@@ -1,0 +1,327 @@
+name: Update CI Dashboard Data
+
+on:
+  schedule:
+    # Run every 3 hours
+    - cron: '0 */3 * * *'
+  
+  workflow_dispatch:
+    # Manual trigger (for "Refresh Now" button)
+    inputs:
+      reason:
+        description: 'Reason for manual refresh'
+        required: false
+        default: 'Manual refresh'
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    
+    outputs:
+      new_failures: ${{ steps.process.outputs.new_failures }}
+      notifications: ${{ steps.process.outputs.notifications }}
+    
+    steps:
+      - name: Checkout dashboard repo
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Load config
+        run: |
+          # Using local config.yaml for now
+          echo "Using local config.yaml"
+          cat config.yaml
+      
+      - name: Fetch workflow runs and jobs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Fetch recent nightly workflow runs (last 10 days)
+          echo "Fetching nightly workflow runs..."
+          gh api \
+            -H "Accept: application/vnd.github+json" \
+            --paginate \
+            "repos/kata-containers/kata-containers/actions/workflows/ci-nightly.yaml/runs?created=>$(date -d '10 days ago' +%Y-%m-%d)" \
+            --jq '.workflow_runs' | jq -s 'add // []' > nightly-runs.json
+          
+          echo "Found $(jq 'length' nightly-runs.json) nightly runs"
+          
+          # For each nightly run, fetch ALL jobs (with pagination)
+          echo "Fetching jobs for each run..."
+          echo '[]' > all-jobs.json
+          
+          for run_id in $(jq -r '.[].id' nightly-runs.json | head -15); do
+            echo "Fetching jobs for run $run_id..."
+            
+            # Use --paginate to get ALL jobs, filter to GPU and TEE-related ones
+            gh api \
+              -H "Accept: application/vnd.github+json" \
+              --paginate \
+              "repos/kata-containers/kata-containers/actions/runs/$run_id/jobs?per_page=100" \
+              --jq '.jobs[] | select(.name | test("run-nvidia-gpu|run-k8s-tests-on-nvidia|run-kata-coco|run-k8s-tests-coco|run-k8s-tests-on-tee|run-k8s-tests-on-zvsi"; "i"))' | \
+              jq -s --arg run_id "$run_id" '[.[] | . + {workflow_run_id: $run_id}]' > run-jobs.json
+            
+            echo "  Found $(jq 'length' run-jobs.json) GPU/TEE test jobs"
+            
+            # Merge
+            jq -s 'add' all-jobs.json run-jobs.json > temp-jobs.json
+            mv temp-jobs.json all-jobs.json
+          done
+          
+          # Create final format
+          echo '{"jobs":' > raw-runs.json
+          cat all-jobs.json >> raw-runs.json
+          echo '}' >> raw-runs.json
+          
+          echo "Fetched $(jq '.jobs | length' raw-runs.json) GPU/TEE test jobs total"
+          
+          # Show found jobs
+          echo "Jobs found:"
+          jq '.jobs[] | {name: .name, conclusion: .conclusion, started_at: .started_at}' raw-runs.json | head -30
+          
+          # Fetch logs for failed jobs to extract test failure details
+          echo ""
+          echo "Fetching logs for failed jobs..."
+          mkdir -p job-logs
+          
+          for job_id in $(jq -r '.jobs[] | select(.conclusion == "failure") | .id' raw-runs.json | head -20); do
+            echo "Fetching logs for job $job_id..."
+            
+            # GitHub logs API returns a 302 redirect to a signed URL
+            # Use curl with -L to follow redirects and get the actual log content
+            curl -sL \
+              -H "Authorization: token $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/kata-containers/kata-containers/actions/jobs/$job_id/logs" \
+              -o "job-logs/$job_id.log" 2>&1
+            
+            # Check if we got actual log content (not an error message)
+            if [ -f "job-logs/$job_id.log" ]; then
+              size=$(wc -c < "job-logs/$job_id.log")
+              echo "  Log file size: $size bytes"
+              
+              # Check if it's actually log content (should be > 1KB and contain common log patterns)
+              if [ "$size" -lt 1000 ]; then
+                echo "  ⚠️ WARNING: Log file seems too small, might be an error response"
+                echo "  Content preview:"
+                head -5 "job-logs/$job_id.log" | head -3 | sed 's/^/    /'
+              elif ! grep -q "not ok\|ok \|TAP\|bats\|Running" "job-logs/$job_id.log" 2>/dev/null; then
+                echo "  ⚠️ WARNING: Log doesn't contain expected TAP/bats output patterns"
+                echo "  First 10 lines:"
+                head -10 "job-logs/$job_id.log" | sed 's/^/    /'
+              else
+                echo "  ✓ Log appears valid (contains TAP/bats patterns)"
+                # Count "not ok" lines for quick verification
+                not_ok_count=$(grep -c "not ok" "job-logs/$job_id.log" 2>/dev/null || echo "0")
+                echo "  Found $not_ok_count 'not ok' lines"
+              fi
+            else
+              echo "  ✗ Failed to create log file"
+            fi
+          done
+          
+          echo "Log files fetched: $(ls job-logs/ 2>/dev/null | wc -l)"
+          echo "Total log size: $(du -sh job-logs/ 2>/dev/null | cut -f1)"
+      
+      - name: Process data
+        id: process
+        run: |
+          # Process raw data into dashboard format using config
+          # Also outputs new failures for notifications
+          node scripts/process-data.js
+          
+          # Check if there are new failures to notify about
+          if [ -f notifications.json ]; then
+            echo "new_failures=true" >> $GITHUB_OUTPUT
+            echo "notifications=$(cat notifications.json | jq -c)" >> $GITHUB_OUTPUT
+          else
+            echo "new_failures=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add data.json
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update dashboard data [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
+            git push
+          fi
+  
+  notify-slack:
+    needs: update-data
+    if: needs.update-data.outputs.new_failures == 'true'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout dashboard repo
+        uses: actions/checkout@v4
+      
+      - name: Load config
+        run: |
+          # Using local config.yaml
+          echo "Using local config.yaml"
+      
+      - name: Send DM to maintainers for failures
+        env:
+          # All workspace tokens
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_BOT_TOKEN_NVIDIA: ${{ secrets.SLACK_BOT_TOKEN_NVIDIA }}
+          SLACK_BOT_TOKEN_CNCF: ${{ secrets.SLACK_BOT_TOKEN_CNCF }}
+          SLACK_BOT_TOKEN_INTEL: ${{ secrets.SLACK_BOT_TOKEN_INTEL }}
+          NOTIFICATIONS: ${{ needs.update-data.outputs.notifications }}
+        run: |
+          # Function to get token for a workspace
+          get_token() {
+            local workspace=$1
+            case "$workspace" in
+              "nvidia") echo "$SLACK_BOT_TOKEN_NVIDIA" ;;
+              "cncf") echo "$SLACK_BOT_TOKEN_CNCF" ;;
+              "intel") echo "$SLACK_BOT_TOKEN_INTEL" ;;
+              *) echo "$SLACK_BOT_TOKEN" ;;  # default
+            esac
+          }
+          
+          # Send direct messages to maintainers for new failures
+          echo "$NOTIFICATIONS" | jq -c '.[] | select(.type == "new_failure")' | while read -r notification; do
+            section=$(echo "$notification" | jq -r '.section')
+            test_name=$(echo "$notification" | jq -r '.test_name')
+            error=$(echo "$notification" | jq -r '.error')
+            run_url=$(echo "$notification" | jq -r '.run_url')
+            
+            # Process each maintainer with their workspace
+            echo "$notification" | jq -c '.maintainer_contacts[]' 2>/dev/null | while read -r contact; do
+              slack_id=$(echo "$contact" | jq -r '.slack_id')
+              workspace=$(echo "$contact" | jq -r '.workspace // "default"')
+              
+              if [ -n "$slack_id" ] && [ "$slack_id" != "null" ]; then
+                token=$(get_token "$workspace")
+                
+                if [ -n "$token" ]; then
+                  echo "Sending DM to $slack_id in workspace $workspace about $test_name"
+                  
+                  curl -s -X POST "https://slack.com/api/chat.postMessage" \
+                    -H "Authorization: Bearer $token" \
+                    -H "Content-Type: application/json" \
+                    -d @- <<EOF
+          {
+            "channel": "${slack_id}",
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "🔴 Nightly Test Failure",
+                  "emoji": true
+                }
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Section:*\n${section}"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Test:*\n\`${test_name}\`"
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Failed Step:*\n${error}"
+                }
+              },
+              {
+                "type": "actions",
+                "elements": [
+                  {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "🔗 View Run",
+                      "emoji": true
+                    },
+                    "url": "${run_url}",
+                    "style": "danger"
+                  },
+                  {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "📊 Dashboard",
+                      "emoji": true
+                    },
+                    "url": "https://kata-containers.github.io/ci-dashboard/"
+                  }
+                ]
+              }
+            ]
+          }
+          EOF
+                  sleep 1  # Rate limiting
+                else
+                  echo "No token configured for workspace: $workspace"
+                fi
+              fi
+            done
+          done
+      
+      - name: Send recovery DMs to maintainers
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_BOT_TOKEN_NVIDIA: ${{ secrets.SLACK_BOT_TOKEN_NVIDIA }}
+          SLACK_BOT_TOKEN_CNCF: ${{ secrets.SLACK_BOT_TOKEN_CNCF }}
+          SLACK_BOT_TOKEN_INTEL: ${{ secrets.SLACK_BOT_TOKEN_INTEL }}
+          NOTIFICATIONS: ${{ needs.update-data.outputs.notifications }}
+        run: |
+          get_token() {
+            local workspace=$1
+            case "$workspace" in
+              "nvidia") echo "$SLACK_BOT_TOKEN_NVIDIA" ;;
+              "cncf") echo "$SLACK_BOT_TOKEN_CNCF" ;;
+              "intel") echo "$SLACK_BOT_TOKEN_INTEL" ;;
+              *) echo "$SLACK_BOT_TOKEN" ;;
+            esac
+          }
+          
+          # Send DMs for section recovery
+          echo "$NOTIFICATIONS" | jq -c '.[] | select(.type == "recovery")' | while read -r notification; do
+            section=$(echo "$notification" | jq -r '.section')
+            
+            echo "$notification" | jq -c '.maintainer_contacts[]' 2>/dev/null | while read -r contact; do
+              slack_id=$(echo "$contact" | jq -r '.slack_id')
+              workspace=$(echo "$contact" | jq -r '.workspace // "default"')
+              
+              if [ -n "$slack_id" ] && [ "$slack_id" != "null" ]; then
+                token=$(get_token "$workspace")
+                
+                if [ -n "$token" ]; then
+                  curl -s -X POST "https://slack.com/api/chat.postMessage" \
+                    -H "Authorization: Bearer $token" \
+                    -H "Content-Type: application/json" \
+                    -d @- <<EOF
+          {
+            "channel": "${slack_id}",
+            "text": "☀️ *${section}* is back to 100% passing!"
+          }
+          EOF
+                fi
+              fi
+            done
+          done
+

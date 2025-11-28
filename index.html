@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kata CI Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">
+          <img src="kata-logo.svg" alt="Kata Containers" class="logo-image">
+          <h1>CI Dashboard</h1>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="last-refresh">Last updated: <strong id="last-refresh-time">—</strong></span>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="tabs">
+      <button class="tab active" data-tab="nightly">
+        <span class="tab-icon">🌙</span>
+        NIGHTLY
+      </button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content">
+      <!-- Quick Stats -->
+      <div class="quick-stats">
+        <div class="stat">
+          <span class="stat-value" id="total-tests">0</span>
+          <span class="stat-label">Total Tests</span>
+        </div>
+        <div class="stat stat-failed">
+          <span class="stat-value" id="failed-tests">0</span>
+          <span class="stat-label">Failed</span>
+        </div>
+        <div class="stat stat-not-run">
+          <span class="stat-value" id="not-run-tests">0</span>
+          <span class="stat-label">Not Run</span>
+        </div>
+        <div class="stat stat-passed">
+          <span class="stat-value" id="passed-tests">0</span>
+          <span class="stat-label">Passed</span>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-tests" placeholder="Search tests...">
+        </div>
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="failed">
+            <span class="dot dot-failed"></span> Failed (<span id="filter-failed-count">8</span>)
+          </button>
+          <button class="filter-btn" data-filter="not_run">
+            <span class="dot dot-not-run"></span> Not Run (<span id="filter-not-run-count">5</span>)
+          </button>
+          <button class="filter-btn" data-filter="passed">
+            <span class="dot dot-passed"></span> Passed (<span id="filter-passed-count">114</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- Date Display -->
+      <div class="date-header">
+        <h2>Nightly Runs — <span id="current-date">November 28, 2025</span></h2>
+      </div>
+
+      <!-- Sections -->
+      <div class="sections" id="sections-container">
+        <!-- Sections will be rendered by JavaScript -->
+      </div>
+    </main>
+
+    <!-- Error Modal -->
+    <div class="modal" id="error-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modal-title">Error Details</h3>
+          <button class="modal-close" id="modal-close">✕</button>
+        </div>
+        <div class="modal-body" id="modal-body">
+          <!-- Error details will be inserted here -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="copy-error">📋 Copy Error</button>
+          <a class="btn btn-secondary" id="github-log-link" href="#" target="_blank">🔗 View Full Log</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weather Modal -->
+    <div class="modal" id="weather-modal">
+      <div class="modal-content modal-weather">
+        <div class="modal-header">
+          <h3 id="weather-modal-title">Weather Details</h3>
+          <button class="modal-close" id="weather-close">✕</button>
+        </div>
+        <div class="modal-body" id="weather-modal-body">
+          <!-- Weather details will be inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+      <span class="toast-message"></span>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+

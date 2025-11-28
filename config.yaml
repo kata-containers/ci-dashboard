@@ -1,0 +1,102 @@
+# Kata Containers CI Dashboard Configuration
+# 
+# This file configures the CI dashboard at:
+# https://kata-containers.github.io/ci-dashboard/
+#
+# To add a new section or modify settings, submit a PR to this file.
+
+settings:
+  weather_days: 10
+  refresh_interval: 60
+  source_repo: "kata-containers/kata-containers"
+
+# Slack notifications (disabled for now - enable when Slack app is set up)
+notifications:
+  slack:
+    enabled: false
+    # Uncomment and configure when ready:
+    # workspaces:
+    #   kata-containers:
+    #     name: "Kata Containers"
+    #     token_secret: "SLACK_BOT_TOKEN"
+    # daily_summary:
+    #   enabled: true
+    #   time: "08:00"
+    #   global_channel: "#kata-ci"
+    # maintainer_alerts:
+    #   enabled: true
+
+# Maintainer directory
+# To add yourself: submit a PR with your GitHub handle and Slack ID
+# Find your Slack ID: Profile > ⋮ > Copy member ID
+maintainers_directory:
+  "@fidencio":
+    name: "Fabiano Fidêncio"
+    slack:
+      kata-containers: "UU8N67ZN1"
+
+# Test sections
+sections:
+  # ===========================================
+  # GPU Section - NVIDIA GPU tests
+  # ===========================================
+  - id: nvidia-gpu
+    name: "NVIDIA GPU"
+    description: "NVIDIA GPU passthrough and Confidential Computing tests"
+    maintainers:
+      - "@fidencio"
+    slack:
+      workspace: "kata-containers"
+      channel: "#kata-ci"
+    
+    # Jobs to monitor (exact names from GitHub Actions)
+    jobs:
+      - name: "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64"
+        description: "NVIDIA GPU on A100"
+      
+      - name: "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64"
+        description: "NVIDIA CC GPU + AMD SNP on H100"
+
+  # ===========================================
+  # TEE Section - Confidential Computing tests
+  # ===========================================
+  - id: tee
+    name: "TEE"
+    description: "Trusted Execution Environment and Confidential Computing tests"
+    maintainers:
+      - "@fidencio"
+    slack:
+      workspace: "kata-containers"
+      channel: "#kata-ci"
+    
+    # Jobs to monitor (exact names from GitHub Actions)
+    jobs:
+      - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)"
+        description: "non-TEE with nydus snapshotter"
+      
+      - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (sev-snp, qemu-snp)"
+        description: "AMD SEV-SNP with nydus snapshotter"
+      
+      - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)"
+        description: "Intel TDX with nydus snapshotter"
+      
+      - name: "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)"
+        description: "IBM zVSI with nydus snapshotter"
+      
+      - name: "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64"
+        description: "NVIDIA CC GPU + AMD SNP on H100"
+      
+      - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (experimental-force-guest-pull, qemu-coco-dev)"
+        description: "non-TEE with force guest pull"
+      
+      - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)"
+        description: "non-TEE with runtime-rs and nydus snapshotter"
+      
+      - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter (qemu-coco-dev, erofs, default)"
+        description: "non-TEE with erofs snapshotter"
+
+# Test step identification
+# Only failures in these steps count as real test failures
+# Failures in any other step = "not run" (infrastructure issue)
+fatal_steps:
+  - pattern: "Run tests.*"
