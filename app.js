@@ -8,12 +8,16 @@
 
 let state = {
   data: null,
+  flakyData: null,
   loading: true,
   error: null,
   filter: 'all',
   searchQuery: '',
   expandedSections: new Set(),
-  expandedGroups: new Set()
+  expandedGroups: new Set(),
+  expandedFlakyTests: new Set(),
+  activeTab: 'nightly',
+  flakyJobFilter: 'all'
 };
 
 // ============================================
@@ -26,15 +30,15 @@ async function loadData() {
   renderLoading();
   
   try {
+    // Load nightly data
     const response = await fetch('data.json?t=' + Date.now());
     if (!response.ok) {
       throw new Error('Data not available yet');
     }
     state.data = await response.json();
-    state.loading = false;
     
     // Auto-expand sections with failures
-  state.data.sections.forEach(section => {
+    state.data.sections.forEach(section => {
       const hasFailures = section.tests.some(t => t.status === 'failed');
       if (hasFailures) {
         state.expandedSections.add(section.id);
@@ -42,11 +46,39 @@ async function loadData() {
       }
     });
     
+    // Load flaky data (don't fail if not available)
+    try {
+      const flakyResponse = await fetch('flaky-data.json?t=' + Date.now());
+      if (flakyResponse.ok) {
+        state.flakyData = await flakyResponse.json();
+        updateFlakyBadge();
+      }
+    } catch (e) {
+      console.log('Flaky data not available yet');
+    }
+    
+    state.loading = false;
     render();
   } catch (error) {
     state.loading = false;
     state.error = error.message;
     renderError();
+  }
+}
+
+/**
+ * Update the flaky tests badge count in the tab
+ */
+function updateFlakyBadge() {
+  const badge = document.getElementById('flaky-count-badge');
+  if (badge && state.flakyData) {
+    const count = state.flakyData.flakyTests?.length || 0;
+    if (count > 0) {
+      badge.textContent = count;
+      badge.style.display = 'inline-flex';
+    } else {
+      badge.style.display = 'none';
+    }
   }
 }
 
@@ -998,6 +1030,465 @@ function copyError() {
 }
 
 // ============================================
+// Tab Switching
+// ============================================
+
+function switchTab(tabName) {
+  state.activeTab = tabName;
+  
+  // Update tab buttons
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.classList.toggle('active', tab.dataset.tab === tabName);
+  });
+  
+  // Update tab content
+  document.querySelectorAll('.tab-content').forEach(content => {
+    content.classList.toggle('active', content.id === `${tabName}-content`);
+  });
+  
+  // Render appropriate content
+  if (tabName === 'prfailures') {
+    renderPRFailures();
+  }
+}
+
+// ============================================
+// Flaky Tests Rendering
+// ============================================
+
+/**
+ * Simplify long job names for display
+ * e.g., "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (sev-snp, qemu-snp)"
+ * becomes "run-k8s-tests-on-tee (sev-snp, qemu-snp)"
+ */
+function simplifyJobName(fullName) {
+  if (!fullName) return 'Unknown';
+  
+  // Split by " / " and take the last meaningful part
+  const parts = fullName.split(' / ');
+  
+  // Get the last part (usually the most specific)
+  let name = parts[parts.length - 1];
+  
+  // If there are 3+ parts, the last one is usually the job with params
+  // e.g., "run-k8s-tests (ubuntu, qemu, small)"
+  if (parts.length >= 2) {
+    name = parts[parts.length - 1];
+  }
+  
+  return name;
+}
+
+function renderPRFailures() {
+  const byTestList = document.getElementById('flaky-by-test-list');
+  const byJobList = document.getElementById('flaky-by-job-list');
+  
+  if (!state.flakyData) {
+    byTestList.innerHTML = '<p class="empty-message">No data available. Analysis runs daily at 05:00 UTC.</p>';
+    byJobList.innerHTML = '<p class="empty-message">No data available.</p>';
+    return;
+  }
+  
+  // Get all tests and filter to only flaky ones
+  const allTests = state.flakyData.failedTests || state.flakyData.flakyTests || [];
+  const flakyTests = allTests.filter(t => t.isConfirmedFlaky || t.flakyCount > 0);
+  
+  // Sort by flaky count
+  flakyTests.sort((a, b) => (b.flakyCount || 0) - (a.flakyCount || 0));
+  
+  // Build job stats
+  const jobStats = {};
+  flakyTests.forEach(test => {
+    // Get flaky occurrences for this test
+    const flakyOccs = (test.recentOccurrences || []).filter(o => o.isFlaky);
+    
+    test.affectedJobs.forEach(job => {
+      if (job.flakyCount > 0) {
+        if (!jobStats[job.name]) {
+          jobStats[job.name] = { 
+            name: job.name, 
+            displayName: job.displayName,
+            flakyTests: [],
+            occurrences: []
+          };
+        }
+        // Get occurrences for this specific job
+        const jobOccs = flakyOccs.filter(o => o.jobName === job.name);
+        jobStats[job.name].flakyTests.push({ 
+          name: test.name, 
+          count: job.flakyCount, 
+          file: test.file,
+          occurrences: jobOccs
+        });
+        jobStats[job.name].occurrences.push(...jobOccs);
+      }
+    });
+  });
+  
+  const sortedJobs = Object.values(jobStats)
+    .map(j => ({ ...j, flakyTestCount: j.flakyTests.length }))
+    .sort((a, b) => b.flakyTestCount - a.flakyTestCount);
+  
+  // Update stats
+  document.getElementById('prfailures-flaky').textContent = flakyTests.length;
+  document.getElementById('prfailures-total').textContent = allTests.reduce((sum, t) => sum + t.totalFailures, 0);
+  document.getElementById('prfailures-prs').textContent = state.flakyData.totalPRs || 0;
+  
+  // Render "By Test" view
+  if (flakyTests.length === 0) {
+    byTestList.innerHTML = '<p class="empty-message">No flaky tests detected! 🎉</p>';
+  } else {
+    byTestList.innerHTML = flakyTests.map((test, i) => {
+      const isExpanded = state.expandedFlakyTests.has(test.name);
+      const flakyOccs = (test.recentOccurrences || []).filter(o => o.isFlaky);
+      const flakyJobs = test.affectedJobs.filter(j => j.flakyCount > 0);
+      
+      return `
+        <div class="flaky-item ${isExpanded ? 'expanded' : ''}" data-test-name="${test.name}">
+          <div class="flaky-item-header">
+            <span class="flaky-rank">#${i + 1}</span>
+            <div class="flaky-item-info">
+              <div class="flaky-item-name">${test.name}</div>
+              <div class="flaky-item-file">${test.file || 'unknown file'}</div>
+            </div>
+            <span class="flaky-item-badge">${test.flakyCount}x flaky</span>
+            <span class="flaky-item-toggle">${isExpanded ? '▼' : '▶'}</span>
+          </div>
+          ${isExpanded ? `
+            <div class="flaky-item-details">
+              <div class="flaky-detail-section">
+                <h4>Affected Jobs (${flakyJobs.length})</h4>
+                <div class="flaky-jobs-chips">
+                  ${flakyJobs.map(j => `<span class="job-chip-small">${simplifyJobName(j.displayName)} (${j.flakyCount}x)</span>`).join('')}
+                </div>
+              </div>
+              <div class="flaky-detail-section">
+                <h4>Failed Runs (${flakyOccs.length}) — click to debug</h4>
+                <div class="flaky-runs-list">
+                  ${flakyOccs.map(occ => {
+                    const date = new Date(occ.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    return `
+                      <a href="https://github.com/kata-containers/kata-containers/actions/runs/${occ.runId}/job/${occ.jobId}" 
+                         target="_blank" class="flaky-run-link">
+                        <span class="run-date">${date}</span>
+                        <span class="run-pr">PR #${occ.prNumber}</span>
+                        <span class="run-job">${simplifyJobName(occ.jobDisplayName)}</span>
+                        <span class="run-arrow">→</span>
+                      </a>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('');
+  }
+  
+  // Render "By Job" view
+  if (sortedJobs.length === 0) {
+    byJobList.innerHTML = '<p class="empty-message">No job data available</p>';
+  } else {
+    byJobList.innerHTML = sortedJobs.map((job, i) => {
+      const isExpanded = state.expandedFlakyJobs?.has(job.name);
+      
+      return `
+        <div class="flaky-job-item ${isExpanded ? 'expanded' : ''}" data-job-name="${job.name}">
+          <div class="flaky-job-header">
+            <span class="flaky-rank">#${i + 1}</span>
+            <div class="flaky-job-info">
+              <div class="flaky-job-name">${simplifyJobName(job.displayName)}</div>
+            </div>
+            <span class="flaky-job-badge">${job.flakyTestCount} flaky test${job.flakyTestCount > 1 ? 's' : ''}</span>
+            <span class="flaky-job-toggle">${isExpanded ? '▼' : '▶'}</span>
+          </div>
+          ${isExpanded ? `
+            <div class="flaky-job-details">
+              ${job.flakyTests.map(test => `
+                <div class="job-flaky-test">
+                  <div class="job-flaky-test-header">
+                    <span class="job-flaky-test-name">${test.name}</span>
+                    <span class="job-flaky-test-count">${test.count}x</span>
+                  </div>
+                  <div class="job-flaky-test-file">${test.file || 'unknown file'}</div>
+                  <div class="job-flaky-test-runs">
+                    ${test.occurrences.slice(0, 3).map(occ => {
+                      const date = new Date(occ.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                      return `
+                        <a href="https://github.com/kata-containers/kata-containers/actions/runs/${occ.runId}/job/${occ.jobId}" 
+                           target="_blank" class="mini-run-link">
+                          ${date} · PR #${occ.prNumber} →
+                        </a>
+                      `;
+                    }).join('')}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('');
+  }
+  
+  // Add sub-tab switching
+  document.querySelectorAll('.sub-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const subtab = tab.dataset.subtab;
+      document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.sub-tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(`${subtab}-content`).classList.add('active');
+    });
+  });
+  
+  // Add click handlers for expanding tests
+  document.querySelectorAll('.flaky-item').forEach(item => {
+    item.querySelector('.flaky-item-header').addEventListener('click', () => {
+      const testName = item.dataset.testName;
+      if (state.expandedFlakyTests.has(testName)) {
+        state.expandedFlakyTests.delete(testName);
+      } else {
+        state.expandedFlakyTests.add(testName);
+      }
+      renderPRFailures();
+    });
+  });
+  
+  // Add click handlers for expanding jobs
+  if (!state.expandedFlakyJobs) state.expandedFlakyJobs = new Set();
+  document.querySelectorAll('.flaky-job-item').forEach(item => {
+    item.querySelector('.flaky-job-header').addEventListener('click', () => {
+      const jobName = item.dataset.jobName;
+      if (state.expandedFlakyJobs.has(jobName)) {
+        state.expandedFlakyJobs.delete(jobName);
+      } else {
+        state.expandedFlakyJobs.add(jobName);
+      }
+      renderPRFailures();
+    });
+  });
+}
+
+function renderFlakyTestRow(test) {
+  const isExpanded = state.expandedFlakyTests.has(test.name);
+  const flakyOccurrences = (test.recentOccurrences || []).filter(o => o.isFlaky);
+  
+  // Get unique PRs where this was flaky
+  const flakyPRs = [...new Set(flakyOccurrences.map(o => o.prNumber))];
+  
+  // Get jobs where this test is flaky
+  const flakyJobs = test.affectedJobs.filter(j => j.flakyCount > 0);
+  
+  return `
+    <div class="flaky-row ${isExpanded ? 'expanded' : ''}" data-test-name="${test.name}">
+      <div class="flaky-row-header">
+        <div class="test-info">
+          <span class="test-name">${test.name}</span>
+          ${test.file ? `<span class="test-file">${test.file}</span>` : ''}
+        </div>
+        <div class="flaky-stats">
+          <span class="flaky-count">${test.flakyCount || 0}x flaky</span>
+          <span class="pr-count">${flakyPRs.length} PR${flakyPRs.length !== 1 ? 's' : ''}</span>
+        </div>
+      </div>
+      ${isExpanded ? `
+        <div class="flaky-row-details">
+          <div class="detail-section">
+            <h4>Affected Jobs (${flakyJobs.length})</h4>
+            <div class="job-chips">
+              ${flakyJobs.map(j => `
+                <span class="job-chip" title="${j.displayName}">${simplifyJobName(j.displayName)} <em>(${j.flakyCount}x)</em></span>
+              `).join('')}
+            </div>
+          </div>
+          <div class="detail-section">
+            <h4>Recent Flaky Occurrences</h4>
+            <div class="occurrences-list">
+              ${flakyOccurrences.slice(0, 5).map(occ => {
+                const date = new Date(occ.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                return `
+                  <div class="occurrence">
+                    <span class="occ-date">${date}</span>
+                    <a href="https://github.com/kata-containers/kata-containers/pull/${occ.prNumber}" target="_blank" class="occ-pr">PR #${occ.prNumber}</a>
+                    <span class="occ-job" title="${occ.jobDisplayName}">${simplifyJobName(occ.jobDisplayName)}</span>
+                    <a href="https://github.com/kata-containers/kata-containers/actions/runs/${occ.runId}/job/${occ.jobId}" target="_blank" class="occ-link">View</a>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+/**
+ * Navigate to a specific job in the Nightly tab
+ */
+function navigateToJob(jobName) {
+  // Switch to nightly tab
+  switchTab('nightly');
+  
+  // Find the test with this job name and expand its section
+  if (state.data?.sections) {
+    for (const section of state.data.sections) {
+      const test = section.tests.find(t => t.jobName === jobName || t.name === jobName);
+      if (test) {
+        // Expand the section
+        state.expandedSections.add(section.id);
+        
+        // Expand the appropriate group based on test status
+        const groupId = `${section.id}-${test.status === 'passed' ? 'passed' : test.status === 'failed' ? 'failed' : 'not-run'}`;
+        state.expandedGroups.add(groupId);
+        
+        // Re-render and scroll to the test
+        renderSections();
+        
+        // Scroll to the test row after a short delay
+        setTimeout(() => {
+          const testRow = document.querySelector(`.test-row .test-name-text[data-test-id="${test.id}"]`);
+          if (testRow) {
+            testRow.closest('.test-row').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            testRow.closest('.test-row').classList.add('highlight');
+            setTimeout(() => testRow.closest('.test-row').classList.remove('highlight'), 2000);
+          }
+        }, 100);
+        
+        return;
+      }
+    }
+  }
+  
+  // If not found in nightly, just show a toast
+  showToast(`Job "${jobName}" not found in nightly runs`, 'error');
+}
+
+function renderFailedTestCard(test) {
+  const isExpanded = state.expandedFlakyTests.has(test.name);
+  const isFlaky = test.isConfirmedFlaky || test.flakyCount > 0;
+  const isMerged = test.mergedDespiteFailure || test.mergedCount > 0;
+  
+  // Format ALL affected jobs (clickable to navigate)
+  const affectedJobsHtml = test.affectedJobs.map(job => {
+    const jobFlaky = job.flakyCount > 0;
+    const jobMerged = job.mergedCount > 0;
+    return `
+      <span class="flaky-job-chip clickable ${jobFlaky ? 'is-flaky' : ''} ${jobMerged ? 'is-merged' : ''}" 
+            data-job-name="${job.name}" 
+            title="Click to view in Nightly tab${jobFlaky ? ' (confirmed flaky)' : ''}${jobMerged ? ' (merged despite failure)' : ''}">
+        ${job.displayName} <span class="job-count">(${job.count}x)</span>
+        ${jobFlaky ? '<span class="chip-badge flaky">🔄</span>' : ''}
+        ${jobMerged ? '<span class="chip-badge merged">✓</span>' : ''}
+      </span>
+    `;
+  }).join('');
+  
+  // Format ALL occurrences with flaky/merged badges
+  const allOccurrences = test.recentOccurrences || [];
+  const occurrencesHtml = allOccurrences.map(occ => {
+    const date = new Date(occ.date);
+    const formatted = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const isRerun = occ.runAttempt > 1;
+    const prTitle = occ.prTitle ? `: ${occ.prTitle.substring(0, 40)}${occ.prTitle.length > 40 ? '...' : ''}` : '';
+    const occFlaky = occ.isFlaky;
+    const occMerged = occ.prMerged;
+    
+    return `
+      <div class="flaky-occurrence ${occFlaky ? 'is-flaky' : ''} ${occMerged ? 'is-merged' : ''}">
+        <span class="occurrence-date">${formatted}</span>
+        <span class="occurrence-pr">
+          <a href="https://github.com/kata-containers/kata-containers/pull/${occ.prNumber}" target="_blank" class="pr-link">
+            PR #${occ.prNumber}${prTitle}
+          </a>
+          ${isRerun ? `<span class="rerun-badge">(re-run #${occ.runAttempt})</span>` : ''}
+          ${occFlaky ? `<span class="occurrence-badge flaky" title="Confirmed flaky: failed then passed on re-run">🔄 Flaky</span>` : ''}
+          ${occMerged ? `<span class="occurrence-badge merged" title="PR was merged despite this failure">✓ Merged</span>` : ''}
+        </span>
+        <span class="occurrence-job">${occ.jobDisplayName}</span>
+        <a href="https://github.com/kata-containers/kata-containers/actions/runs/${occ.runId}/job/${occ.jobId}" 
+           target="_blank" 
+           class="occurrence-link">
+          View Run
+        </a>
+      </div>
+    `;
+  }).join('');
+  
+  // Format ALL dates
+  const allDatesHtml = test.uniqueDates.map(d => {
+    const date = new Date(d);
+    return `<span class="date-chip">${date.toLocaleDateString('en-US', {month: 'short', day: 'numeric'})}</span>`;
+  }).join('');
+  
+  // Build header badges
+  const headerBadges = [];
+  if (isFlaky) {
+    headerBadges.push(`<span class="test-badge flaky" title="Confirmed flaky: failed then passed on re-run">🔄 Flaky (${test.flakyCount || 0})</span>`);
+  }
+  if (isMerged) {
+    headerBadges.push(`<span class="test-badge merged" title="PR merged despite this failure">✓ Merged (${test.mergedCount || 0})</span>`);
+  }
+  
+  return `
+    <div class="flaky-test-card ${isExpanded ? 'expanded' : ''} ${isFlaky ? 'is-flaky' : ''} ${isMerged ? 'is-merged' : ''}" data-test-name="${test.name}">
+      <div class="flaky-test-header">
+        <div class="flaky-test-toggle">▶</div>
+        <div class="flaky-test-info">
+          <div class="flaky-test-name">
+            <span class="flaky-marker">✗</span>
+            ${test.name}
+            ${headerBadges.join('')}
+          </div>
+          ${test.file ? `<div class="flaky-test-file">📁 ${test.file}</div>` : ''}
+        </div>
+        <div class="flaky-test-stats">
+          <span class="flaky-count">${test.totalFailures}x</span>
+          <span class="flaky-prs">${test.uniquePRs} PR${test.uniquePRs > 1 ? 's' : ''}</span>
+        </div>
+        <a href="https://github.com/kata-containers/kata-containers/actions/runs/${test.recentOccurrences[0]?.runId}/job/${test.recentOccurrences[0]?.jobId}" 
+           target="_blank" 
+           class="btn btn-small"
+           onclick="event.stopPropagation()">
+          Latest
+        </a>
+      </div>
+      <div class="flaky-test-body">
+        <div class="flaky-section">
+          <h5>Affected Jobs (${test.affectedJobs.length})</h5>
+          <div class="flaky-jobs-list">
+            ${affectedJobsHtml}
+          </div>
+        </div>
+        <div class="flaky-section">
+          <h5>All Failures (${allOccurrences.length})</h5>
+          <div class="flaky-occurrences">
+            ${occurrencesHtml}
+          </div>
+        </div>
+        <div class="flaky-section">
+          <h5>Failed on Days (${test.uniqueDates.length})</h5>
+          <div class="flaky-dates">
+            ${allDatesHtml}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function toggleFlakyTest(testName) {
+  if (state.expandedFlakyTests.has(testName)) {
+    state.expandedFlakyTests.delete(testName);
+  } else {
+    state.expandedFlakyTests.add(testName);
+  }
+  renderFlakyTests();
+}
+
+// ============================================
 // Initialization
 // ============================================
 
@@ -1013,6 +1504,11 @@ function init() {
   document.getElementById('weather-close').addEventListener('click', () => closeModal('weather-modal'));
   
   document.getElementById('copy-error').addEventListener('click', copyError);
+  
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+  });
   
   // Filter buttons
   document.querySelectorAll('.filter-btn').forEach(btn => {

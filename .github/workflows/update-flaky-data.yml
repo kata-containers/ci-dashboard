@@ -1,0 +1,179 @@
+name: Update Flaky Tests Data
+
+on:
+  schedule:
+    # Run once per day at 05:00 UTC
+    - cron: '0 5 * * *'
+  
+  workflow_dispatch:
+    # Manual trigger
+    inputs:
+      reason:
+        description: 'Reason for manual refresh'
+        required: false
+        default: 'Manual refresh'
+
+jobs:
+  update-flaky-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout dashboard repo
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Fetch PR workflow runs (last 2 weeks)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Calculate date 14 days ago
+          SINCE_DATE=$(date -d '14 days ago' +%Y-%m-%d)
+          echo "Fetching PR runs since $SINCE_DATE..."
+          
+          # Fetch recent workflow runs from ci-on-push.yaml
+          # This workflow uses pull_request_target event, so we don't filter by event type
+          echo "Fetching workflow runs from ci-on-push.yaml..."
+          gh api \
+            -H "Accept: application/vnd.github+json" \
+            --paginate \
+            "repos/kata-containers/kata-containers/actions/workflows/ci-on-push.yaml/runs?created=>$SINCE_DATE&per_page=100" \
+            --jq '.workflow_runs' | jq -s 'add // []' > pr-runs.json
+          
+          echo "Found $(jq 'length' pr-runs.json) runs from ci-on-push.yaml"
+          
+          # Show sample runs
+          echo "Sample runs:"
+          jq -r '.[0:3] | .[] | "  Run \(.id): \(.event) - \(.display_title | .[0:60])"' pr-runs.json
+          
+          # Build a cache of branch -> PR info mappings (including merge status)
+          echo "Building PR cache from recent PRs..."
+          gh api "repos/kata-containers/kata-containers/pulls?state=all&per_page=100" \
+            --jq '[.[] | {branch: .head.ref, number: .number, title: .title, merged: (.merged_at != null), state: .state, merged_at: .merged_at}]' > pr-cache.json
+          echo "  Cached $(jq 'length' pr-cache.json) PR mappings"
+          echo "  Merged PRs: $(jq '[.[] | select(.merged == true)] | length' pr-cache.json)"
+          
+          # For each run, fetch jobs that match our test patterns
+          echo "Fetching jobs for runs..."
+          echo '[]' > all-pr-jobs.json
+          
+          # Process up to 100 most recent runs
+          for run_id in $(jq -r 'sort_by(.created_at) | reverse | .[0:100] | .[].id' pr-runs.json); do
+            # Get the run info
+            run_info=$(jq -r --arg id "$run_id" '.[] | select(.id == ($id | tonumber))' pr-runs.json)
+            pr_number=$(echo "$run_info" | jq -r '.pull_requests[0].number // null')
+            head_branch=$(echo "$run_info" | jq -r '.head_branch // "unknown"')
+            head_sha=$(echo "$run_info" | jq -r '.head_sha // "unknown"')
+            run_attempt=$(echo "$run_info" | jq -r '.run_attempt // 1')
+            created_at=$(echo "$run_info" | jq -r '.created_at')
+            
+            # Look up PR info from cache
+            pr_info=$(jq -r --arg branch "$head_branch" '.[] | select(.branch == $branch)' pr-cache.json)
+            if [ "$pr_number" = "null" ] || [ -z "$pr_number" ]; then
+              pr_number=$(echo "$pr_info" | jq -r '.number // empty')
+            fi
+            pr_title=$(echo "$pr_info" | jq -r '.title // empty')
+            pr_merged=$(echo "$pr_info" | jq -r '.merged // false')
+            pr_state=$(echo "$pr_info" | jq -r '.state // empty')
+            
+            # Skip if no PR number found
+            if [ -z "$pr_number" ]; then
+              echo "Skipping run $run_id (branch: $head_branch) - no PR found"
+              continue
+            fi
+            
+            echo "Fetching jobs for run $run_id (PR #$pr_number, attempt $run_attempt)..."
+            
+            # Fetch ALL k8s test jobs from:
+            # - run-k8s-tests-on-aks.yaml (run-k8s-tests with matrix)
+            # - run-k8s-tests-on-arm64.yaml (run-k8s-tests-on-arm64)
+            # - run-k8s-tests-on-nvidia-gpu.yaml (run-nvidia-gpu-tests, run-nvidia-gpu-snp-tests)
+            # - run-k8s-tests-on-zvsi.yaml (run-k8s-tests with matrix)
+            # - run-k8s-tests-on-tdx.yaml, run-k8s-tests-on-sev.yaml, etc.
+            gh api \
+              -H "Accept: application/vnd.github+json" \
+              --paginate \
+              "repos/kata-containers/kata-containers/actions/runs/$run_id/jobs?per_page=100" \
+              --jq '.jobs[] | select(.name | test("run-k8s-tests|run-nvidia-gpu|run-kata-coco"; "i"))' | \
+              jq -s --arg run_id "$run_id" --arg pr "$pr_number" --arg title "$pr_title" --arg branch "$head_branch" --arg sha "$head_sha" --arg attempt "$run_attempt" --arg created "$created_at" --arg merged "$pr_merged" --arg state "$pr_state" \
+                '[.[] | . + {workflow_run_id: $run_id, pr_number: $pr, pr_title: $title, head_branch: $branch, head_sha: $sha, run_attempt: ($attempt | tonumber), run_created_at: $created, pr_merged: ($merged == "true"), pr_state: $state}]' > run-jobs.json
+            
+            job_count=$(jq 'length' run-jobs.json)
+            if [ "$job_count" -gt 0 ]; then
+              echo "  Found $job_count test jobs (PR #$pr_number, attempt $run_attempt)"
+              
+              # Merge
+              jq -s 'add' all-pr-jobs.json run-jobs.json > temp-jobs.json
+              mv temp-jobs.json all-pr-jobs.json
+            fi
+          done
+          
+          # Create final format
+          echo '{"jobs":' > raw-pr-runs.json
+          cat all-pr-jobs.json >> raw-pr-runs.json
+          echo '}' >> raw-pr-runs.json
+          
+          echo ""
+          echo "Fetched $(jq '.jobs | length' raw-pr-runs.json) test jobs from PRs"
+          
+          # Show summary
+          echo ""
+          echo "Jobs by conclusion:"
+          jq -r '.jobs | group_by(.conclusion) | .[] | "\(.[0].conclusion): \(length)"' raw-pr-runs.json
+          
+          # Fetch logs for failed jobs
+          echo ""
+          echo "Fetching logs for failed jobs..."
+          mkdir -p pr-job-logs
+          
+          failed_count=$(jq -r '.jobs[] | select(.conclusion == "failure") | .id' raw-pr-runs.json | wc -l)
+          echo "Found $failed_count failed jobs"
+          
+          # Fetch logs for failed jobs (limit to 50 to avoid rate limits)
+          for job_id in $(jq -r '.jobs[] | select(.conclusion == "failure") | .id' raw-pr-runs.json | head -50); do
+            echo "Fetching logs for job $job_id..."
+            
+            curl -sL \
+              -H "Authorization: token $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/kata-containers/kata-containers/actions/jobs/$job_id/logs" \
+              -o "pr-job-logs/$job_id.log" 2>&1
+            
+            if [ -f "pr-job-logs/$job_id.log" ]; then
+              size=$(wc -c < "pr-job-logs/$job_id.log")
+              if [ "$size" -gt 1000 ]; then
+                not_ok_count=$(grep -c "not ok" "pr-job-logs/$job_id.log" 2>/dev/null || echo "0")
+                echo "  ✓ Log fetched ($size bytes, $not_ok_count 'not ok' lines)"
+              else
+                echo "  ⚠️ Log too small ($size bytes)"
+              fi
+            fi
+          done
+          
+          echo ""
+          echo "Log files fetched: $(ls pr-job-logs/ 2>/dev/null | wc -l)"
+      
+      - name: Process flaky test data
+        run: |
+          node scripts/process-flaky-data.js
+      
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add flaky-data.json
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update flaky tests data [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
+            git push
+          fi
+

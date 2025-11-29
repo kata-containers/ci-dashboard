@@ -28,12 +28,17 @@
     <nav class="tabs">
       <button class="tab active" data-tab="nightly">
         <span class="tab-icon">🌙</span>
-        NIGHTLY
+        Nightly CI
+      </button>
+      <button class="tab" data-tab="prfailures">
+        <span class="tab-icon">🔴</span>
+        PR Failures
+        <span class="tab-badge" id="flaky-count-badge" style="display: none;">0</span>
       </button>
     </nav>
 
-    <!-- Main Content -->
-    <main class="content">
+    <!-- Main Content - Nightly Tab -->
+    <main class="content tab-content active" id="nightly-content">
       <!-- Quick Stats -->
       <div class="quick-stats">
         <div class="stat">
@@ -82,6 +87,47 @@
       <!-- Sections -->
       <div class="sections" id="sections-container">
         <!-- Sections will be rendered by JavaScript -->
+      </div>
+    </main>
+
+    <!-- Main Content - PR Failures Tab -->
+    <main class="content tab-content" id="prfailures-content">
+      <!-- PR Failures Stats -->
+      <div class="quick-stats">
+        <div class="stat stat-failed">
+          <span class="stat-value" id="prfailures-flaky">0</span>
+          <span class="stat-label">🔄 Flaky Tests</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="prfailures-total">0</span>
+          <span class="stat-label">Total Failures</span>
+        </div>
+        <div class="stat stat-passed">
+          <span class="stat-value" id="prfailures-prs">0</span>
+          <span class="stat-label">PRs Analyzed</span>
+        </div>
+      </div>
+
+      <!-- Sub-tabs for By Test / By Job -->
+      <div class="sub-tabs">
+        <button class="sub-tab active" data-subtab="by-test">🔥 By Test</button>
+        <button class="sub-tab" data-subtab="by-job">📊 By Job</button>
+      </div>
+
+      <!-- By Test View -->
+      <div class="sub-tab-content active" id="by-test-content">
+        <p class="section-subtitle">Click a test to see failed runs for debugging</p>
+        <div id="flaky-by-test-list">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- By Job View -->
+      <div class="sub-tab-content" id="by-job-content">
+        <p class="section-subtitle">Click a job to see its flaky tests and failed runs</p>
+        <div id="flaky-by-job-list">
+          <!-- Rendered by JS -->
+        </div>
       </div>
     </main>
 

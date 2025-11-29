@@ -2007,3 +2007,743 @@ body {
   font-size: 0.9rem;
 }
 
+/* ============================================
+   Tab Navigation
+   ============================================ */
+
+.tabs {
+  display: flex;
+  gap: var(--space-xs);
+  padding: 0 var(--space-lg);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.tab.active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+.tab-icon {
+  font-size: 1.1rem;
+}
+
+.tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--color-failed);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ============================================
+   Flaky Tests Styles
+   ============================================ */
+
+.flaky-description {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: var(--space-xs);
+}
+
+.flaky-tests-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.flaky-test-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all var(--transition-fast);
+}
+
+.flaky-test-card:hover {
+  border-color: var(--border-secondary);
+}
+
+.flaky-test-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.flaky-test-header:hover {
+  background: var(--bg-tertiary);
+}
+
+.flaky-test-toggle {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  transition: transform var(--transition-fast);
+}
+
+.flaky-test-card.expanded .flaky-test-toggle {
+  transform: rotate(90deg);
+}
+
+.flaky-test-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.flaky-test-name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.flaky-marker {
+  color: var(--color-failed);
+  font-weight: 600;
+}
+
+.flaky-test-file {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+  font-family: var(--font-mono);
+}
+
+.flaky-test-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.flaky-count {
+  background: var(--color-failed-bg);
+  color: var(--color-failed);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.flaky-prs {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.flaky-test-body {
+  display: none;
+  padding: var(--space-md) var(--space-lg);
+  padding-top: 0;
+  border-top: 1px solid var(--border-secondary);
+}
+
+.flaky-test-card.expanded .flaky-test-body {
+  display: block;
+  padding-top: var(--space-md);
+}
+
+.flaky-section {
+  margin-bottom: var(--space-md);
+}
+
+.flaky-section:last-child {
+  margin-bottom: 0;
+}
+
+.flaky-section h5 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.flaky-jobs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.flaky-job-chip {
+  background: var(--bg-tertiary);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.flaky-job-chip.clickable {
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.flaky-job-chip.clickable:hover {
+  background: var(--color-accent);
+  color: white;
+}
+
+.flaky-job-chip .job-count {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.flaky-job-chip.clickable:hover .job-count {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Job filter and breakdown */
+.flaky-job-filter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-primary);
+}
+
+.flaky-job-filter label {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.flaky-job-filter select {
+  flex: 1;
+  max-width: 400px;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.flaky-job-filter select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.flaky-job-breakdown {
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-primary);
+}
+
+.flaky-job-breakdown h4 {
+  margin: 0 0 var(--space-md) 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.job-breakdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.job-breakdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.job-breakdown-item:hover {
+  background: var(--bg-hover);
+}
+
+.job-breakdown-item.selected {
+  background: var(--color-accent);
+  color: white;
+}
+
+.job-breakdown-item .job-rank {
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 30px;
+}
+
+.job-breakdown-item.selected .job-rank {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.job-breakdown-item .job-name {
+  flex: 1;
+  font-weight: 500;
+}
+
+.job-breakdown-item .job-stats {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.job-breakdown-item.selected .job-stats {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Sub-tabs */
+.sub-tabs {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-sm);
+}
+
+.sub-tab {
+  padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  cursor: pointer;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: all 0.15s;
+}
+
+.sub-tab:hover {
+  color: var(--color-text);
+  background: var(--color-hover);
+}
+
+.sub-tab.active {
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-bottom-color: var(--color-surface);
+  margin-bottom: -1px;
+}
+
+.sub-tab-content {
+  display: none;
+  padding-top: var(--space-md);
+}
+
+.sub-tab-content.active {
+  display: block;
+}
+
+.section-subtitle {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: var(--space-md);
+}
+
+/* Flaky Item (By Test view) */
+.flaky-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+  overflow: hidden;
+}
+
+.flaky-item-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.flaky-item-header:hover {
+  background: var(--color-hover);
+}
+
+.flaky-item .flaky-rank {
+  font-weight: 700;
+  color: var(--color-text-muted);
+  min-width: 36px;
+}
+
+.flaky-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.flaky-item-name {
+  font-weight: 500;
+}
+
+.flaky-item-file {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+.flaky-item-badge {
+  background: var(--color-failed);
+  color: white;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.flaky-item-toggle {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+
+/* Flaky Item Details */
+.flaky-item-details {
+  padding: var(--space-md);
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+.flaky-detail-section {
+  margin-bottom: var(--space-md);
+}
+
+.flaky-detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.flaky-detail-section h4 {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+  font-weight: 500;
+}
+
+.flaky-jobs-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.job-chip-small {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+}
+
+/* Flaky Runs List */
+.flaky-runs-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.flaky-run-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--color-text);
+  transition: all 0.15s;
+}
+
+.flaky-run-link:hover {
+  border-color: var(--color-accent);
+  background: var(--color-hover);
+}
+
+.flaky-run-link .run-date {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  min-width: 50px;
+}
+
+.flaky-run-link .run-pr {
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.flaky-run-link .run-job {
+  flex: 1;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flaky-run-link .run-arrow {
+  color: var(--color-accent);
+}
+
+/* Flaky Job Item (By Job view) */
+.flaky-job-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+  overflow: hidden;
+}
+
+.flaky-job-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.flaky-job-header:hover {
+  background: var(--color-hover);
+}
+
+.flaky-job-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.flaky-job-name {
+  font-weight: 500;
+}
+
+.flaky-job-badge {
+  background: var(--color-failed);
+  color: white;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.flaky-job-toggle {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+
+/* Flaky Job Details */
+.flaky-job-details {
+  padding: var(--space-md);
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+.job-flaky-test {
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.job-flaky-test:last-child {
+  border-bottom: none;
+}
+
+.job-flaky-test-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-flaky-test-name {
+  font-weight: 500;
+}
+
+.job-flaky-test-count {
+  color: var(--color-failed);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.job-flaky-test-file {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  margin: 4px 0;
+}
+
+.job-flaky-test-runs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+
+.mini-run-link {
+  font-size: 0.8rem;
+  color: var(--color-accent);
+  text-decoration: none;
+  padding: 2px 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.mini-run-link:hover {
+  border-color: var(--color-accent);
+}
+
+.empty-message {
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-lg);
+}
+
+/* Highlight animation for navigated test */
+.test-row.highlight {
+  animation: highlight-pulse 2s ease-out;
+}
+
+@keyframes highlight-pulse {
+  0% { background: var(--color-accent); }
+  100% { background: transparent; }
+}
+
+.flaky-occurrences {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.flaky-occurrence {
+  display: grid;
+  grid-template-columns: 80px 150px 1fr auto;
+  gap: var(--space-md);
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+
+.occurrence-date {
+  color: var(--text-secondary);
+}
+
+.occurrence-pr {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.pr-link {
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.pr-link:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.rerun-badge {
+  color: var(--color-pending);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.occurrence-job {
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.occurrence-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.occurrence-link:hover {
+  text-decoration: underline;
+}
+
+.more-occurrences {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: var(--space-sm);
+}
+
+.flaky-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.btn-small {
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.btn-small:hover {
+  background: var(--bg-hover);
+  border-color: var(--color-accent);
+}
+
+/* Responsive flaky tests */
+@media (max-width: 768px) {
+  .flaky-occurrence {
+    grid-template-columns: 1fr;
+    gap: var(--space-xs);
+  }
+  
+  .flaky-test-header {
+    flex-wrap: wrap;
+  }
+  
+  .flaky-test-stats {
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: var(--space-sm);
+  }
+}
+
