@@ -194,6 +194,9 @@ jobs:
             passed=$(echo "$section" | jq -r '.passed')
             weather_emoji=$(echo "$section" | jq -r '.weather_emoji')
             
+            # Get slack mentions from section (resolved from maintainers)
+            slack_mentions=$(echo "$section" | jq -r '.slack_mentions // ""')
+            
             # Get failing tests for this section
             # Note: Using \u0060 for backticks to avoid bash escaping issues
             failing_tests=$(echo "$section" | jq -r '.failing_tests | map("• \u0060\(.name)\u0060 - \(.error_step) (\(.days_failing)d)") | join("\n")')
@@ -208,22 +211,12 @@ jobs:
               flaky_tests="None detected"
             fi
             
-            # Process each Slack destination for this section
-            echo "$section" | jq -c '.slack_destinations[]' 2>/dev/null | while read -r dest; do
-              workspace=$(echo "$dest" | jq -r '.workspace // "default"')
-              channel=$(echo "$dest" | jq -r '.channel')
-              slack_mentions=$(echo "$dest" | jq -r '.slack_mentions // ""')
-              
-              token=$(get_token "$workspace")
-              
-              if [ -n "$token" ] && [ -n "$channel" ]; then
-                echo "Sending ${section_name} summary to ${channel} in workspace ${workspace}"
-                send_summary "$token" "$channel" "$section_name" "$pass_rate" "$total" "$failed" "$passed" "$weather_emoji" "$failing_tests" "$flaky_tests" "$slack_mentions"
-                sleep 1  # Rate limiting
-              else
-                echo "Skipping ${workspace}/${channel} - no token or channel configured"
-              fi
-            done
+            # Send to default channel (#kata-ci)
+            if [ -n "$SLACK_BOT_TOKEN" ]; then
+              echo "Sending ${section_name} summary to #kata-ci"
+              send_summary "$SLACK_BOT_TOKEN" "#kata-ci" "$section_name" "$pass_rate" "$total" "$failed" "$passed" "$weather_emoji" "$failing_tests" "$flaky_tests" "$slack_mentions"
+              sleep 1  # Rate limiting
+            fi
           done
           
           echo "Per-section summaries sent"

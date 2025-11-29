@@ -260,6 +260,7 @@ const sections = (config.sections || []).map(sectionConfig => {
   const tests = sectionJobs.map(jobConfig => {
     const jobName = typeof jobConfig === 'string' ? jobConfig : jobConfig.name;
     const jobDescription = typeof jobConfig === 'object' ? jobConfig.description : jobName;
+    const jobMaintainers = typeof jobConfig === 'object' ? (jobConfig.maintainers || []) : [];
     // Use description as display name, fall back to job name
     const displayName = jobDescription || jobName;
     // Use job name for ID (stable), not description (can change)
@@ -566,7 +567,8 @@ const sections = (config.sections || []).map(sectionConfig => {
       setupRetry: false,
       runId: latestJob?.workflow_run_id || latestJob?.run_id?.toString() || null,
       jobId: latestJob?.id?.toString() || null,
-      error: errorDetails
+      error: errorDetails,
+      maintainers: jobMaintainers
     };
   });
   
@@ -574,7 +576,6 @@ const sections = (config.sections || []).map(sectionConfig => {
     id: sectionConfig.id,
     name: sectionConfig.name,
     description: sectionConfig.description,
-    maintainers: sectionConfig.maintainers || [],
     tests: tests
   };
 });

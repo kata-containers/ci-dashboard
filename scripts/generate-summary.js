@@ -7,9 +7,40 @@
  */
 
 const fs = require('fs');
+const yaml = require('js-yaml');
 
 // Load data
 const data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+
+// Load config for maintainers directory
+const config = yaml.load(fs.readFileSync('config.yaml', 'utf8'));
+const maintainersDirectory = config.maintainers_directory || {};
+
+/**
+ * Resolve maintainer handles to Slack mentions
+ * @param {string[]} handles - Array of maintainer handles (e.g., ["@fidencio"])
+ * @returns {string} - Slack mentions string (e.g., "<@UU8N67ZN1>")
+ */
+function resolveMaintainersToSlack(handles) {
+  if (!handles || handles.length === 0) return '';
+  
+  const mentions = handles.map(handle => {
+    const maintainer = maintainersDirectory[handle];
+    if (!maintainer) return handle; // Return raw handle if not found
+    
+    // Get Slack ID from kata-containers workspace (primary)
+    const slackId = maintainer.slack?.['kata-containers'] || 
+                    maintainer.slack?.['cloud-native'] ||
+                    null;
+    
+    if (slackId) {
+      return `<@${slackId}>`;
+    }
+    return maintainer.name || handle;
+  });
+  
+  return mentions.join(' ');
+}
 
 // Calculate overall stats
 const allTests = data.sections.flatMap(s => s.tests);
@@ -32,36 +63,91 @@ const sections = data.sections.map(section => {
   if (passRate < 70) weatherEmoji = '🌧️';
   if (passRate < 50) weatherEmoji = '⛈️';
   
+  // Collect unique maintainers from all failed tests in this section
+  const failedTests = tests.filter(t => t.status === 'failed');
+  const maintainerHandles = [...new Set(failedTests.flatMap(t => t.maintainers || []))];
+  const slackMentions = resolveMaintainersToSlack(maintainerHandles);
+  
+  // Get failing tests with maintainer info
+  const failingTestsWithMaintainers = failedTests.map(t => ({
+    name: t.name,
+    error_step: t.error?.step || 'Unknown',
+    days_failing: calculateDaysFailing(t.weatherHistory),
+    run_id: t.runId,
+    maintainers: t.maintainers || [],
+    slack_mentions: resolveMaintainersToSlack(t.maintainers || [])
+  }));
+  
+  // Get flaky tests for this section
+  const flakyTestsInSection = tests
+    .map(t => {
+      const weather = t.weatherHistory || [];
+      if (weather.length < 5) return null;
+      
+      let transitions = 0;
+      for (let i = 1; i < weather.length; i++) {
+        if (weather[i].status !== weather[i-1].status) {
+          transitions++;
+        }
+      }
+      
+      const flakyRate = Math.round((transitions / (weather.length - 1)) * 100);
+      
+      if (flakyRate > 30) {
+        return {
+          name: t.name,
+          flaky_rate: flakyRate,
+          transitions,
+          maintainers: t.maintainers || [],
+          slack_mentions: resolveMaintainersToSlack(t.maintainers || [])
+        };
+      }
+      return null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.flaky_rate - a.flaky_rate);
+  
   return {
     name: section.name,
     total: tests.length,
     failed,
     passed,
     pass_rate: passRate,
-    weather_emoji: weatherEmoji
+    weather_emoji: weatherEmoji,
+    maintainers: maintainerHandles,
+    slack_mentions: slackMentions,
+    failing_tests: failingTestsWithMaintainers,
+    flaky_tests: flakyTestsInSection
   };
 });
+
+/**
+ * Calculate consecutive days failing from the end of weather history
+ */
+function calculateDaysFailing(weatherHistory) {
+  const weather = weatherHistory || [];
+  let daysFailing = 0;
+  for (let i = weather.length - 1; i >= 0; i--) {
+    if (weather[i].status === 'failed') {
+      daysFailing++;
+    } else {
+      break;
+    }
+  }
+  return daysFailing;
+}
 
 // Get failing tests with details
 const failingTests = allTests
   .filter(t => t.status === 'failed')
   .map(t => {
-    // Calculate days failing (count consecutive failed days from today)
-    const weather = t.weatherHistory || [];
-    let daysFailing = 0;
-    for (let i = weather.length - 1; i >= 0; i--) {
-      if (weather[i].status === 'failed') {
-        daysFailing++;
-      } else {
-        break;
-      }
-    }
-    
     return {
       name: t.name,
       error_step: t.error?.step || 'Unknown',
-      days_failing: daysFailing,
-      run_id: t.runId
+      days_failing: calculateDaysFailing(t.weatherHistory),
+      run_id: t.runId,
+      maintainers: t.maintainers || [],
+      slack_mentions: resolveMaintainersToSlack(t.maintainers || [])
     };
   })
   .sort((a, b) => b.days_failing - a.days_failing);
@@ -87,7 +173,9 @@ const flakyTests = allTests
       return {
         name: t.name,
         flaky_rate: flakyRate,
-        transitions
+        transitions,
+        maintainers: t.maintainers || [],
+        slack_mentions: resolveMaintainersToSlack(t.maintainers || [])
       };
     }
     return null;
