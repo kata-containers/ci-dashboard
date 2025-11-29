@@ -29,11 +29,86 @@ notifications:
 # Maintainer directory
 # To add yourself: submit a PR with your GitHub handle and Slack ID
 # Find your Slack ID: Profile > ⋮ > Copy member ID
+#
+# Source: https://github.com/kata-containers/kata-containers.github.io/blob/main/maintainers.yml
 maintainers_directory:
+  # NVIDIA GPU and experimental-force-guest-pull maintainer
   "@fidencio":
     name: "Fabiano Fidêncio"
+    email: "fabiano@fidencio.org"
+    github: "fidencio"
     slack:
       kata-containers: "UU8N67ZN1"
+      url: "https://katacontainers.slack.com/team/UU8N67ZN1"
+
+  # CoCo non-TEE maintainers
+  "@stevenhorsman":
+    name: "Steven Horsman"
+    email: "steven@uk.ibm.com"
+    github: "stevenhorsman"
+    slack:
+      kata-containers: "U020KLK70TA"
+      url: "https://katacontainers.slack.com/team/U020KLK70TA"
+
+  "@wainersm":
+    name: "Wainer dos Santos Moschetta"
+    email: "wmoschet@redhat.com"
+    github: "wainersm"
+    slack:
+      kata-containers: "U012NV99LPL"
+      url: "https://katacontainers.slack.com/team/U012NV99LPL"
+
+  # AMD SEV-SNP maintainers
+  "@AdithyaKrishnan":
+    name: "Adithya Krishnan Kannan"
+    email: "AdithyaKrishnan.Kannan@amd.com"
+    github: "AdithyaKrishnan"
+    slack:
+      cloud-native: "U05TX2URB16"
+      url: "https://cloud-native.slack.com/team/U05TX2URB16"
+
+  "@arvindskumar99":
+    name: "Arvind Kumar"
+    email: "arvind.kumar@amd.com"
+    github: "arvindskumar99"
+    slack:
+      cloud-native: "U06HXU0312P"
+      url: "https://cloud-native.slack.com/team/U06HXU0312P"
+
+  # Intel TDX maintainer
+  "@mythi":
+    name: "Mikko Ylinen"
+    email: "mikko.ylinen@intel.com"
+    github: "mythi"
+    slack:
+      kata-containers: "U02HEDZ6QCR"
+      url: "https://katacontainers.slack.com/team/U02HEDZ6QCR"
+
+  # IBM zVSI (s390x) maintainer
+  "@BbolroC":
+    name: "Hyounggyu Choi"
+    email: "Hyounggyu.Choi@ibm.com"
+    github: "BbolroC"
+    slack:
+      kata-containers: "U0369UMM69M"
+      url: "https://katacontainers.slack.com/team/U0369UMM69M"
+
+  # runtime-rs maintainers
+  "@pmores":
+    name: "Pavel Mores"
+    email: "pmores@redhat.com"
+    github: "pmores"
+    slack:
+      kata-containers: "U03CCR6KGBC"
+      url: "https://katacontainers.slack.com/team/U03CCR6KGBC"
+
+  "@lifupan":
+    name: "Fupan Li"
+    email: "lifupan@gmail.com"
+    github: "lifupan"
+    slack:
+      kata-containers: "U059Y60DZPW"
+      url: "https://katacontainers.slack.com/team/U059Y60DZPW"
 
 # Test sections
 sections:
@@ -43,8 +118,6 @@ sections:
   - id: nvidia-gpu
     name: "NVIDIA GPU"
     description: "NVIDIA GPU passthrough and Confidential Computing tests"
-    maintainers:
-      - "@fidencio"
     slack:
       workspace: "kata-containers"
       channel: "#kata-ci"
@@ -53,9 +126,13 @@ sections:
     jobs:
       - name: "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64"
         description: "NVIDIA GPU on A100"
+        maintainers:
+          - "@fidencio"
       
       - name: "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64"
         description: "NVIDIA CC GPU + AMD SNP on H100"
+        maintainers:
+          - "@fidencio"
 
   # ===========================================
   # TEE Section - Confidential Computing tests
@@ -63,8 +140,6 @@ sections:
   - id: tee
     name: "TEE"
     description: "Trusted Execution Environment and Confidential Computing tests"
-    maintainers:
-      - "@fidencio"
     slack:
       workspace: "kata-containers"
       channel: "#kata-ci"
@@ -73,27 +148,47 @@ sections:
     jobs:
       - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)"
         description: "non-TEE with nydus snapshotter"
+        maintainers:
+          - "@stevenhorsman"
+          - "@wainersm"
       
       - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (sev-snp, qemu-snp)"
         description: "AMD SEV-SNP with nydus snapshotter"
+        maintainers:
+          - "@AdithyaKrishnan"
+          - "@arvindskumar99"
       
       - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)"
         description: "Intel TDX with nydus snapshotter"
+        maintainers:
+          - "@mythi"
       
       - name: "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)"
         description: "IBM zVSI with nydus snapshotter"
+        maintainers:
+          - "@BbolroC"
       
       - name: "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64"
         description: "NVIDIA CC GPU + AMD SNP on H100"
+        maintainers:
+          - "@fidencio"
       
       - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (experimental-force-guest-pull, qemu-coco-dev)"
         description: "non-TEE with force guest pull"
+        maintainers:
+          - "@fidencio"
       
       - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)"
         description: "non-TEE with runtime-rs and nydus snapshotter"
+        maintainers:
+          - "@pmores"
+          - "@lifupan"
       
       - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter (qemu-coco-dev, erofs, default)"
         description: "non-TEE with erofs snapshotter"
+        maintainers:
+          - "@stevenhorsman"
+          - "@wainersm"
 
 # Test step identification
 # Only failures in these steps count as real test failures
