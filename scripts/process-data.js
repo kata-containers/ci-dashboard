@@ -672,7 +672,9 @@ const allJobsSection = {
   tests: allJobNames.map(jobName => {
     // Check if this job is configured (has custom description/maintainers)
     const configuredJob = configuredJobs.find(cj => cj.name === jobName);
-    const displayName = configuredJob?.description || simplifyJobName(jobName);
+    // For All Jobs view, always use simplified job name (not description)
+    // The description is only used in the TEE/NVIDIA section views
+    const displayName = simplifyJobName(jobName);
     const maintainers = configuredJob?.maintainers || [];
     const testId = jobName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
     const categories = getJobCategories(jobName);
