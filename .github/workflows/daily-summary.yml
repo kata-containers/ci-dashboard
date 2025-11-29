@@ -44,18 +44,15 @@ jobs:
       - name: Send per-section daily summaries to Slack
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          SLACK_BOT_TOKEN_NVIDIA: ${{ secrets.SLACK_BOT_TOKEN_NVIDIA }}
-          SLACK_BOT_TOKEN_CNCF: ${{ secrets.SLACK_BOT_TOKEN_CNCF }}
-          SLACK_BOT_TOKEN_INTEL: ${{ secrets.SLACK_BOT_TOKEN_INTEL }}
+          SLACK_BOT_TOKEN_COCO: ${{ secrets.SLACK_BOT_TOKEN_COCO }}
         run: |
           # Function to get token for a workspace
+          # Only kata-containers and confidential-containers workspaces are supported
           get_token() {
             local workspace=$1
             case "$workspace" in
-              "nvidia") echo "$SLACK_BOT_TOKEN_NVIDIA" ;;
-              "cncf") echo "$SLACK_BOT_TOKEN_CNCF" ;;
-              "intel") echo "$SLACK_BOT_TOKEN_INTEL" ;;
-              *) echo "$SLACK_BOT_TOKEN" ;;  # default
+              "coco") echo "$SLACK_BOT_TOKEN_COCO" ;;
+              *) echo "$SLACK_BOT_TOKEN" ;;  # default (kata-containers)
             esac
           }
           
