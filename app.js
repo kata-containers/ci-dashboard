@@ -1269,6 +1269,30 @@ function renderPRFailures() {
       renderPRFailures();
     });
   });
+  
+  // Add search handler (single search for both views)
+  const searchFlaky = document.getElementById('search-flaky');
+  
+  if (searchFlaky) {
+    searchFlaky.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      
+      // Filter tests in "By Test" view
+      document.querySelectorAll('.flaky-item').forEach(item => {
+        const testName = item.dataset.testName.toLowerCase();
+        const file = item.querySelector('.flaky-item-file')?.textContent.toLowerCase() || '';
+        const matches = testName.includes(query) || file.includes(query);
+        item.style.display = matches ? '' : 'none';
+      });
+      
+      // Filter jobs in "By Job" view
+      document.querySelectorAll('.flaky-job-item').forEach(item => {
+        const jobName = item.querySelector('.flaky-job-name')?.textContent.toLowerCase() || '';
+        const matches = jobName.includes(query);
+        item.style.display = matches ? '' : 'none';
+      });
+    });
+  }
 }
 
 function renderFlakyTestRow(test) {
