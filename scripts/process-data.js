@@ -190,8 +190,60 @@ const configuredJobs = [];
   });
 });
 
-// Get required jobs from config
-const requiredJobs = config.required_jobs || [];
+// Load required tests from gatekeeper (authoritative source)
+// Source: https://raw.githubusercontent.com/kata-containers/kata-containers/refs/heads/main/tools/testing/gatekeeper/required-tests.yaml
+let requiredTests = [];
+let requiredRegexps = [];
+try {
+  if (fs.existsSync('required-tests.yaml')) {
+    const requiredTestsConfig = yaml.load(fs.readFileSync('required-tests.yaml', 'utf8'));
+    
+    // Get always-required tests
+    requiredTests = requiredTestsConfig.required_tests || [];
+    
+    // Get required regexps
+    requiredRegexps = requiredTestsConfig.required_regexps || [];
+    
+    // Get tests from the 'test' mapping (most comprehensive list)
+    const testMapping = requiredTestsConfig.mapping?.test || {};
+    if (testMapping.names) {
+      requiredTests = requiredTests.concat(testMapping.names);
+    }
+    if (testMapping.regexps) {
+      // Split by | to get individual patterns
+      const patterns = testMapping.regexps.split('|').filter(p => p.trim());
+      requiredRegexps = requiredRegexps.concat(patterns);
+    }
+    
+    // Get tests from 'static' mapping
+    const staticMapping = requiredTestsConfig.mapping?.static || {};
+    if (staticMapping.names) {
+      requiredTests = requiredTests.concat(staticMapping.names);
+    }
+    if (staticMapping.regexps) {
+      const patterns = staticMapping.regexps.split('|').filter(p => p.trim());
+      requiredRegexps = requiredRegexps.concat(patterns);
+    }
+    
+    // Get tests from 'build' mapping
+    const buildMapping = requiredTestsConfig.mapping?.build || {};
+    if (buildMapping.names) {
+      requiredTests = requiredTests.concat(buildMapping.names);
+    }
+    if (buildMapping.regexps) {
+      const patterns = buildMapping.regexps.split('|').filter(p => p.trim());
+      requiredRegexps = requiredRegexps.concat(patterns);
+    }
+    
+    console.log(`Loaded ${requiredTests.length} required tests and ${requiredRegexps.length} required regexps from gatekeeper`);
+  } else {
+    console.warn('required-tests.yaml not found, falling back to config.yaml required_jobs');
+    requiredTests = config.required_jobs || [];
+  }
+} catch (e) {
+  console.warn('Failed to load required-tests.yaml:', e.message);
+  requiredTests = config.required_jobs || [];
+}
 
 // Get category patterns from config
 const categoryPatterns = config.job_categories || {};
@@ -212,7 +264,27 @@ function getJobCategories(jobName) {
   });
   
   // Check if it's a required job
-  if (requiredJobs.some(req => nameLower.includes(req.toLowerCase()) || req.toLowerCase().includes(nameLower))) {
+  // Required tests from gatekeeper are full paths like:
+  // "Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (ubuntu, clh, normal)"
+  // The job name from GitHub is just the final part like "run-k8s-tests (ubuntu, clh, normal)"
+  // So we check if any required test path ends with this job name
+  const isRequired = requiredTests.some(req => {
+    const reqLower = req.toLowerCase();
+    // Check if the required test ends with this job name (after " / ")
+    return reqLower.endsWith(nameLower) || reqLower.endsWith(' / ' + nameLower);
+  });
+  
+  // Also check required regexps
+  const matchesRegexp = requiredRegexps.some(pattern => {
+    try {
+      const regex = new RegExp(pattern, 'i');
+      return regex.test(jobName);
+    } catch (e) {
+      return false;
+    }
+  });
+  
+  if (isRequired || matchesRegexp) {
     categories.push('required');
   }
   
@@ -1053,7 +1125,7 @@ const outputData = {
   lastRefresh: new Date().toISOString(),
   sections: sections,
   allJobsSection: allJobsSection, // NEW: all jobs for the "All" view
-  requiredJobs: requiredJobs,
+  requiredTests: requiredTests,
   jobCategories: categoryPatterns,
   failedTestsIndex: failedTestsIndex,
   maintainersDirectory: config.maintainers_directory || {},

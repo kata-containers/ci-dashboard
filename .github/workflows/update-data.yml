@@ -133,6 +133,13 @@ jobs:
           echo "Log files fetched: $(ls job-logs/ 2>/dev/null | wc -l)"
           echo "Total log size: $(du -sh job-logs/ 2>/dev/null | cut -f1)"
       
+      - name: Fetch required tests from gatekeeper
+        run: |
+          # Fetch the authoritative list of required tests
+          curl -sL "https://raw.githubusercontent.com/kata-containers/kata-containers/refs/heads/main/tools/testing/gatekeeper/required-tests.yaml" \
+            -o required-tests.yaml
+          echo "Downloaded required-tests.yaml ($(wc -c < required-tests.yaml) bytes)"
+      
       - name: Process data
         id: process
         run: |

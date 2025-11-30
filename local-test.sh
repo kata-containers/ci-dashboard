@@ -85,6 +85,12 @@ fetch_nightly_data() {
             
             echo "Total jobs: $(jq ".jobs | length" raw-runs.json)"
             
+            # Fetch required tests from gatekeeper
+            echo "Fetching required-tests.yaml from gatekeeper..."
+            curl -sL "https://raw.githubusercontent.com/kata-containers/kata-containers/refs/heads/main/tools/testing/gatekeeper/required-tests.yaml" \
+                -o required-tests.yaml
+            echo "  Downloaded required-tests.yaml ($(wc -c < required-tests.yaml) bytes)"
+            
             # Fetch logs for ALL failed jobs
             echo "Fetching logs for failed jobs..."
             mkdir -p job-logs

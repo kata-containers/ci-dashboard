@@ -12,7 +12,8 @@ let state = {
   loading: true,
   error: null,
   filter: 'all',
-  categoryFilter: 'all', // 'all', 'required', 'tee', 'nvidia'
+  viewMode: 'all', // 'all', 'tee', 'nvidia' - which section to show
+  showRequiredOnly: false, // filter to show only required jobs
   searchQuery: '',
   expandedSections: new Set(),
   expandedGroups: new Set(),
@@ -134,21 +135,23 @@ function getSectionStats(tests) {
 function getTotalStats() {
   if (!state.data) return { total: 0, failed: 0, passed: 0, notRun: 0, failureDays: 0 };
   
-  // Get tests from the appropriate source based on category
+  // Get tests from the appropriate source based on view mode
   let testsToCount = [];
   
-  if (state.categoryFilter === 'tee') {
+  if (state.viewMode === 'tee') {
     const section = state.data.sections?.find(s => s.id === 'tee');
     testsToCount = section?.tests || [];
-  } else if (state.categoryFilter === 'nvidia') {
+  } else if (state.viewMode === 'nvidia') {
     const section = state.data.sections?.find(s => s.id === 'nvidia-gpu');
     testsToCount = section?.tests || [];
   } else {
-    // For 'all' and 'required', use allJobsSection
-    const allTests = state.data.allJobsSection?.tests || state.data.sections?.flatMap(s => s.tests) || [];
-    testsToCount = state.categoryFilter === 'required' 
-      ? allTests.filter(t => matchesCategory(t, 'required'))
-      : allTests;
+    // For 'all' and 'required' views, use allJobsSection
+    testsToCount = state.data.allJobsSection?.tests || state.data.sections?.flatMap(s => s.tests) || [];
+  }
+  
+  // Apply required filter if enabled
+  if (state.showRequiredOnly) {
+    testsToCount = testsToCount.filter(t => matchesCategory(t, 'required'));
   }
   
   // Apply status and search filters
@@ -200,8 +203,8 @@ function matchesCategory(test, category) {
 function filterTests(tests) {
   let filtered = tests;
   
-  // Filter by category (only for 'required' since tee/nvidia use their own sections)
-  if (state.categoryFilter === 'required') {
+  // Filter by required (applies to all view modes)
+  if (state.showRequiredOnly) {
     filtered = filtered.filter(t => matchesCategory(t, 'required'));
   }
   
@@ -433,11 +436,11 @@ function renderSections() {
     return;
   }
   
-  // Determine which data source to use based on category filter
+  // Determine which data source to use based on view mode
   let sectionsToRender = [];
   
-  if (state.categoryFilter === 'tee') {
-    // Use the configured TEE section
+  if (state.viewMode === 'tee') {
+    // Use the configured TEE section (with descriptive names)
     const teeSection = state.data.sections?.find(s => s.id === 'tee');
     if (teeSection) {
       const filteredTests = filterTests(teeSection.tests || []);
@@ -445,8 +448,8 @@ function renderSections() {
         sectionsToRender.push({ ...teeSection, tests: filteredTests });
       }
     }
-  } else if (state.categoryFilter === 'nvidia') {
-    // Use the configured NVIDIA section
+  } else if (state.viewMode === 'nvidia') {
+    // Use the configured NVIDIA section (with descriptive names)
     const nvidiaSection = state.data.sections?.find(s => s.id === 'nvidia-gpu');
     if (nvidiaSection) {
       const filteredTests = filterTests(nvidiaSection.tests || []);
@@ -455,7 +458,8 @@ function renderSections() {
       }
     }
   } else if (state.data.allJobsSection) {
-    // For 'all' and 'required', use allJobsSection
+    // For 'all' and 'required' views, use allJobsSection (flat list with simplified names)
+    // The required filter is applied in filterTests() via showRequiredOnly flag
     const allJobs = state.data.allJobsSection;
     const filteredTests = filterTests(allJobs.tests || []);
     
@@ -490,7 +494,7 @@ function renderSections() {
     if (tests.length === 0) return;
     
     const stats = getSectionStats(tests);
-    const isExpanded = state.expandedSections.has(section.id) || state.categoryFilter !== 'all' || state.searchQuery;
+    const isExpanded = state.expandedSections.has(section.id) || state.viewMode !== 'all' || state.showRequiredOnly || state.searchQuery;
     
     const sectionEl = document.createElement('div');
     sectionEl.className = `section ${isExpanded ? 'expanded' : ''}`;
@@ -506,14 +510,10 @@ function renderSections() {
       statusBadges.push(`<span class="section-status all-green">All Green</span>`);
     }
     
-    // Build section title based on filter
+    // Build section title
     let sectionTitle = section.name;
-    if (state.categoryFilter === 'required') {
+    if (state.showRequiredOnly && section.id === 'all-jobs') {
       sectionTitle = 'Required Jobs';
-    } else if (state.categoryFilter === 'tee') {
-      sectionTitle = section.name; // Use configured name
-    } else if (state.categoryFilter === 'nvidia') {
-      sectionTitle = section.name; // Use configured name
     }
     
     sectionEl.innerHTML = `
@@ -729,24 +729,27 @@ function updateStats() {
   document.getElementById('not-run-tests').textContent = stats.notRun;
   document.getElementById('passed-tests').textContent = stats.passed;
   
-  // Get tests based on current category for filter counts
-  let categoryTests = [];
-  if (state.categoryFilter === 'tee') {
+  // Get tests based on current view mode for filter counts
+  let viewTests = [];
+  if (state.viewMode === 'tee') {
     const section = state.data?.sections?.find(s => s.id === 'tee');
-    categoryTests = section?.tests || [];
-  } else if (state.categoryFilter === 'nvidia') {
+    viewTests = section?.tests || [];
+  } else if (state.viewMode === 'nvidia') {
     const section = state.data?.sections?.find(s => s.id === 'nvidia-gpu');
-    categoryTests = section?.tests || [];
-  } else if (state.categoryFilter === 'required') {
-    const allTests = state.data?.allJobsSection?.tests || [];
-    categoryTests = allTests.filter(t => matchesCategory(t, 'required'));
+    viewTests = section?.tests || [];
   } else {
-    categoryTests = state.data?.allJobsSection?.tests || state.data?.sections?.flatMap(s => s.tests) || [];
+    // For 'all' and 'required' views, use allJobsSection
+    viewTests = state.data?.allJobsSection?.tests || state.data?.sections?.flatMap(s => s.tests) || [];
   }
   
-  document.getElementById('filter-failed-count').textContent = categoryTests.filter(t => t.status === 'failed').length;
-  document.getElementById('filter-not-run-count').textContent = categoryTests.filter(t => t.status === 'not_run').length;
-  document.getElementById('filter-passed-count').textContent = categoryTests.filter(t => t.status === 'passed').length;
+  // Apply required filter if enabled
+  if (state.showRequiredOnly) {
+    viewTests = viewTests.filter(t => matchesCategory(t, 'required'));
+  }
+  
+  document.getElementById('filter-failed-count').textContent = viewTests.filter(t => t.status === 'failed').length;
+  document.getElementById('filter-not-run-count').textContent = viewTests.filter(t => t.status === 'not_run').length;
+  document.getElementById('filter-passed-count').textContent = viewTests.filter(t => t.status === 'passed').length;
 }
 
 // ============================================
@@ -780,24 +783,42 @@ function setFilter(filter) {
   updateJobCount();
 }
 
-function setCategoryFilter(category) {
-  state.categoryFilter = category;
-  
-  // Update toggle buttons (All/Required)
-  document.querySelectorAll('.category-btn').forEach(btn => {
-    const btnCategory = btn.dataset.category;
-    btn.classList.toggle('active', btnCategory === category);
-  });
+function setViewMode(mode) {
+  state.viewMode = mode;
   
   // Update quick filter buttons (TEE/NVIDIA)
   document.querySelectorAll('.quick-filter-btn').forEach(btn => {
-    const btnCategory = btn.dataset.category;
-    btn.classList.toggle('active', btnCategory === category);
+    const btnMode = btn.dataset.category;
+    btn.classList.toggle('active', btnMode === mode);
   });
+  
+  // When switching to TEE/NVIDIA, the All button should still show the current required state
+  updateAllRequiredButtons();
   
   updateStats();
   renderSections();
   updateJobCount();
+}
+
+function toggleRequiredFilter() {
+  state.showRequiredOnly = !state.showRequiredOnly;
+  updateAllRequiredButtons();
+  
+  updateStats();
+  renderSections();
+  updateJobCount();
+}
+
+function updateAllRequiredButtons() {
+  // Update toggle buttons (All/Required)
+  document.querySelectorAll('.category-btn').forEach(btn => {
+    const btnCategory = btn.dataset.category;
+    if (btnCategory === 'all') {
+      btn.classList.toggle('active', !state.showRequiredOnly);
+    } else if (btnCategory === 'required') {
+      btn.classList.toggle('active', state.showRequiredOnly);
+    }
+  });
 }
 
 function updateJobCount() {
@@ -806,15 +827,16 @@ function updateJobCount() {
   // Get total count (all jobs)
   const allTests = state.data.allJobsSection?.tests || state.data.sections?.flatMap(s => s.tests) || [];
   
-  // Get visible count based on current category
+  // Get visible count based on current view mode
   let visibleTests = [];
-  if (state.categoryFilter === 'tee') {
+  if (state.viewMode === 'tee') {
     const section = state.data.sections?.find(s => s.id === 'tee');
     visibleTests = filterTests(section?.tests || []);
-  } else if (state.categoryFilter === 'nvidia') {
+  } else if (state.viewMode === 'nvidia') {
     const section = state.data.sections?.find(s => s.id === 'nvidia-gpu');
     visibleTests = filterTests(section?.tests || []);
   } else {
+    // For 'all' and 'required' views, use allJobsSection
     visibleTests = filterTests(allTests);
   }
   
@@ -1798,19 +1820,31 @@ function init() {
   });
   
   // Category filter buttons (All/Required toggle)
+  // Category toggle buttons (All/Required) - these toggle the required filter
   document.querySelectorAll('.category-btn').forEach(btn => {
-    btn.addEventListener('click', () => setCategoryFilter(btn.dataset.category));
-  });
-  
-  // Quick filter buttons (TEE/NVIDIA)
-  document.querySelectorAll('.quick-filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const category = btn.dataset.category;
-      // Toggle: if already active, go back to 'all'
-      if (state.categoryFilter === category) {
-        setCategoryFilter('all');
+      if (category === 'required') {
+        state.showRequiredOnly = true;
       } else {
-        setCategoryFilter(category);
+        state.showRequiredOnly = false;
+      }
+      updateAllRequiredButtons();
+      updateStats();
+      renderSections();
+      updateJobCount();
+    });
+  });
+  
+  // Quick filter buttons (TEE/NVIDIA) - these change the view mode
+  document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.category;
+      // Toggle: if already active, go back to 'all'
+      if (state.viewMode === mode) {
+        setViewMode('all');
+      } else {
+        setViewMode(mode);
       }
     });
   });
