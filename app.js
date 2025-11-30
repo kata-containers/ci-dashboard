@@ -754,7 +754,11 @@ function updateJobCount() {
 }
 
 function showWeatherModal(sectionId, testId) {
-  const section = state.data.sections.find(s => s.id === sectionId);
+  // Look in both regular sections and allJobsSection
+  let section = state.data.sections.find(s => s.id === sectionId);
+  if (!section && sectionId === 'all-jobs' && state.data.allJobsSection) {
+    section = state.data.allJobsSection;
+  }
   const test = section?.tests.find(t => t.id === testId);
   
   if (!test || !test.weatherHistory) {
@@ -1110,7 +1114,11 @@ function showFailingTestsModal(sectionId, testId) {
 }
 
 function showErrorModal(sectionId, testId) {
-  const section = state.data.sections.find(s => s.id === sectionId);
+  // Look in both regular sections and allJobsSection
+  let section = state.data.sections.find(s => s.id === sectionId);
+  if (!section && sectionId === 'all-jobs' && state.data.allJobsSection) {
+    section = state.data.allJobsSection;
+  }
   const test = section?.tests.find(t => t.id === testId);
   
   if (!test || !test.error) {

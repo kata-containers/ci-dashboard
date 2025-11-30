@@ -85,11 +85,14 @@ fetch_nightly_data() {
             
             echo "Total jobs: $(jq ".jobs | length" raw-runs.json)"
             
-            # Fetch logs for failed jobs
+            # Fetch logs for ALL failed jobs
             echo "Fetching logs for failed jobs..."
             mkdir -p job-logs
             
-            for job_id in $(jq -r ".jobs[] | select(.conclusion == \"failure\") | .id" raw-runs.json | head -20); do
+            failed_count=$(jq -r ".jobs[] | select(.conclusion == \"failure\") | .id" raw-runs.json | wc -l)
+            echo "Found $failed_count failed jobs to fetch logs for"
+            
+            for job_id in $(jq -r ".jobs[] | select(.conclusion == \"failure\") | .id" raw-runs.json); do
                 echo "Fetching log for job $job_id..."
                 curl -sL \
                     -H "Authorization: token $GH_TOKEN" \

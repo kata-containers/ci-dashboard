@@ -665,6 +665,17 @@ enrichFailedTestsIndex();
 const allJobNames = getAllUniqueJobNames();
 console.log(`Building 'All Jobs' section with ${allJobNames.length} jobs...`);
 
+// Build a lookup map of configured jobs from sections (they have rich weather data with failure details)
+const configuredJobsFromSections = new Map();
+sections.forEach(section => {
+  section.tests.forEach(test => {
+    if (test.jobName || test.fullName) {
+      configuredJobsFromSections.set(test.jobName || test.fullName, test);
+    }
+  });
+});
+console.log(`  Found ${configuredJobsFromSections.size} configured jobs with rich data`);
+
 const allJobsSection = {
   id: 'all-jobs',
   name: 'All Jobs',
@@ -678,6 +689,20 @@ const allJobsSection = {
     const maintainers = configuredJob?.maintainers || [];
     const testId = jobName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
     const categories = getJobCategories(jobName);
+    
+    // If this job was already processed in a section, reuse its rich data
+    const existingTest = configuredJobsFromSections.get(jobName);
+    if (existingTest) {
+      return {
+        ...existingTest,
+        id: testId,
+        name: displayName, // Use simplified name for All Jobs view
+        jobName: jobName,
+        fullName: jobName,
+        categories: categories,
+        isRequired: categories.includes('required')
+      };
+    }
     
     // Find jobs matching this name
     const matchingJobs = allJobs.filter(job => job.name === jobName)
@@ -704,7 +729,7 @@ const allJobsSection = {
       }
     }
     
-    // Build weather history (simplified - just last 10 days)
+    // Build weather history (last 10 days)
     const weatherHistory = [];
     const anchorDate = new Date();
     for (let i = 0; i < 10; i++) {
@@ -723,11 +748,29 @@ const allJobsSection = {
       }) || dayJobs[0] || null;
       
       let dayStatus = 'none';
+      let failureStep = null;
+      let failureDetails = null;
+      
       if (dayJob) {
         if (dayJob.conclusion === 'success') {
           dayStatus = 'passed';
         } else if (dayJob.conclusion === 'failure') {
           dayStatus = 'failed';
+          // Get the failed step name
+          const failedStep = dayJob.steps?.find(s => s.conclusion === 'failure');
+          if (failedStep) {
+            failureStep = failedStep.name;
+          }
+          // Try to get failure details from parsed logs if available
+          const logFile = `job-logs/${dayJob.id}.log`;
+          if (fs.existsSync(logFile)) {
+            const logContent = fs.readFileSync(logFile, 'utf-8');
+            const parsed = parseTestFailures(logContent);
+            if (parsed && parsed.failures && parsed.failures.length > 0) {
+              failureDetails = parsed;
+              failureStep = parsed.batsFiles?.join(', ') || failureStep;
+            }
+          }
         }
       }
       
@@ -736,7 +779,9 @@ const allJobsSection = {
         status: dayStatus,
         runId: dayJob?.workflow_run_id || dayJob?.run_id?.toString() || null,
         jobId: dayJob?.id?.toString() || null,
-        duration: dayJob ? formatDuration(dayJob.started_at, dayJob.completed_at) : null
+        duration: dayJob ? formatDuration(dayJob.started_at, dayJob.completed_at) : null,
+        failureStep: failureStep,
+        failureDetails: failureDetails
       });
     }
     
