@@ -339,12 +339,84 @@ function render() {
   updateStats();
   renderSections();
   updateJobCount();
+  renderRenameWarnings();
   
   // Update last refresh time
   if (state.data.lastRefresh) {
     document.getElementById('last-refresh-time').textContent = 
       formatRelativeTime(state.data.lastRefresh);
   }
+}
+
+/**
+ * Render warning banner for detected job renames
+ */
+function renderRenameWarnings() {
+  const container = document.getElementById('rename-warnings');
+  if (!container) return;
+  
+  // Get renames detected within last 3 days
+  const threeDaysAgo = new Date();
+  threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+  
+  const recentRenames = (state.data.detectedRenames || []).filter(rename => {
+    const detectedDate = new Date(rename.detectedDate);
+    return detectedDate > threeDaysAgo;
+  });
+  
+  if (recentRenames.length === 0) {
+    container.innerHTML = '';
+    container.style.display = 'none';
+    return;
+  }
+  
+  container.style.display = 'block';
+  
+  const renamesList = recentRenames.map(rename => {
+    const detectedDate = new Date(rename.detectedDate);
+    const formattedDate = detectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return `
+      <div class="rename-item">
+        <span class="rename-old">"${escapeHtml(rename.oldName)}"</span>
+        <span class="rename-arrow">→</span>
+        <span class="rename-new">"${escapeHtml(rename.newName)}"</span>
+        <span class="rename-date">(detected ${formattedDate})</span>
+      </div>
+    `;
+  }).join('');
+  
+  const configPatch = recentRenames.map(rename => 
+    `  - old: "${rename.oldName}"\n    new: "${rename.newName}"`
+  ).join('\n');
+  
+  container.innerHTML = `
+    <div class="rename-warning-banner">
+      <div class="rename-warning-header">
+        <span class="rename-warning-icon">⚠️</span>
+        <span class="rename-warning-title">Potential Job Renames Detected</span>
+      </div>
+      <p class="rename-warning-description">
+        The following jobs appear to have been renamed. History has been merged automatically.
+      </p>
+      <div class="rename-list">
+        ${renamesList}
+      </div>
+      <div class="rename-action">
+        <p>If this is incorrect (these are separate tests), open a PR to add this to <code>ci-dashboard/config.yaml</code>:</p>
+        <pre class="rename-config-patch">not_a_rename:
+${configPatch}</pre>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Escape HTML to prevent XSS
+ */
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }
 
 function renderSections() {

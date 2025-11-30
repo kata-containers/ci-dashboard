@@ -815,6 +815,219 @@ console.log(`  Required: ${allJobsSection.tests.filter(t => t.isRequired).length
 console.log(`  TEE: ${allJobsSection.tests.filter(t => t.categories.includes('tee')).length}`);
 console.log(`  NVIDIA: ${allJobsSection.tests.filter(t => t.categories.includes('nvidia')).length}`);
 
+// ============================================
+// Rename Detection
+// ============================================
+
+/**
+ * Calculate similarity between two strings (Levenshtein-based)
+ */
+function stringSimilarity(str1, str2) {
+  if (!str1 || !str2) return 0;
+  if (str1 === str2) return 1;
+  
+  const longer = str1.length > str2.length ? str1 : str2;
+  const shorter = str1.length > str2.length ? str2 : str1;
+  
+  if (longer.length === 0) return 1;
+  
+  // Simple character-based similarity
+  let matches = 0;
+  const longerChars = longer.toLowerCase().split('');
+  const shorterChars = shorter.toLowerCase().split('');
+  
+  shorterChars.forEach((char, i) => {
+    if (longerChars[i] === char) matches++;
+  });
+  
+  return matches / longer.length;
+}
+
+/**
+ * Get common prefix length between two strings
+ */
+function commonPrefixLength(str1, str2) {
+  let i = 0;
+  while (i < str1.length && i < str2.length && str1[i] === str2[i]) {
+    i++;
+  }
+  return i;
+}
+
+/**
+ * Detect potential job renames by analyzing job appearance patterns
+ */
+function detectRenames(allJobsSection, cachedData) {
+  const detectedRenames = [];
+  const notARename = config.not_a_rename || [];
+  
+  // Get current job names and their first appearance
+  const currentJobs = new Map();
+  allJobsSection.tests.forEach(test => {
+    const jobName = test.jobName || test.fullName;
+    // Find first day this job appeared in weather history
+    const firstAppearance = test.weatherHistory?.find(w => w.status !== 'none');
+    if (firstAppearance) {
+      currentJobs.set(jobName, {
+        name: jobName,
+        firstSeen: new Date(firstAppearance.date),
+        weatherHistory: test.weatherHistory
+      });
+    }
+  });
+  
+  // Get cached job names (jobs that existed before)
+  const cachedJobs = new Map();
+  if (cachedData?.allJobsSection?.tests) {
+    cachedData.allJobsSection.tests.forEach(test => {
+      const jobName = test.jobName || test.fullName;
+      cachedJobs.set(jobName, {
+        name: jobName,
+        weatherHistory: test.weatherHistory
+      });
+    });
+  }
+  
+  // Also check sections
+  if (cachedData?.sections) {
+    cachedData.sections.forEach(section => {
+      section.tests?.forEach(test => {
+        const jobName = test.jobName || test.fullName;
+        if (!cachedJobs.has(jobName)) {
+          cachedJobs.set(jobName, {
+            name: jobName,
+            weatherHistory: test.weatherHistory
+          });
+        }
+      });
+    });
+  }
+  
+  // Find jobs that disappeared (in cache but not in current with recent activity)
+  const disappearedJobs = [];
+  cachedJobs.forEach((cachedJob, jobName) => {
+    if (!currentJobs.has(jobName)) {
+      // Check if it had recent activity (within last 5 days in weather)
+      const hadRecentActivity = cachedJob.weatherHistory?.slice(-5).some(w => w.status !== 'none');
+      if (hadRecentActivity) {
+        disappearedJobs.push(cachedJob);
+      }
+    }
+  });
+  
+  // For each new job, check if it might be a rename of a disappeared job
+  currentJobs.forEach((currentJob, jobName) => {
+    // Skip if this job existed in cache
+    if (cachedJobs.has(jobName)) return;
+    
+    // Check against disappeared jobs
+    disappearedJobs.forEach(oldJob => {
+      // Check if this pair is in not_a_rename list
+      const isExcluded = notARename.some(entry => 
+        entry.old === oldJob.name && entry.new === jobName
+      );
+      if (isExcluded) return;
+      
+      // Calculate similarity
+      const similarity = stringSimilarity(oldJob.name, jobName);
+      const prefixLen = commonPrefixLength(oldJob.name, jobName);
+      const minLen = Math.min(oldJob.name.length, jobName.length);
+      const prefixRatio = prefixLen / minLen;
+      
+      // Consider it a potential rename if:
+      // - High overall similarity (>70%) OR
+      // - Long common prefix (>60% of shorter string)
+      if (similarity > 0.7 || prefixRatio > 0.6) {
+        detectedRenames.push({
+          oldName: oldJob.name,
+          newName: jobName,
+          similarity: Math.round(similarity * 100),
+          detectedDate: new Date().toISOString(),
+          oldWeatherHistory: oldJob.weatherHistory
+        });
+        console.log(`  Potential rename detected: "${oldJob.name}" → "${jobName}" (${Math.round(similarity * 100)}% similar)`);
+      }
+    });
+  });
+  
+  // Also carry forward previously detected renames (within 3 days)
+  if (cachedData?.detectedRenames) {
+    const threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+    
+    cachedData.detectedRenames.forEach(rename => {
+      const detectedDate = new Date(rename.detectedDate);
+      // Keep if still within 3 days and not already in current list
+      if (detectedDate > threeDaysAgo) {
+        const alreadyDetected = detectedRenames.some(r => 
+          r.oldName === rename.oldName && r.newName === rename.newName
+        );
+        if (!alreadyDetected) {
+          detectedRenames.push(rename);
+        }
+      }
+    });
+  }
+  
+  return detectedRenames;
+}
+
+/**
+ * Merge weather history from old job into new job (for auto-aliasing)
+ */
+function mergeWeatherHistory(newHistory, oldHistory) {
+  if (!oldHistory || !newHistory) return newHistory;
+  
+  const merged = [...newHistory];
+  
+  // For each day in old history, if new history has 'none', use old
+  oldHistory.forEach(oldDay => {
+    const oldDate = new Date(oldDay.date).toDateString();
+    const newDayIndex = merged.findIndex(d => new Date(d.date).toDateString() === oldDate);
+    
+    if (newDayIndex !== -1 && merged[newDayIndex].status === 'none' && oldDay.status !== 'none') {
+      merged[newDayIndex] = { ...oldDay };
+    }
+  });
+  
+  return merged;
+}
+
+// Detect renames
+console.log('Detecting potential job renames...');
+const detectedRenames = detectRenames(allJobsSection, cachedData);
+
+if (detectedRenames.length > 0) {
+  console.log(`Found ${detectedRenames.length} potential rename(s)`);
+  
+  // Apply auto-aliasing: merge old weather history into new jobs
+  detectedRenames.forEach(rename => {
+    // Find the new job in allJobsSection
+    const newJob = allJobsSection.tests.find(t => 
+      (t.jobName || t.fullName) === rename.newName
+    );
+    
+    if (newJob && rename.oldWeatherHistory) {
+      newJob.weatherHistory = mergeWeatherHistory(newJob.weatherHistory, rename.oldWeatherHistory);
+      newJob.aliasedFrom = rename.oldName;
+      console.log(`  Auto-aliased: "${rename.oldName}" → "${rename.newName}"`);
+    }
+    
+    // Also update in sections if present
+    sections.forEach(section => {
+      const sectionJob = section.tests?.find(t => 
+        (t.jobName || t.fullName) === rename.newName
+      );
+      if (sectionJob && rename.oldWeatherHistory) {
+        sectionJob.weatherHistory = mergeWeatherHistory(sectionJob.weatherHistory, rename.oldWeatherHistory);
+        sectionJob.aliasedFrom = rename.oldName;
+      }
+    });
+  });
+} else {
+  console.log('No potential renames detected');
+}
+
 /**
  * Simplify long job names for display
  */
@@ -843,7 +1056,8 @@ const outputData = {
   requiredJobs: requiredJobs,
   jobCategories: categoryPatterns,
   failedTestsIndex: failedTestsIndex,
-  maintainersDirectory: config.maintainers_directory || {}
+  maintainersDirectory: config.maintainers_directory || {},
+  detectedRenames: detectedRenames // Potential job renames (show warning for 3 days)
 };
 
 // Write data.json
