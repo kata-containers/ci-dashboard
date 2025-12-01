@@ -763,6 +763,13 @@ function toggleSection(sectionId) {
     state.expandedSections.add(sectionId);
   }
   renderSections();
+  // Scroll to the clicked section after re-render
+  setTimeout(() => {
+    const sectionEl = document.querySelector(`.section-header[data-section="${sectionId}"]`);
+    if (sectionEl) {
+      sectionEl.scrollIntoView({ behavior: 'instant', block: 'nearest' });
+    }
+  }, 0);
 }
 
 function toggleGroup(groupId) {
@@ -772,6 +779,13 @@ function toggleGroup(groupId) {
     state.expandedGroups.add(groupId);
   }
   renderSections();
+  // Scroll to the clicked group after re-render
+  setTimeout(() => {
+    const groupEl = document.querySelector(`.test-group-header[data-group="${groupId}"]`);
+    if (groupEl) {
+      groupEl.scrollIntoView({ behavior: 'instant', block: 'nearest' });
+    }
+  }, 0);
 }
 
 function setFilter(filter) {
@@ -1533,6 +1547,13 @@ function renderPRFailures() {
         state.expandedFlakyTests.add(testName);
       }
       renderPRFailures();
+      // Scroll to the clicked item after re-render
+      setTimeout(() => {
+        const newItem = document.querySelector(`.flaky-item[data-test-name="${CSS.escape(testName)}"]`);
+        if (newItem) {
+          newItem.scrollIntoView({ behavior: 'instant', block: 'nearest' });
+        }
+      }, 0);
     });
   });
   
@@ -1547,6 +1568,13 @@ function renderPRFailures() {
         state.expandedFlakyJobs.add(jobName);
       }
       renderPRFailures();
+      // Scroll to the clicked item after re-render
+      setTimeout(() => {
+        const newItem = document.querySelector(`.flaky-job-item[data-job-name="${CSS.escape(jobName)}"]`);
+        if (newItem) {
+          newItem.scrollIntoView({ behavior: 'instant', block: 'nearest' });
+        }
+      }, 0);
     });
   });
   
