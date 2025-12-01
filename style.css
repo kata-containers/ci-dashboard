@@ -133,10 +133,13 @@ body {
 .project-logo {
   height: 24px;
   width: auto;
+  /* Grayscale logos for cleaner look */
+  filter: grayscale(100%) brightness(0.7);
 }
 
 .project-btn.active .project-logo {
-  filter: brightness(0) invert(1);
+  /* White logo when button is active (selected) */
+  filter: grayscale(100%) brightness(0) invert(1);
 }
 
 .project-logo.kata-icon {
@@ -145,18 +148,6 @@ body {
 
 .project-logo.coco-logo {
   height: 28px;
-}
-
-/* When CoCo button is active, don't apply any filter - show original colors */
-.project-btn.active .project-logo.coco-logo {
-  /* The CoCo logo has white fill with blue stroke - looks good on salmon background */
-  filter: none;
-}
-
-/* When CoCo button is NOT active (dark background), invert to show properly */
-.project-btn:not(.active) .project-logo.coco-logo {
-  /* Make the white hexagon visible on dark background */
-  filter: brightness(0.8);
 }
 
 .project-icon {
