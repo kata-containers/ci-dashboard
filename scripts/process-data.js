@@ -780,23 +780,37 @@ const allJobsSection = {
     const matchingJobs = allJobs.filter(job => job.name === jobName)
       .sort((a, b) => new Date(b.started_at || b.created_at) - new Date(a.started_at || a.created_at));
     
-    // Get latest job
+    // Get the most recent workflow run's jobs
     const latestJob = matchingJobs[0];
+    const latestRunId = latestJob?.workflow_run_id;
+    
+    // Find the FIRST attempt of the latest run (run_attempt === 1 or lowest)
+    // This is the true result - retries don't change the fact that it failed initially
+    const latestRunJobs = matchingJobs.filter(j => j.workflow_run_id === latestRunId);
+    const firstAttemptJob = latestRunJobs.sort((a, b) => (a.run_attempt || 1) - (b.run_attempt || 1))[0];
+    const lastAttemptJob = latestRunJobs.sort((a, b) => (b.run_attempt || 1) - (a.run_attempt || 1))[0];
+    
+    // Count retries
+    const retryCount = lastAttemptJob?.run_attempt > 1 ? lastAttemptJob.run_attempt - 1 : 0;
+    const retriedAndPassed = retryCount > 0 && lastAttemptJob?.conclusion === 'success' && firstAttemptJob?.conclusion === 'failure';
+    
     let status = 'not_run';
     
-    if (latestJob) {
-      if (latestJob.conclusion === 'success') {
+    // Use FIRST attempt's result as the status - don't hide failures behind retries
+    const jobForStatus = firstAttemptJob || latestJob;
+    if (jobForStatus) {
+      if (jobForStatus.conclusion === 'success') {
         status = 'passed';
-      } else if (latestJob.conclusion === 'failure') {
+      } else if (jobForStatus.conclusion === 'failure') {
         // Check if failure is in a fatal step
-        const failedStep = latestJob.steps?.find(s => s.conclusion === 'failure');
+        const failedStep = jobForStatus.steps?.find(s => s.conclusion === 'failure');
         if (failedStep) {
           const isFatal = fatalStepPatterns.some(p => p.test(failedStep.name));
           status = isFatal ? 'failed' : 'not_run';
         } else {
           status = 'failed';
         }
-      } else if (latestJob.status === 'in_progress' || latestJob.status === 'queued') {
+      } else if (jobForStatus.status === 'in_progress' || jobForStatus.status === 'queued') {
         status = 'running';
       }
     }
@@ -814,10 +828,38 @@ const allJobsSection = {
         return jobDate.toDateString() === date.toDateString();
       });
       
-      // Pick the first job that has a "Run tests" step
-      const dayJob = dayJobs.find(job => {
-        return job.steps?.some(s => fatalStepPatterns.some(p => p.test(s.name)));
-      }) || dayJobs[0] || null;
+      // Group by workflow run and find first attempt for each run
+      const runGroups = {};
+      dayJobs.forEach(job => {
+        const runId = job.workflow_run_id;
+        if (!runGroups[runId]) runGroups[runId] = [];
+        runGroups[runId].push(job);
+      });
+      
+      // For each run, get the first attempt (lowest run_attempt number)
+      // This ensures we show the original result, not the retry result
+      let dayJob = null;
+      let dayRetried = false;
+      
+      // Find the most recent run's first attempt
+      const sortedRuns = Object.values(runGroups).sort((a, b) => {
+        const aDate = new Date(a[0].started_at || a[0].created_at);
+        const bDate = new Date(b[0].started_at || b[0].created_at);
+        return bDate - aDate;
+      });
+      
+      if (sortedRuns.length > 0) {
+        const latestRunJobs = sortedRuns[0];
+        // Sort by run_attempt to get first attempt
+        latestRunJobs.sort((a, b) => (a.run_attempt || 1) - (b.run_attempt || 1));
+        dayJob = latestRunJobs[0]; // First attempt
+        
+        // Check if there were retries
+        const lastAttempt = latestRunJobs[latestRunJobs.length - 1];
+        if (lastAttempt.run_attempt > 1) {
+          dayRetried = true;
+        }
+      }
       
       let dayStatus = 'none';
       let failureStep = null;
@@ -849,6 +891,7 @@ const allJobsSection = {
       weatherHistory.push({
         date: date.toISOString(),
         status: dayStatus,
+        retried: dayRetried, // True if this day had retries (flaky indicator)
         runId: dayJob?.workflow_run_id || dayJob?.run_id?.toString() || null,
         jobId: dayJob?.id?.toString() || null,
         duration: dayJob ? formatDuration(dayJob.started_at, dayJob.completed_at) : null,
@@ -857,9 +900,9 @@ const allJobsSection = {
       });
     }
     
-    // Find last failure and success
-    const lastFailureJob = matchingJobs.find(j => j.conclusion === 'failure');
-    const lastSuccessJob = matchingJobs.find(j => j.conclusion === 'success');
+    // Find last failure and success (from first attempts only)
+    const lastFailureJob = matchingJobs.find(j => j.conclusion === 'failure' && (j.run_attempt || 1) === 1);
+    const lastSuccessJob = matchingJobs.find(j => j.conclusion === 'success' && (j.run_attempt || 1) === 1);
     
     return {
       id: testId,
@@ -874,15 +917,17 @@ const allJobsSection = {
       lastSuccess: lastSuccessJob ? formatRelativeTime(lastSuccessJob.started_at) : 'Never',
       weatherHistory: weatherHistory,
       failureCount: weatherHistory.filter(w => w.status === 'failed').length,
-      retried: latestJob?.run_attempt > 1 ? latestJob.run_attempt - 1 : 0,
+      retried: retryCount,
+      retriedAndPassed: retriedAndPassed, // First attempt failed but retry passed - this is flaky!
       runId: latestJob?.workflow_run_id || latestJob?.run_id?.toString() || null,
-      jobId: latestJob?.id?.toString() || null,
+      jobId: firstAttemptJob?.id?.toString() || latestJob?.id?.toString() || null, // Link to first attempt
       maintainers: maintainers
     };
   })
 };
 
 console.log(`All Jobs section: ${allJobsSection.tests.length} jobs`);
+console.log(`  Retried and passed (flaky): ${allJobsSection.tests.filter(t => t.retriedAndPassed).length}`);
 console.log(`  Required: ${allJobsSection.tests.filter(t => t.isRequired).length}`);
 console.log(`  TEE: ${allJobsSection.tests.filter(t => t.categories.includes('tee')).length}`);
 console.log(`  NVIDIA: ${allJobsSection.tests.filter(t => t.categories.includes('nvidia')).length}`);
