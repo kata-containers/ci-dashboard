@@ -2173,8 +2173,16 @@ function renderCocoSections() {
     `;
   };
   
+  // Check if section is expanded (default to true on first render)
+  // Use a separate flag to track if we've initialized this section
+  if (!state.cocoChartsInitialized) {
+    state.expandedSections.add('coco-charts');
+    state.cocoChartsInitialized = true;
+  }
+  const isSectionExpanded = state.expandedSections.has('coco-charts');
+  
   container.innerHTML = `
-    <div class="section expanded">
+    <div class="section ${isSectionExpanded ? 'expanded' : ''}" data-section-id="coco-charts">
       <div class="section-header" data-section="coco-charts">
         <span class="section-toggle">▶</span>
         <span class="section-name">All Jobs</span>
@@ -2187,7 +2195,7 @@ function renderCocoSections() {
           ${statusBadges.join('')}
         </div>
       </div>
-      <div class="section-content">
+      <div class="section-content" style="${isSectionExpanded ? '' : 'display: none;'}">
         ${renderCocoTestGroup(failed, 'FAILED', 'failed', 'coco-charts-failed', state.expandedGroups.has('coco-charts-failed') || failed.length > 0)}
         ${renderCocoTestGroup(notRun, 'NOT RUN', 'not-run', 'coco-charts-not-run', state.expandedGroups.has('coco-charts-not-run'))}
         ${renderCocoTestGroup(passed, 'PASSED', 'passed', 'coco-charts-passed', state.expandedGroups.has('coco-charts-passed') || (failed.length === 0 && notRun.length === 0))}
@@ -2198,9 +2206,17 @@ function renderCocoSections() {
   // Add click handler for section header (expand/collapse)
   container.querySelectorAll('.section-header').forEach(header => {
     header.addEventListener('click', () => {
+      const sectionId = header.dataset.section;
       const section = header.closest('.section');
       const content = section.querySelector('.section-content');
       const isExpanded = section.classList.contains('expanded');
+      
+      // Toggle state
+      if (isExpanded) {
+        state.expandedSections.delete(sectionId);
+      } else {
+        state.expandedSections.add(sectionId);
+      }
       
       section.classList.toggle('expanded', !isExpanded);
       content.style.display = isExpanded ? 'none' : '';
@@ -2426,8 +2442,15 @@ function renderCAASections() {
     `;
   };
   
+  // Check if section is expanded (default to true on first render)
+  if (!state.cocoCAAInitialized) {
+    state.expandedSections.add('coco-caa');
+    state.cocoCAAInitialized = true;
+  }
+  const isSectionExpanded = state.expandedSections.has('coco-caa');
+  
   container.innerHTML = `
-    <div class="section expanded">
+    <div class="section ${isSectionExpanded ? 'expanded' : ''}" data-section-id="coco-caa">
       <div class="section-header" data-section="coco-caa">
         <span class="section-toggle">▶</span>
         <span class="section-name">All Jobs</span>
@@ -2440,7 +2463,7 @@ function renderCAASections() {
           ${statusBadges.join('')}
         </div>
       </div>
-      <div class="section-content">
+      <div class="section-content" style="${isSectionExpanded ? '' : 'display: none;'}">
         ${renderCAATestGroup(failed, 'FAILED', 'failed', 'coco-caa-failed', state.expandedGroups.has('coco-caa-failed') || failed.length > 0)}
         ${renderCAATestGroup(notRun, 'NOT RUN', 'not-run', 'coco-caa-not-run', state.expandedGroups.has('coco-caa-not-run'))}
         ${renderCAATestGroup(passed, 'PASSED', 'passed', 'coco-caa-passed', state.expandedGroups.has('coco-caa-passed') || (failed.length === 0 && notRun.length === 0))}
@@ -2451,9 +2474,17 @@ function renderCAASections() {
   // Add click handler for section header (expand/collapse)
   container.querySelectorAll('.section-header').forEach(header => {
     header.addEventListener('click', () => {
+      const sectionId = header.dataset.section;
       const section = header.closest('.section');
       const content = section.querySelector('.section-content');
       const isExpanded = section.classList.contains('expanded');
+      
+      // Toggle state
+      if (isExpanded) {
+        state.expandedSections.delete(sectionId);
+      } else {
+        state.expandedSections.add(sectionId);
+      }
       
       section.classList.toggle('expanded', !isExpanded);
       content.style.display = isExpanded ? 'none' : '';
