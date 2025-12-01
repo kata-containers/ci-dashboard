@@ -813,7 +813,18 @@ function toggleGroup(groupId) {
   } else {
     state.expandedGroups.add(groupId);
   }
-  renderSections();
+  
+  // Re-render the appropriate section based on active project and tab
+  if (state.activeProject === 'coco') {
+    if (state.activeCocoTab === 'coco-charts') {
+      renderCocoSections();
+    } else if (state.activeCocoTab === 'coco-caa') {
+      renderCAASections();
+    }
+  } else {
+    renderSections();
+  }
+  
   // Scroll to the clicked group after re-render
   setTimeout(() => {
     const groupEl = document.querySelector(`.test-group-header[data-group="${groupId}"]`);
