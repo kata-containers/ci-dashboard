@@ -288,9 +288,13 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Update dashboard data [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
+            # Stash any unstaged changes (temp files from processing)
+            git stash --include-untracked || true
             # Rebase to avoid conflicts with other concurrent jobs
             git pull --rebase origin main
             git push
+            # Drop stash (we don't need the temp files)
+            git stash drop || true
           fi
   
   notify-slack:
