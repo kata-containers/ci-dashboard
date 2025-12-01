@@ -12,7 +12,7 @@ let state = {
   loading: true,
   error: null,
   filter: 'all',
-  viewMode: 'all', // 'all', 'tee', 'nvidia' - which section to show
+  viewMode: 'all', // 'all', 'tee', 'nvidia', 'ibm' - which section to show
   showRequiredOnly: false, // filter to show only required jobs
   searchQuery: '',
   expandedSections: new Set(),
@@ -151,6 +151,9 @@ function getTotalStats() {
   } else if (state.viewMode === 'nvidia') {
     const section = state.data.sections?.find(s => s.id === 'nvidia-gpu');
     testsToCount = section?.tests || [];
+  } else if (state.viewMode === 'ibm') {
+    const section = state.data.sections?.find(s => s.id === 'ibm');
+    testsToCount = section?.tests || [];
   } else if (state.viewMode === 'coco-charts') {
     testsToCount = state.data.cocoChartsSection?.tests || [];
   } else {
@@ -188,10 +191,10 @@ function matchesCategory(test, category) {
   
   const jobName = test.jobName || test.fullName || test.name || '';
   
-  // For 'tee' and 'nvidia', use the configured sections (exact match)
-  if (category === 'tee' || category === 'nvidia') {
+  // For 'tee', 'nvidia', and 'ibm', use the configured sections (exact match)
+  if (category === 'tee' || category === 'nvidia' || category === 'ibm') {
     // Check if this job is in the configured section
-    const sectionId = category === 'tee' ? 'tee' : 'nvidia-gpu';
+    const sectionId = category === 'tee' ? 'tee' : (category === 'nvidia' ? 'nvidia-gpu' : 'ibm');
     const section = state.data?.sections?.find(s => s.id === sectionId);
     if (section) {
       return section.tests.some(t => t.fullName === jobName || t.jobName === jobName);
@@ -464,6 +467,15 @@ function renderSections() {
       const filteredTests = filterTests(nvidiaSection.tests || []);
       if (filteredTests.length > 0) {
         sectionsToRender.push({ ...nvidiaSection, tests: filteredTests });
+      }
+    }
+  } else if (state.viewMode === 'ibm') {
+    // Use the configured IBM section (s390x tests)
+    const ibmSection = state.data.sections?.find(s => s.id === 'ibm');
+    if (ibmSection) {
+      const filteredTests = filterTests(ibmSection.tests || []);
+      if (filteredTests.length > 0) {
+        sectionsToRender.push({ ...ibmSection, tests: filteredTests });
       }
     }
   } else if (state.viewMode === 'coco-charts') {
@@ -755,6 +767,9 @@ function updateStats() {
   } else if (state.viewMode === 'nvidia') {
     const section = state.data?.sections?.find(s => s.id === 'nvidia-gpu');
     viewTests = section?.tests || [];
+  } else if (state.viewMode === 'ibm') {
+    const section = state.data?.sections?.find(s => s.id === 'ibm');
+    viewTests = section?.tests || [];
   } else if (state.viewMode === 'coco-charts') {
     viewTests = state.data?.cocoChartsSection?.tests || [];
   } else {
@@ -868,6 +883,9 @@ function updateJobCount() {
     visibleTests = filterTests(section?.tests || []);
   } else if (state.viewMode === 'nvidia') {
     const section = state.data.sections?.find(s => s.id === 'nvidia-gpu');
+    visibleTests = filterTests(section?.tests || []);
+  } else if (state.viewMode === 'ibm') {
+    const section = state.data.sections?.find(s => s.id === 'ibm');
     visibleTests = filterTests(section?.tests || []);
   } else if (state.viewMode === 'coco-charts') {
     visibleTests = filterTests(state.data.cocoChartsSection?.tests || []);

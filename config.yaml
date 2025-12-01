@@ -25,9 +25,8 @@ job_categories:
       - "sev"
       - "zvsi"
       - "coco"
-      - "se"
-      - "s390x"
-      - "vfio-ap"
+      - "cc-se"
+      - "cc-vfio-ap"
   
   # NVIDIA GPU tests
   nvidia:
@@ -37,6 +36,17 @@ job_categories:
     patterns:
       - "nvidia"
       - "gpu"
+
+  # IBM s390x tests (zVSI, Secure Execution, VFIO-AP)
+  ibm:
+    name: "IBM"
+    description: "s390x"
+    icon: "🖥️"
+    patterns:
+      - "s390x"
+      - "zvsi"
+      - "vfio-ap"
+      - "cc-se"
 
 # External repositories to monitor
 external_repos:
@@ -235,6 +245,39 @@ sections:
         maintainers:
           - "@stevenhorsman"
           - "@wainersm"
+
+  # ===========================================
+  # IBM Section - s390x tests (zVSI, SE, VFIO-AP)
+  # ===========================================
+  - id: ibm
+    name: "IBM"
+    description: "IBM s390x tests including Secure Execution and VFIO-AP"
+    slack:
+      workspace: "kata-containers"
+      channel: "#kata-ci"
+    
+    # Jobs to monitor (exact names from GitHub Actions)
+    jobs:
+      # From ci-nightly-s390x.yaml workflow
+      - name: "check-internal-test-result (kata-vfio-ap-e2e-tests)"
+        description: "Kata VFIO-AP E2E tests"
+        maintainers:
+          - "@BbolroC"
+      
+      - name: "check-internal-test-result (cc-vfio-ap-e2e-tests)"
+        description: "CC VFIO-AP E2E tests"
+        maintainers:
+          - "@BbolroC"
+      
+      - name: "check-internal-test-result (cc-se-e2e-tests-go)"
+        description: "CC Secure Execution E2E tests (Go)"
+        maintainers:
+          - "@BbolroC"
+      
+      - name: "check-internal-test-result (cc-se-e2e-tests-rs)"
+        description: "CC Secure Execution E2E tests (Rust)"
+        maintainers:
+          - "@BbolroC"
 
 # Test step identification
 # Only failures in these steps count as real test failures
