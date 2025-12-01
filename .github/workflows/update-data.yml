@@ -284,6 +284,8 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Update dashboard data [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
+            # Rebase to avoid conflicts with other concurrent jobs
+            git pull --rebase origin main
             git push
           fi
   
