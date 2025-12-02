@@ -382,6 +382,9 @@ const sections = (config.sections || []).map(sectionConfig => {
     const displayName = jobDescription || jobName;
     // Use job name for ID (stable), not description (can change)
     const testId = jobName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+    // Get categories including required status
+    const categories = getJobCategories(jobName);
+    const isRequired = categories.includes('required');
     
     // Find jobs matching this name (exact match)
     const matchingJobs = allJobs.filter(job => {
@@ -672,8 +675,11 @@ const sections = (config.sections || []).map(sectionConfig => {
     return {
       id: testId,
       name: displayName,
+      jobName: jobName,
       fullName: jobName,
       status: status,
+      categories: categories,
+      isRequired: isRequired,
       duration: latestJob ? formatDuration(latestJob.started_at, latestJob.completed_at) : 'N/A',
       lastFailure: lastFailureJob ? formatRelativeTime(lastFailureJob.started_at) : 'Never',
       lastSuccess: lastSuccessJob ? formatRelativeTime(lastSuccessJob.started_at) : 'Never',
