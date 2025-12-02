@@ -443,18 +443,9 @@ const sections = (config.sections || []).map(sectionConfig => {
     // Get cached weather for this test
     const cachedWeather = getCachedWeatherHistory(sectionConfig.id, testId);
     
-    // Determine anchor date for 10-day window
-    // If today's run hasn't happened/finished yet, start from yesterday
+    // Anchor date is always today - we always show the last 10 days including today
+    // If today's run hasn't completed, it will show as 'not_run' or 'running'
     let anchorDate = new Date();
-    const todayStr = anchorDate.toDateString();
-    const hasRunToday = matchingJobs.some(j => {
-      const d = new Date(j.started_at || j.created_at);
-      return d.toDateString() === todayStr && (j.conclusion === 'success' || j.conclusion === 'failure');
-    });
-    
-    if (!hasRunToday) {
-      anchorDate.setDate(anchorDate.getDate() - 1);
-    }
     
     // Build weather history (last 10 days from anchor)
     const weatherHistory = [];
