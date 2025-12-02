@@ -206,8 +206,14 @@ function matchesCategory(test, category) {
   // Check required jobs
   if (category === 'required') {
     if (test.isRequired) return true;
-    const requiredJobs = state.data?.requiredJobs || [];
-    return requiredJobs.some(req => jobName === req || jobName.includes(req) || req.includes(jobName));
+    // Fallback: check against requiredTests list from gatekeeper
+    const requiredTests = state.data?.requiredTests || [];
+    return requiredTests.some(req => {
+      const reqLower = req.toLowerCase();
+      const jobLower = jobName.toLowerCase();
+      // Check if the required test path ends with this job name
+      return reqLower === jobLower || reqLower.endsWith(jobLower) || reqLower.endsWith(' / ' + jobLower);
+    });
   }
   
   return false;
@@ -937,7 +943,7 @@ function toggleGroup(groupId) {
       renderCAASections();
     }
   } else {
-    renderSections();
+  renderSections();
   }
   
   // Scroll to the clicked group after re-render
