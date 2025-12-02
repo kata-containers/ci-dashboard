@@ -716,6 +716,7 @@ function renderTestRow(sectionId, test) {
         <div class="test-name">
           <span class="test-status-dot ${test.status}"></span>
           <span class="test-name-text" ${test.error ? `data-test-id="${test.id}" data-section-id="${sectionId}" style="cursor:pointer"` : ''}>${test.name}</span>
+          ${test.isRequired ? '<span class="required-badge">required</span>' : ''}
           ${failureInfo.length > 0 ? `
             <span class="test-failure-badge" data-test-id="${test.id}" data-section-id="${sectionId}">
               ⚠️ ${failureInfo.join(' · ')}
@@ -2275,6 +2276,7 @@ function renderCocoTestRow(test, sectionId, sourceRepo) {
         <div class="test-name">
           <span class="test-status-dot ${test.status}"></span>
           <span class="test-name-text">${escapeHtml(test.name)}</span>
+          ${test.isRequired ? '<span class="required-badge">required</span>' : ''}
         </div>
       </div>
       <div class="test-maintainers-col">
