@@ -1179,6 +1179,30 @@ function simplifyJobName(fullName) {
     name = parts[parts.length - 1];
   }
   
+  // Extract architecture from parent job names if present
+  // Look for patterns like "build-kata-static-tarball-arm64", "run-basic-amd64-tests", etc.
+  const archPatterns = ['arm64', 's390x', 'amd64', 'ppc64le'];
+  let arch = null;
+  
+  for (const part of parts) {
+    const partLower = part.toLowerCase();
+    for (const archPattern of archPatterns) {
+      // Check if architecture appears in the part with word boundaries
+      // e.g., "tarball-arm64", "run-basic-amd64-tests", "s390x-build"
+      const regex = new RegExp(`[-_]${archPattern}[-_]|[-_]${archPattern}$|^${archPattern}[-_]`);
+      if (regex.test(partLower)) {
+        arch = archPattern;
+        break;
+      }
+    }
+    if (arch) break;
+  }
+  
+  // Append architecture if found and not already in the name
+  if (arch && !name.toLowerCase().includes(arch)) {
+    name = `${name} [${arch}]`;
+  }
+  
   return name;
 }
 
