@@ -132,13 +132,14 @@ jobs:
             end
           ' summary.json)
           
-          # Build failing tests list (all failures) with maintainer mentions
+          # Build failing tests list (all failures) with maintainer mentions and specific failures
           failing_tests=$(jq -r '
             .failing_tests | 
             if length == 0 then "None! 🎉" 
             else map(
               "• `\(.name)` - \(.error_step) (\(.days_failing)d)" + 
-              (if .slack_mentions != "" then " → \(.slack_mentions)" else "" end)
+              (if .slack_mentions != "" then " → \(.slack_mentions)" else "" end) +
+              (if (.specific_failures | length) > 0 then "\\n    _" + (.specific_failures | join(", ")) + "_" else "" end)
             ) | join("\\n") 
             end
           ' summary.json)

@@ -84,11 +84,25 @@ function calculateDaysFailing(weatherHistory) {
 const failingTests = allTests
   .filter(t => t.status === 'failed')
   .map(t => {
+    // Get the most recent failure from weather history for step info
+    const recentFailure = (t.weatherHistory || [])
+      .filter(w => w.status === 'failed')
+      .sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+    
+    // Get error step from: error field, weather history, or 'Unknown'
+    const errorStep = t.error?.step || recentFailure?.failureStep || 'Unknown';
+    
+    // Get specific test failures if available (from bats/Go test output)
+    const failureDetails = recentFailure?.failureDetails;
+    const specificFailures = failureDetails?.failures?.slice(0, 3).map(f => f.name) || [];
+    
     return {
       name: t.name,
-      error_step: t.error?.step || 'Unknown',
+      error_step: errorStep,
+      specific_failures: specificFailures,
       days_failing: calculateDaysFailing(t.weatherHistory),
       run_id: t.runId,
+      job_id: t.jobId,
       maintainers: t.maintainers || [],
       slack_mentions: resolveMaintainersToSlack(t.maintainers || [])
     };
