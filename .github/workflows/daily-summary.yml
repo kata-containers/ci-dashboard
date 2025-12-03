@@ -79,35 +79,6 @@ jobs:
         if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
         run: npm install js-yaml
       
-      - name: Fetch latest nightly data
-        if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "Fetching latest nightly run data..."
-          
-          # Fetch nightly workflow runs (last 10 days)
-          gh api repos/kata-containers/kata-containers/actions/workflows/ci-nightly.yaml/runs \
-            --paginate -q '.workflow_runs[:10]' > raw-runs.json
-          
-          # Fetch jobs for each run
-          echo "Fetching jobs for each run..."
-          for run_id in $(jq -r '.[].id' raw-runs.json); do
-            echo "  Fetching jobs for run $run_id..."
-            gh api "repos/kata-containers/kata-containers/actions/runs/${run_id}/jobs?filter=all&per_page=100" \
-              -q '.jobs' > "jobs-${run_id}.json" 2>/dev/null || echo "[]" > "jobs-${run_id}.json"
-          done
-          
-          # Merge all jobs into all-jobs.json
-          echo "Merging job data..."
-          cat jobs-*.json | jq -s 'add // []' > all-jobs.json
-          
-          # Process the data
-          echo "Processing data..."
-          node scripts/process-data.js
-          
-          echo "Data refresh complete!"
-      
       - name: Generate summary
         if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
         id: summary
