@@ -144,9 +144,9 @@ jobs:
             end
           ' summary.json)
           
-          # Build flaky tests list (top 3)
+          # Build flaky tests list (all)
           flaky_tests=$(jq -r '
-            .flaky_tests[:3] | 
+            .flaky_tests | 
             if length == 0 then "None detected" 
             else map("• `\(.name)` - \(.flaky_rate)% flaky") | join("\\n") 
             end
@@ -216,14 +216,14 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*🔴 Failing Tests (top 5)*\n${failing_tests}"
+                  "text": "*🔴 Failing Tests*\n${failing_tests}"
                 }
               },
               {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*⚡ Flaky Tests (top 3)*\n${flaky_tests}"
+                  "text": "*⚡ Flaky Tests*\n${flaky_tests}"
                 }
               },
               {
