@@ -42,84 +42,27 @@ function resolveMaintainersToSlack(handles) {
   return mentions.join(' ');
 }
 
-// Calculate overall stats
-const allTests = data.sections.flatMap(s => s.tests);
+// Use allJobsSection for the nightly "All Jobs" view
+// This matches what the dashboard shows
+const allJobsSection = data.allJobsSection || { tests: [] };
+const allTests = allJobsSection.tests || [];
 const totalTests = allTests.length;
 const failedCount = allTests.filter(t => t.status === 'failed').length;
+const notRunCount = allTests.filter(t => t.status === 'not_run' || t.status === 'none').length;
 const runningCount = allTests.filter(t => t.status === 'running').length;
 const passedCount = allTests.filter(t => t.status === 'passed').length;
-const overallPassRate = Math.round((passedCount / totalTests) * 100);
+const overallPassRate = totalTests > 0 ? Math.round((passedCount / totalTests) * 100) : 0;
 
-// Calculate per-section stats
-const sections = data.sections.map(section => {
-  const tests = section.tests;
-  const failed = tests.filter(t => t.status === 'failed').length;
-  const passed = tests.filter(t => t.status === 'passed').length;
-  const passRate = Math.round((passed / tests.length) * 100);
-  
-  let weatherEmoji = '☀️';
-  if (passRate < 95) weatherEmoji = '🌤️';
-  if (passRate < 85) weatherEmoji = '⛅';
-  if (passRate < 70) weatherEmoji = '🌧️';
-  if (passRate < 50) weatherEmoji = '⛈️';
-  
-  // Collect unique maintainers from all failed tests in this section
-  const failedTests = tests.filter(t => t.status === 'failed');
-  const maintainerHandles = [...new Set(failedTests.flatMap(t => t.maintainers || []))];
-  const slackMentions = resolveMaintainersToSlack(maintainerHandles);
-  
-  // Get failing tests with maintainer info
-  const failingTestsWithMaintainers = failedTests.map(t => ({
-    name: t.name,
-    error_step: t.error?.step || 'Unknown',
-    days_failing: calculateDaysFailing(t.weatherHistory),
-    run_id: t.runId,
-    maintainers: t.maintainers || [],
-    slack_mentions: resolveMaintainersToSlack(t.maintainers || [])
-  }));
-  
-  // Get flaky tests for this section
-  const flakyTestsInSection = tests
-    .map(t => {
-      const weather = t.weatherHistory || [];
-      if (weather.length < 5) return null;
-      
-      let transitions = 0;
-      for (let i = 1; i < weather.length; i++) {
-        if (weather[i].status !== weather[i-1].status) {
-          transitions++;
-        }
-      }
-      
-      const flakyRate = Math.round((transitions / (weather.length - 1)) * 100);
-      
-      if (flakyRate > 30) {
-        return {
-          name: t.name,
-          flaky_rate: flakyRate,
-          transitions,
-          maintainers: t.maintainers || [],
-          slack_mentions: resolveMaintainersToSlack(t.maintainers || [])
-        };
-      }
-      return null;
-    })
-    .filter(Boolean)
-    .sort((a, b) => b.flaky_rate - a.flaky_rate);
-  
-  return {
-    name: section.name,
-    total: tests.length,
-    failed,
-    passed,
-    pass_rate: passRate,
-    weather_emoji: weatherEmoji,
-    maintainers: maintainerHandles,
-    slack_mentions: slackMentions,
-    failing_tests: failingTestsWithMaintainers,
-    flaky_tests: flakyTestsInSection
-  };
-});
+// Create a single "All Jobs" section summary
+const sections = [{
+  name: "All Jobs",
+  total: totalTests,
+  failed: failedCount,
+  passed: passedCount,
+  not_run: notRunCount,
+  pass_rate: overallPassRate,
+  weather_emoji: overallPassRate >= 95 ? '☀️' : overallPassRate >= 85 ? '🌤️' : overallPassRate >= 70 ? '⛅' : overallPassRate >= 50 ? '🌧️' : '⛈️'
+}];
 
 /**
  * Calculate consecutive days failing from the end of weather history
@@ -196,6 +139,7 @@ const summary = {
   overall_pass_rate: overallPassRate,
   total_tests: totalTests,
   failed_count: failedCount,
+  not_run_count: notRunCount,
   running_count: runningCount,
   passed_count: passedCount,
   flaky_count: flakyTests.length,

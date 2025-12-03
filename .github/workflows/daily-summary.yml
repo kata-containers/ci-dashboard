@@ -90,6 +90,7 @@ jobs:
           echo "pass_rate=$(jq -r '.overall_pass_rate' summary.json)" >> $GITHUB_OUTPUT
           echo "total=$(jq -r '.total_tests' summary.json)" >> $GITHUB_OUTPUT
           echo "failed=$(jq -r '.failed_count' summary.json)" >> $GITHUB_OUTPUT
+          echo "not_run=$(jq -r '.not_run_count' summary.json)" >> $GITHUB_OUTPUT
           echo "passed=$(jq -r '.passed_count' summary.json)" >> $GITHUB_OUTPUT
       
       - name: Send Slack notification
@@ -122,14 +123,23 @@ jobs:
             status_text="Critical"
           fi
           
-          # Build section breakdown
-          sections_text=$(jq -r '.sections | map("• *\(.name)*: \(.weather_emoji) \(.pass_rate)% (\(.failed) failed)") | join("\\n")' summary.json)
+          # Build section breakdown (only show groups with failures or not_run)
+          sections_text=$(jq -r '
+            .sections | 
+            map(select(.failed > 0 or .not_run > 0)) |
+            if length == 0 then "All groups passing! 🎉"
+            else map("• *\(.name)*: \(.weather_emoji) \(.pass_rate)% (🔴 \(.failed) | 🟡 \(.not_run // 0))") | join("\\n")
+            end
+          ' summary.json)
           
-          # Build failing tests list (top 5)
+          # Build failing tests list (all failures) with maintainer mentions
           failing_tests=$(jq -r '
-            .failing_tests[:5] | 
+            .failing_tests | 
             if length == 0 then "None! 🎉" 
-            else map("• `\(.name)` - \(.error_step) (\(.days_failing)d)") | join("\\n") 
+            else map(
+              "• `\(.name)` - \(.error_step) (\(.days_failing)d)" + 
+              (if .slack_mentions != "" then " → \(.slack_mentions)" else "" end)
+            ) | join("\\n") 
             end
           ' summary.json)
           
@@ -184,7 +194,7 @@ jobs:
                   },
                   {
                     "type": "mrkdwn",
-                    "text": "*Results*\n🟢 ${{ steps.summary.outputs.passed }} | 🔴 ${{ steps.summary.outputs.failed }}"
+                    "text": "*Results*\n🟢 ${{ steps.summary.outputs.passed }} | 🔴 ${{ steps.summary.outputs.failed }} | 🟡 ${{ steps.summary.outputs.not_run }}"
                   }
                 ]
               },

@@ -990,6 +990,15 @@ const allJobsSection = {
     const lastFailureJob = matchingJobs.find(j => j.conclusion === 'failure' && (j.run_attempt || 1) === 1);
     const lastSuccessJob = matchingJobs.find(j => j.conclusion === 'success' && (j.run_attempt || 1) === 1);
     
+    // Get error details if failed
+    let errorDetails = null;
+    if (status === 'failed' && latestJob) {
+      const failedStep = latestJob.steps?.find(s => s.conclusion === 'failure');
+      errorDetails = {
+        step: failedStep?.name || 'Unknown step'
+      };
+    }
+    
     return {
       id: testId,
       name: displayName,
@@ -1007,6 +1016,7 @@ const allJobsSection = {
       retriedAndPassed: retriedAndPassed, // True if first attempt failed but retry passed (FLAKY!)
       runId: latestJob?.workflow_run_id || latestJob?.run_id?.toString() || null,
       jobId: latestJob?.id?.toString() || null, // Links to first attempt
+      error: errorDetails
       maintainers: maintainers
     };
   })
