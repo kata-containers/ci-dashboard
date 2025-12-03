@@ -92,7 +92,14 @@ jobs:
           echo "failed=$(jq -r '.failed_count' summary.json)" >> $GITHUB_OUTPUT
           echo "not_run=$(jq -r '.not_run_count' summary.json)" >> $GITHUB_OUTPUT
           echo "passed=$(jq -r '.passed_count' summary.json)" >> $GITHUB_OUTPUT
-          echo "arch_summary=$(jq -r '.failing_arch_summary // ""' summary.json)" >> $GITHUB_OUTPUT
+          
+          # Build failing tests header with arch breakdown
+          arch_summary=$(jq -r '.failing_arch_summary // ""' summary.json)
+          if [ -n "$arch_summary" ]; then
+            echo "failing_header=🔴 Failing Tests ${arch_summary}" >> $GITHUB_OUTPUT
+          else
+            echo "failing_header=🔴 Failing Tests" >> $GITHUB_OUTPUT
+          fi
       
       - name: Send Slack notification
         if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
@@ -217,7 +224,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*🔴 Failing Tests*$(if [ -n \"${{ steps.summary.outputs.arch_summary }}\" ]; then echo \" ${{ steps.summary.outputs.arch_summary }}\"; fi)\n${failing_tests}"
+                  "text": "*${{ steps.summary.outputs.failing_header }}*\n${failing_tests}"
                 }
               },
               {
