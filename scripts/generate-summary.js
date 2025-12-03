@@ -96,6 +96,10 @@ const failingTests = allTests
     const failureDetails = recentFailure?.failureDetails;
     const specificFailures = failureDetails?.failures?.map(f => f.name) || [];
     
+    // Extract architecture from test name (e.g., [s390x], [ppc64le], [amd64], [arm64])
+    const archMatch = t.name.match(/\[(s390x|ppc64le|amd64|arm64)\]/);
+    const arch = archMatch ? archMatch[1] : 'amd64'; // Default to amd64 if not specified
+    
     return {
       name: t.name,
       error_step: errorStep,
@@ -103,11 +107,22 @@ const failingTests = allTests
       days_failing: calculateDaysFailing(t.weatherHistory),
       run_id: t.runId,
       job_id: t.jobId,
+      arch: arch,
       maintainers: t.maintainers || [],
       slack_mentions: resolveMaintainersToSlack(t.maintainers || [])
     };
   })
   .sort((a, b) => b.days_failing - a.days_failing);
+
+// Calculate architecture breakdown for failing tests
+const failingByArch = {};
+failingTests.forEach(t => {
+  failingByArch[t.arch] = (failingByArch[t.arch] || 0) + 1;
+});
+const archSummary = Object.entries(failingByArch)
+  .sort((a, b) => b[1] - a[1])
+  .map(([arch, count]) => `[${count}x ${arch}]`)
+  .join(' ');
 
 // Detect flaky tests (alternating pass/fail pattern)
 const flakyTests = allTests
@@ -161,6 +176,8 @@ const summary = {
   trend_emoji: trendEmoji,
   sections,
   failing_tests: failingTests,
+  failing_by_arch: failingByArch,
+  failing_arch_summary: archSummary,
   flaky_tests: flakyTests
 };
 
