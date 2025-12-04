@@ -1097,7 +1097,7 @@ function showWeatherModal(sectionId, testId) {
     const messageText = day.status === 'passed' 
       ? `Completed in ${day.duration || 'N/A'}` 
       : day.status === 'failed' 
-        ? null
+        ? (day.failureStep ? `Failed step: ${day.failureStep}` : null)
         : 'No run recorded';
     
     return `
@@ -1126,13 +1126,12 @@ function showWeatherModal(sectionId, testId) {
         <div class="weather-day-failures">
           <div class="day-failures-header">Failed tests (${failureCount}):</div>
           <ul class="day-failures-list">
-            ${uniqueDayFailures.slice(0, 5).map(f => `
+            ${uniqueDayFailures.map(f => `
               <li class="day-failure-item">
                 <span class="failure-marker">✗</span>
                 <span class="failure-name">${f.name}</span>
               </li>
             `).join('')}
-            ${failureCount > 5 ? `<li class="day-failure-more">...and ${failureCount - 5} more</li>` : ''}
           </ul>
         </div>
       ` : ''}
@@ -1461,13 +1460,17 @@ function showErrorModal(sectionId, testId) {
       <div class="failed-tests-list">
         <h4>Failed Tests (${test.error.failures.length})</h4>
         <ul class="failures-list">
-          ${test.error.failures.map(f => `
+          ${test.error.failures.map(f => {
+            // Detect Go tests (start with capital Test or contain /)
+            const isGoTest = /^Test[A-Z]/.test(f.name) || f.name.includes('/');
+            const marker = isGoTest ? '--- FAIL:' : `not ok ${f.number}`;
+            return `
             <li class="failure-item">
-              <span class="failure-marker">not ok ${f.number}</span>
+              <span class="failure-marker">${marker}</span>
               <span class="failure-name">${f.name}</span>
               ${f.comment ? `<span class="failure-comment"># ${f.comment}</span>` : ''}
             </li>
-          `).join('')}
+          `}).join('')}
         </ul>
       </div>
     `;

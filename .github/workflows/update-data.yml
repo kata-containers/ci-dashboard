@@ -224,6 +224,32 @@ jobs:
           done
           
           echo "Fetched $(jq 'length' coco-charts-jobs.json) CoCo Charts jobs total"
+          
+          # Fetch logs for failed CoCo Charts jobs
+          echo ""
+          echo "Fetching logs for failed CoCo Charts jobs..."
+          mkdir -p coco-charts-logs
+          
+          for job_id in $(jq -r '.[] | select(.conclusion == "failure") | .id' coco-charts-jobs.json); do
+            echo "Fetching logs for CoCo Charts job $job_id..."
+            
+            curl -sL \
+              -H "Authorization: token $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/confidential-containers/charts/actions/jobs/$job_id/logs" \
+              -o "coco-charts-logs/$job_id.log" 2>&1
+            
+            if [ -f "coco-charts-logs/$job_id.log" ]; then
+              size=$(wc -c < "coco-charts-logs/$job_id.log")
+              echo "  Log file size: $size bytes"
+              
+              # Check for Go test FAIL patterns
+              fail_count=$(grep -c "FAIL:" "coco-charts-logs/$job_id.log" 2>/dev/null || echo "0")
+              echo "  Found $fail_count 'FAIL:' lines (Go test failures)"
+            fi
+          done
+          
+          echo "CoCo Charts log files fetched: $(ls coco-charts-logs/ 2>/dev/null | wc -l)"
       
       - name: Fetch CoCo Cloud API Adaptor E2E test data
         env:
@@ -261,6 +287,32 @@ jobs:
           done
           
           echo "Fetched $(jq 'length' coco-caa-jobs.json) CAA jobs total"
+          
+          # Fetch logs for failed CAA jobs
+          echo ""
+          echo "Fetching logs for failed CAA jobs..."
+          mkdir -p coco-caa-logs
+          
+          for job_id in $(jq -r '.[] | select(.conclusion == "failure") | .id' coco-caa-jobs.json); do
+            echo "Fetching logs for CAA job $job_id..."
+            
+            curl -sL \
+              -H "Authorization: token $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/confidential-containers/cloud-api-adaptor/actions/jobs/$job_id/logs" \
+              -o "coco-caa-logs/$job_id.log" 2>&1
+            
+            if [ -f "coco-caa-logs/$job_id.log" ]; then
+              size=$(wc -c < "coco-caa-logs/$job_id.log")
+              echo "  Log file size: $size bytes"
+              
+              # Check for Go test FAIL patterns
+              fail_count=$(grep -c "FAIL:" "coco-caa-logs/$job_id.log" 2>/dev/null || echo "0")
+              echo "  Found $fail_count 'FAIL:' lines (Go test failures)"
+            fi
+          done
+          
+          echo "CAA log files fetched: $(ls coco-caa-logs/ 2>/dev/null | wc -l)"
       
       - name: Process data
         id: process

@@ -82,6 +82,50 @@ if (fs.existsSync(logsDir)) {
   console.log('No job-logs directory found');
 }
 
+// Load CoCo Charts job logs
+const cocoChartsLogsDir = 'coco-charts-logs';
+if (fs.existsSync(cocoChartsLogsDir)) {
+  const logFiles = fs.readdirSync(cocoChartsLogsDir).filter(f => f.endsWith('.log'));
+  console.log(`Found ${logFiles.length} CoCo Charts job log files`);
+  
+  logFiles.forEach(file => {
+    const jobId = file.replace('.log', '');
+    try {
+      const content = fs.readFileSync(path.join(cocoChartsLogsDir, file), 'utf8');
+      jobLogs[jobId] = content;
+      
+      const goFailCount = (content.match(/FAIL:\s+\S+/gi) || []).length;
+      console.log(`  CoCo Charts Log ${jobId}: ${content.length} bytes, ${goFailCount} "FAIL:" (Go) lines found`);
+    } catch (e) {
+      console.warn(`Could not read CoCo Charts log for job ${jobId}: ${e.message}`);
+    }
+  });
+} else {
+  console.log('No coco-charts-logs directory found');
+}
+
+// Load CAA job logs
+const caaLogsDir = 'coco-caa-logs';
+if (fs.existsSync(caaLogsDir)) {
+  const logFiles = fs.readdirSync(caaLogsDir).filter(f => f.endsWith('.log'));
+  console.log(`Found ${logFiles.length} CAA job log files`);
+  
+  logFiles.forEach(file => {
+    const jobId = file.replace('.log', '');
+    try {
+      const content = fs.readFileSync(path.join(caaLogsDir, file), 'utf8');
+      jobLogs[jobId] = content;
+      
+      const goFailCount = (content.match(/FAIL:\s+\S+/gi) || []).length;
+      console.log(`  CAA Log ${jobId}: ${content.length} bytes, ${goFailCount} "FAIL:" (Go) lines found`);
+    } catch (e) {
+      console.warn(`Could not read CAA log for job ${jobId}: ${e.message}`);
+    }
+  });
+} else {
+  console.log('No coco-caa-logs directory found');
+}
+
 /**
  * Parse job logs to extract test failure details from TAP output
  */
@@ -1016,7 +1060,7 @@ const allJobsSection = {
       retriedAndPassed: retriedAndPassed, // True if first attempt failed but retry passed (FLAKY!)
       runId: latestJob?.workflow_run_id || latestJob?.run_id?.toString() || null,
       jobId: latestJob?.id?.toString() || null, // Links to first attempt
-      error: errorDetails
+      error: errorDetails,
       maintainers: maintainers
     };
   })
@@ -1344,6 +1388,7 @@ try {
           const dayJob = dayJobs[0] || null;
           let dayStatus = 'none';
           let failureStep = null;
+          let failureDetails = null;
           
           if (dayJob) {
             if (dayJob.conclusion === 'success') {
@@ -1352,6 +1397,12 @@ try {
               dayStatus = 'failed';
               const failedStep = dayJob.steps?.find(s => s.conclusion === 'failure');
               failureStep = failedStep?.name || 'Unknown step';
+              
+              // Parse test failures from logs if available
+              const testFailures = parseTestFailures(dayJob.id.toString());
+              if (testFailures && testFailures.failures.length > 0) {
+                failureDetails = testFailures;
+              }
             }
           }
           
@@ -1361,7 +1412,8 @@ try {
             runId: dayJob?.workflow_run_id || dayJob?.run_id?.toString() || null,
             jobId: dayJob?.id?.toString() || null,
             duration: dayJob ? formatDuration(dayJob.started_at, dayJob.completed_at) : null,
-            failureStep: failureStep
+            failureStep: failureStep,
+            failureDetails: failureDetails
           });
         }
         
@@ -1376,6 +1428,33 @@ try {
         // Find last failure and success
         const lastFailureJob = matchingJobs.find(j => j.conclusion === 'failure');
         const lastSuccessJob = matchingJobs.find(j => j.conclusion === 'success');
+        
+        // Get error details if failed
+        let errorDetails = null;
+        if (status === 'failed' && latestJob?.id) {
+          const failedStep = latestJob.steps?.find(s => s.conclusion === 'failure');
+          const testFailures = parseTestFailures(latestJob.id.toString());
+          
+          if (testFailures && testFailures.failures.length > 0) {
+            errorDetails = {
+              step: failedStep?.name || 'Unknown step',
+              testResults: testFailures.stats,
+              failures: testFailures.failures.slice(0, 20),
+              output: testFailures.failures.map(f => {
+                const isGoTest = /^Test[A-Z]/.test(f.name) || f.name.includes('/');
+                if (isGoTest) {
+                  return `--- FAIL: ${f.name}`;
+                }
+                return `not ok ${f.number} - ${f.name}${f.comment ? ' # ' + f.comment : ''}`;
+              }).join('\n')
+            };
+          } else {
+            errorDetails = {
+              step: failedStep?.name || 'Unknown step',
+              output: 'View full log on GitHub for details'
+            };
+          }
+        }
         
         return {
           id: testId,
@@ -1392,7 +1471,8 @@ try {
           runId: latestJob?.workflow_run_id || latestJob?.run_id?.toString() || null,
           jobId: latestJob?.id?.toString() || null,
           sourceRepo: 'confidential-containers/charts',
-          maintainers: []
+          maintainers: [],
+          error: errorDetails
         };
       })
     };
@@ -1468,6 +1548,8 @@ try {
           let dayStatus = 'none';
           let failureStep = null;
           
+          let failureDetails = null;
+          
           if (dayJob) {
             if (dayJob.conclusion === 'success') {
               dayStatus = 'passed';
@@ -1475,6 +1557,12 @@ try {
               dayStatus = 'failed';
               const failedStep = dayJob.steps?.find(s => s.conclusion === 'failure');
               failureStep = failedStep?.name || 'Unknown step';
+              
+              // Parse test failures from logs if available
+              const testFailures = parseTestFailures(dayJob.id.toString());
+              if (testFailures && testFailures.failures.length > 0) {
+                failureDetails = testFailures;
+              }
             }
           }
           
@@ -1484,7 +1572,8 @@ try {
             runId: dayJob?.workflow_run_id || dayJob?.run_id?.toString() || null,
             jobId: dayJob?.id?.toString() || null,
             duration: dayJob ? formatDuration(dayJob.started_at, dayJob.completed_at) : null,
-            failureStep: failureStep
+            failureStep: failureStep,
+            failureDetails: failureDetails
           });
         }
         
@@ -1494,6 +1583,33 @@ try {
         // Find last failure and success
         const lastFailureJob = matchingJobs.find(j => j.conclusion === 'failure');
         const lastSuccessJob = matchingJobs.find(j => j.conclusion === 'success');
+        
+        // Get error details if failed
+        let errorDetails = null;
+        if (status === 'failed' && latestJob?.id) {
+          const failedStep = latestJob.steps?.find(s => s.conclusion === 'failure');
+          const testFailures = parseTestFailures(latestJob.id.toString());
+          
+          if (testFailures && testFailures.failures.length > 0) {
+            errorDetails = {
+              step: failedStep?.name || 'Unknown step',
+              testResults: testFailures.stats,
+              failures: testFailures.failures.slice(0, 20),
+              output: testFailures.failures.map(f => {
+                const isGoTest = /^Test[A-Z]/.test(f.name) || f.name.includes('/');
+                if (isGoTest) {
+                  return `--- FAIL: ${f.name}`;
+                }
+                return `not ok ${f.number} - ${f.name}${f.comment ? ' # ' + f.comment : ''}`;
+              }).join('\n')
+            };
+          } else {
+            errorDetails = {
+              step: failedStep?.name || 'Unknown step',
+              output: 'View full log on GitHub for details'
+            };
+          }
+        }
         
         return {
           id: testId,
@@ -1510,7 +1626,8 @@ try {
           runId: latestJob?.workflow_run_id || latestJob?.run_id?.toString() || null,
           jobId: latestJob?.id?.toString() || null,
           sourceRepo: 'confidential-containers/cloud-api-adaptor',
-          maintainers: []
+          maintainers: [],
+          error: errorDetails
         };
       })
     };
