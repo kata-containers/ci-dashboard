@@ -1,5 +1,5 @@
 {
-  "lastRefresh": "2026-01-09T01:28:21.846Z",
+  "lastRefresh": "2026-01-09T04:04:39.847Z",
   "sections": [
     {
       "id": "nvidia-gpu",
@@ -19,7 +19,7 @@
           "isRequired": true,
           "duration": "10m 24s",
           "lastFailure": "4 days ago",
-          "lastSuccess": "Just now",
+          "lastSuccess": "3h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -137,7 +137,7 @@
           "isRequired": true,
           "duration": "23m 1s",
           "lastFailure": "4 days ago",
-          "lastSuccess": "Just now",
+          "lastSuccess": "3h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -253,14 +253,14 @@
           "name": "non-TEE with nydus snapshotter",
           "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
           "fullName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
-          "status": "not_run",
+          "status": "failed",
           "categories": [
             "tee",
             "required"
           ],
           "isRequired": true,
-          "duration": "N/A",
-          "lastFailure": "Never",
+          "duration": "60m 28s",
+          "lastFailure": "3h ago",
           "lastSuccess": "Yesterday",
           "weatherHistory": [
             {
@@ -346,21 +346,83 @@
             },
             {
               "date": "2026-01-09T00:00:00.000Z",
-              "status": "none",
+              "status": "failed",
               "runId": "20836507424",
               "jobId": "59863029492",
-              "duration": "N/A",
-              "failureStep": null,
-              "failureDetails": null
+              "duration": "60m 28s",
+              "failureStep": "k8s-guest-pull-image.bats",
+              "failureDetails": {
+                "failures": [
+                  {
+                    "number": 3,
+                    "name": "Test we can pull an image inside the guest using trusted storage",
+                    "comment": "",
+                    "file": "k8s-guest-pull-image.bats"
+                  },
+                  {
+                    "number": 3,
+                    "name": "Test we can pull an image inside the guest using trusted storage",
+                    "comment": "",
+                    "file": "##[group]k8s-guest-pull-image.bats"
+                  }
+                ],
+                "stats": {
+                  "total": 254,
+                  "passed": 252,
+                  "failed": 2,
+                  "skipped": 0
+                },
+                "batsFiles": [
+                  "k8s-guest-pull-image.bats"
+                ]
+              }
             }
           ],
-          "failureCount": 0,
-          "failedTestsInWeather": [],
+          "failureCount": 1,
+          "failedTestsInWeather": [
+            {
+              "name": "Test we can pull an image inside the guest using trusted storage",
+              "count": 1,
+              "dates": [
+                "2026-01-09"
+              ],
+              "files": [
+                "k8s-guest-pull-image.bats"
+              ]
+            }
+          ],
           "retried": 0,
           "setupRetry": false,
           "runId": "20836507424",
           "jobId": "59863029492",
-          "error": null,
+          "error": {
+            "step": "k8s-guest-pull-image.bats, ##[group]k8s-guest-pull-image.bats",
+            "batsFiles": [
+              "k8s-guest-pull-image.bats",
+              "##[group]k8s-guest-pull-image.bats"
+            ],
+            "testResults": {
+              "total": 254,
+              "passed": 252,
+              "failed": 2,
+              "skipped": 0
+            },
+            "failures": [
+              {
+                "number": 3,
+                "name": "Test we can pull an image inside the guest using trusted storage",
+                "comment": "",
+                "file": "k8s-guest-pull-image.bats"
+              },
+              {
+                "number": 3,
+                "name": "Test we can pull an image inside the guest using trusted storage",
+                "comment": "",
+                "file": "##[group]k8s-guest-pull-image.bats"
+              }
+            ],
+            "output": "not ok 3 - Test we can pull an image inside the guest using trusted storage\nnot ok 3 - Test we can pull an image inside the guest using trusted storage"
+          },
           "maintainers": [
             "@stevenhorsman",
             "@wainersm"
@@ -378,7 +440,7 @@
           "isRequired": false,
           "duration": "41m 25s",
           "lastFailure": "Never",
-          "lastSuccess": "Just now",
+          "lastSuccess": "3h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -494,7 +556,7 @@
           ],
           "isRequired": false,
           "duration": "0m 19s",
-          "lastFailure": "Just now",
+          "lastFailure": "3h ago",
           "lastSuccess": "2 days ago",
           "weatherHistory": [
             {
@@ -742,7 +804,7 @@
           "isRequired": true,
           "duration": "22m 13s",
           "lastFailure": "Never",
-          "lastSuccess": "18h ago",
+          "lastSuccess": "20h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -860,7 +922,7 @@
           "isRequired": true,
           "duration": "23m 1s",
           "lastFailure": "4 days ago",
-          "lastSuccess": "Just now",
+          "lastSuccess": "3h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -976,7 +1038,7 @@
           "isRequired": false,
           "duration": "39m 59s",
           "lastFailure": "Never",
-          "lastSuccess": "Just now",
+          "lastSuccess": "3h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -1085,15 +1147,15 @@
           "name": "non-TEE with runtime-rs and nydus snapshotter",
           "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
           "fullName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
-          "status": "not_run",
+          "status": "passed",
           "categories": [
             "tee",
             "required"
           ],
           "isRequired": true,
-          "duration": "N/A",
+          "duration": "62m 21s",
           "lastFailure": "Never",
-          "lastSuccess": "Yesterday",
+          "lastSuccess": "3h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -1178,10 +1240,10 @@
             },
             {
               "date": "2026-01-09T00:00:00.000Z",
-              "status": "none",
+              "status": "passed",
               "runId": "20836507424",
               "jobId": "59863029445",
-              "duration": "N/A",
+              "duration": "62m 21s",
               "failureStep": null,
               "failureDetails": null
             }
@@ -1210,7 +1272,7 @@
           "isRequired": false,
           "duration": "17m 3s",
           "lastFailure": "2 days ago",
-          "lastSuccess": "Just now",
+          "lastSuccess": "3h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -1650,8 +1712,8 @@
           ],
           "isRequired": false,
           "duration": "0m 6s",
-          "lastFailure": "20h ago",
-          "lastSuccess": "15h ago",
+          "lastFailure": "23h ago",
+          "lastSuccess": "18h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -1767,8 +1829,8 @@
           ],
           "isRequired": false,
           "duration": "0m 9s",
-          "lastFailure": "20h ago",
-          "lastSuccess": "15h ago",
+          "lastFailure": "23h ago",
+          "lastSuccess": "18h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -1884,8 +1946,8 @@
           ],
           "isRequired": false,
           "duration": "0m 7s",
-          "lastFailure": "20h ago",
-          "lastSuccess": "15h ago",
+          "lastFailure": "23h ago",
+          "lastSuccess": "18h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -2008,7 +2070,7 @@
           "isRequired": false,
           "duration": "0m 7s",
           "lastFailure": "Never",
-          "lastSuccess": "20h ago",
+          "lastSuccess": "23h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -2124,8 +2186,8 @@
           ],
           "isRequired": false,
           "duration": "0m 6s",
-          "lastFailure": "20h ago",
-          "lastSuccess": "15h ago",
+          "lastFailure": "23h ago",
+          "lastSuccess": "18h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -2241,8 +2303,8 @@
           ],
           "isRequired": false,
           "duration": "0m 9s",
-          "lastFailure": "20h ago",
-          "lastSuccess": "15h ago",
+          "lastFailure": "23h ago",
+          "lastSuccess": "18h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -2358,8 +2420,8 @@
           ],
           "isRequired": false,
           "duration": "0m 7s",
-          "lastFailure": "20h ago",
-          "lastSuccess": "15h ago",
+          "lastFailure": "23h ago",
+          "lastSuccess": "18h ago",
           "weatherHistory": [
             {
               "date": "2025-12-31T00:00:00.000Z",
@@ -2483,8 +2545,8 @@
         ],
         "isRequired": false,
         "duration": "0m 9s",
-        "lastFailure": "20h ago",
-        "lastSuccess": "15h ago",
+        "lastFailure": "23h ago",
+        "lastSuccess": "18h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -2600,8 +2662,8 @@
         ],
         "isRequired": false,
         "duration": "0m 7s",
-        "lastFailure": "20h ago",
-        "lastSuccess": "15h ago",
+        "lastFailure": "23h ago",
+        "lastSuccess": "18h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -2717,8 +2779,8 @@
         ],
         "isRequired": false,
         "duration": "0m 6s",
-        "lastFailure": "20h ago",
-        "lastSuccess": "15h ago",
+        "lastFailure": "23h ago",
+        "lastSuccess": "18h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -2834,7 +2896,7 @@
         "isRequired": false,
         "duration": "0m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -2950,7 +3012,7 @@
         "isRequired": true,
         "duration": "0m 35s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -3071,7 +3133,7 @@
         "isRequired": false,
         "duration": "0m 56s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -3192,7 +3254,7 @@
         "isRequired": false,
         "duration": "0m 57s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -3315,7 +3377,7 @@
         "isRequired": true,
         "duration": "0m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -3438,7 +3500,7 @@
         "isRequired": true,
         "duration": "0m 46s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -3561,7 +3623,7 @@
         "isRequired": false,
         "duration": "0m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -3684,7 +3746,7 @@
         "isRequired": true,
         "duration": "0m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -3807,7 +3869,7 @@
         "isRequired": true,
         "duration": "1m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -3928,7 +3990,7 @@
         "isRequired": false,
         "duration": "0m 57s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -4051,7 +4113,7 @@
         "isRequired": true,
         "duration": "1m 16s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -4175,7 +4237,7 @@
         "isRequired": true,
         "duration": "1m 15s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -4298,7 +4360,7 @@
         "isRequired": false,
         "duration": "0m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -4421,7 +4483,7 @@
         "isRequired": true,
         "duration": "0m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -4544,7 +4606,7 @@
         "isRequired": true,
         "duration": "0m 57s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -4668,7 +4730,7 @@
         "isRequired": true,
         "duration": "0m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -4791,7 +4853,7 @@
         "isRequired": false,
         "duration": "0m 59s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -4912,7 +4974,7 @@
         "isRequired": false,
         "duration": "1m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -5035,7 +5097,7 @@
         "isRequired": true,
         "duration": "0m 47s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -5159,7 +5221,7 @@
         "isRequired": true,
         "duration": "0m 46s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -5282,7 +5344,7 @@
         "isRequired": false,
         "duration": "0m 47s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -5405,7 +5467,7 @@
         "isRequired": true,
         "duration": "0m 52s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -5647,7 +5709,7 @@
         "isRequired": false,
         "duration": "1m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -5768,7 +5830,7 @@
         "isRequired": false,
         "duration": "0m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -5889,7 +5951,7 @@
         "isRequired": false,
         "duration": "1m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -6012,7 +6074,7 @@
         "isRequired": false,
         "duration": "1m 17s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -6135,7 +6197,7 @@
         "isRequired": false,
         "duration": "1m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -6256,7 +6318,7 @@
         "isRequired": false,
         "duration": "1m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -6377,7 +6439,7 @@
         "isRequired": false,
         "duration": "0m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -6500,7 +6562,7 @@
         "isRequired": false,
         "duration": "1m 15s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -6623,7 +6685,7 @@
         "isRequired": false,
         "duration": "1m 11s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -6744,7 +6806,7 @@
         "isRequired": false,
         "duration": "1m 23s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -6867,7 +6929,7 @@
         "isRequired": true,
         "duration": "0m 45s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -6990,7 +7052,7 @@
         "isRequired": true,
         "duration": "0m 49s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -7113,7 +7175,7 @@
         "isRequired": true,
         "duration": "0m 47s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -7236,7 +7298,7 @@
         "isRequired": true,
         "duration": "1m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -7359,7 +7421,7 @@
         "isRequired": true,
         "duration": "0m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -7482,7 +7544,7 @@
         "isRequired": true,
         "duration": "0m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -7605,7 +7667,7 @@
         "isRequired": true,
         "duration": "1m 31s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -7728,7 +7790,7 @@
         "isRequired": true,
         "duration": "0m 13s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -7970,7 +8032,7 @@
         "isRequired": false,
         "duration": "0m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -8093,7 +8155,7 @@
         "isRequired": false,
         "duration": "0m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -8216,7 +8278,7 @@
         "isRequired": false,
         "duration": "0m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -8339,7 +8401,7 @@
         "isRequired": false,
         "duration": "0m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -8460,7 +8522,7 @@
         "isRequired": false,
         "duration": "0m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -8702,7 +8764,7 @@
         "isRequired": false,
         "duration": "0m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -8944,7 +9006,7 @@
         "isRequired": false,
         "duration": "1m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -9065,7 +9127,7 @@
         "isRequired": false,
         "duration": "1m 3s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -9186,7 +9248,7 @@
         "isRequired": false,
         "duration": "1m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -9793,7 +9855,7 @@
         "isRequired": false,
         "duration": "1m 8s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -10155,7 +10217,7 @@
         "categories": [],
         "isRequired": false,
         "duration": "1m 26s",
-        "lastFailure": "1h ago",
+        "lastFailure": "3h ago",
         "lastSuccess": "Yesterday",
         "weatherHistory": [
           {
@@ -12099,7 +12161,7 @@
         "categories": [],
         "isRequired": false,
         "duration": "2m 53s",
-        "lastFailure": "1h ago",
+        "lastFailure": "3h ago",
         "lastSuccess": "Yesterday",
         "weatherHistory": [
           {
@@ -13444,7 +13506,7 @@
         "isRequired": false,
         "duration": "1m 10s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -13689,7 +13751,7 @@
         ],
         "isRequired": false,
         "duration": "2m 32s",
-        "lastFailure": "1h ago",
+        "lastFailure": "3h ago",
         "lastSuccess": "2 days ago",
         "weatherHistory": [
           {
@@ -15290,7 +15352,7 @@
         "isRequired": false,
         "duration": "0m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -15534,7 +15596,7 @@
         "isRequired": true,
         "duration": "6m 24s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -16629,7 +16691,7 @@
         "isRequired": true,
         "duration": "3m 59s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -16752,7 +16814,7 @@
         "isRequired": true,
         "duration": "4m 56s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -16875,7 +16937,7 @@
         "isRequired": true,
         "duration": "4m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -16998,7 +17060,7 @@
         "isRequired": true,
         "duration": "3m 51s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -17121,7 +17183,7 @@
         "isRequired": true,
         "duration": "4m 52s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -17244,7 +17306,7 @@
         "isRequired": true,
         "duration": "4m 52s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -17367,7 +17429,7 @@
         "isRequired": true,
         "duration": "4m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -17490,7 +17552,7 @@
         "isRequired": true,
         "duration": "3m 36s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -17613,7 +17675,7 @@
         "isRequired": true,
         "duration": "4m 30s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -17736,7 +17798,7 @@
         "isRequired": true,
         "duration": "4m 14s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -17859,7 +17921,7 @@
         "isRequired": true,
         "duration": "3m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -17980,7 +18042,7 @@
         "isRequired": false,
         "duration": "1m 57s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -18103,7 +18165,7 @@
         "isRequired": true,
         "duration": "1m 19s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -18226,7 +18288,7 @@
         "isRequired": true,
         "duration": "1m 49s",
         "lastFailure": "1/1/2026",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -18349,7 +18411,7 @@
         "isRequired": true,
         "duration": "2m 17s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -18472,7 +18534,7 @@
         "isRequired": true,
         "duration": "2m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -18595,7 +18657,7 @@
         "isRequired": true,
         "duration": "0m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -18718,7 +18780,7 @@
         "isRequired": true,
         "duration": "1m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -18841,7 +18903,7 @@
         "isRequired": true,
         "duration": "1m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -18962,7 +19024,7 @@
         "isRequired": false,
         "duration": "1m 31s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -19085,7 +19147,7 @@
         "isRequired": true,
         "duration": "1m 23s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -19208,7 +19270,7 @@
         "isRequired": true,
         "duration": "1m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -19331,7 +19393,7 @@
         "isRequired": true,
         "duration": "1m 20s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -19452,7 +19514,7 @@
         "isRequired": false,
         "duration": "1m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -20551,7 +20613,7 @@
         "isRequired": true,
         "duration": "4m 43s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -20674,7 +20736,7 @@
         "isRequired": true,
         "duration": "3m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -20797,7 +20859,7 @@
         "isRequired": true,
         "duration": "4m 12s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -20920,7 +20982,7 @@
         "isRequired": true,
         "duration": "5m 13s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -21043,7 +21105,7 @@
         "isRequired": true,
         "duration": "4m 13s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -21166,7 +21228,7 @@
         "isRequired": true,
         "duration": "5m 30s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -21289,7 +21351,7 @@
         "isRequired": true,
         "duration": "4m 33s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -21412,7 +21474,7 @@
         "isRequired": true,
         "duration": "4m 30s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -21535,7 +21597,7 @@
         "isRequired": true,
         "duration": "5m 11s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -21658,7 +21720,7 @@
         "isRequired": true,
         "duration": "5m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -22635,7 +22697,7 @@
         "isRequired": true,
         "duration": "17m 12s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -22758,7 +22820,7 @@
         "isRequired": true,
         "duration": "46m 30s",
         "lastFailure": "5 days ago",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -22881,7 +22943,7 @@
         "isRequired": true,
         "duration": "46m 55s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -23004,7 +23066,7 @@
         "isRequired": true,
         "duration": "15m 43s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -23127,7 +23189,7 @@
         "isRequired": true,
         "duration": "29m 28s",
         "lastFailure": "Yesterday",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -23250,7 +23312,7 @@
         "isRequired": true,
         "duration": "13m 12s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -23373,7 +23435,7 @@
         "isRequired": true,
         "duration": "28m 16s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -23496,7 +23558,7 @@
         "isRequired": true,
         "duration": "13m 26s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -23619,7 +23681,7 @@
         "isRequired": true,
         "duration": "28m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -23742,7 +23804,7 @@
         "isRequired": true,
         "duration": "15m 57s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -23865,7 +23927,7 @@
         "isRequired": true,
         "duration": "24m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -23988,7 +24050,7 @@
         "isRequired": true,
         "duration": "15m 46s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -24111,7 +24173,7 @@
         "isRequired": true,
         "duration": "22m 18s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -24603,7 +24665,7 @@
         "isRequired": true,
         "duration": "23m 1s",
         "lastFailure": "4 days ago",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -24720,7 +24782,7 @@
         "isRequired": true,
         "duration": "10m 24s",
         "lastFailure": "4 days ago",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -25329,7 +25391,7 @@
         "isRequired": true,
         "duration": "22m 13s",
         "lastFailure": "Never",
-        "lastSuccess": "18h ago",
+        "lastSuccess": "20h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -25692,7 +25754,7 @@
         "isRequired": false,
         "duration": "39m 59s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -25801,14 +25863,14 @@
         "name": "run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
         "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
         "fullName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
-        "status": "not_run",
+        "status": "failed",
         "categories": [
           "tee",
           "required"
         ],
         "isRequired": true,
-        "duration": "N/A",
-        "lastFailure": "Never",
+        "duration": "60m 28s",
+        "lastFailure": "3h ago",
         "lastSuccess": "Yesterday",
         "weatherHistory": [
           {
@@ -25894,21 +25956,83 @@
           },
           {
             "date": "2026-01-09T00:00:00.000Z",
-            "status": "none",
+            "status": "failed",
             "runId": "20836507424",
             "jobId": "59863029492",
-            "duration": "N/A",
-            "failureStep": null,
-            "failureDetails": null
+            "duration": "60m 28s",
+            "failureStep": "k8s-guest-pull-image.bats",
+            "failureDetails": {
+              "failures": [
+                {
+                  "number": 3,
+                  "name": "Test we can pull an image inside the guest using trusted storage",
+                  "comment": "",
+                  "file": "k8s-guest-pull-image.bats"
+                },
+                {
+                  "number": 3,
+                  "name": "Test we can pull an image inside the guest using trusted storage",
+                  "comment": "",
+                  "file": "##[group]k8s-guest-pull-image.bats"
+                }
+              ],
+              "stats": {
+                "total": 254,
+                "passed": 252,
+                "failed": 2,
+                "skipped": 0
+              },
+              "batsFiles": [
+                "k8s-guest-pull-image.bats"
+              ]
+            }
           }
         ],
-        "failureCount": 0,
-        "failedTestsInWeather": [],
+        "failureCount": 1,
+        "failedTestsInWeather": [
+          {
+            "name": "Test we can pull an image inside the guest using trusted storage",
+            "count": 1,
+            "dates": [
+              "2026-01-09"
+            ],
+            "files": [
+              "k8s-guest-pull-image.bats"
+            ]
+          }
+        ],
         "retried": 0,
         "setupRetry": false,
         "runId": "20836507424",
         "jobId": "59863029492",
-        "error": null,
+        "error": {
+          "step": "k8s-guest-pull-image.bats, ##[group]k8s-guest-pull-image.bats",
+          "batsFiles": [
+            "k8s-guest-pull-image.bats",
+            "##[group]k8s-guest-pull-image.bats"
+          ],
+          "testResults": {
+            "total": 254,
+            "passed": 252,
+            "failed": 2,
+            "skipped": 0
+          },
+          "failures": [
+            {
+              "number": 3,
+              "name": "Test we can pull an image inside the guest using trusted storage",
+              "comment": "",
+              "file": "k8s-guest-pull-image.bats"
+            },
+            {
+              "number": 3,
+              "name": "Test we can pull an image inside the guest using trusted storage",
+              "comment": "",
+              "file": "##[group]k8s-guest-pull-image.bats"
+            }
+          ],
+          "output": "not ok 3 - Test we can pull an image inside the guest using trusted storage\nnot ok 3 - Test we can pull an image inside the guest using trusted storage"
+        },
         "maintainers": [
           "@stevenhorsman",
           "@wainersm"
@@ -25919,15 +26043,15 @@
         "name": "run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
         "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
         "fullName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
-        "status": "not_run",
+        "status": "passed",
         "categories": [
           "tee",
           "required"
         ],
         "isRequired": true,
-        "duration": "N/A",
+        "duration": "62m 21s",
         "lastFailure": "Never",
-        "lastSuccess": "Yesterday",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -26012,10 +26136,10 @@
           },
           {
             "date": "2026-01-09T00:00:00.000Z",
-            "status": "none",
+            "status": "passed",
             "runId": "20836507424",
             "jobId": "59863029445",
-            "duration": "N/A",
+            "duration": "62m 21s",
             "failureStep": null,
             "failureDetails": null
           }
@@ -26044,7 +26168,7 @@
         "isRequired": false,
         "duration": "17m 3s",
         "lastFailure": "2 days ago",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -26484,7 +26608,7 @@
         "isRequired": false,
         "duration": "41m 25s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -26600,7 +26724,7 @@
         ],
         "isRequired": false,
         "duration": "0m 19s",
-        "lastFailure": "Just now",
+        "lastFailure": "3h ago",
         "lastSuccess": "2 days ago",
         "weatherHistory": [
           {
@@ -26967,7 +27091,7 @@
         "isRequired": true,
         "duration": "6m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -27090,7 +27214,7 @@
         "isRequired": true,
         "duration": "6m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -27213,7 +27337,7 @@
         "isRequired": true,
         "duration": "4m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -27336,7 +27460,7 @@
         "isRequired": true,
         "duration": "6m 30s",
         "lastFailure": "Never",
-        "lastSuccess": "Just now",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -27580,7 +27704,7 @@
         "isRequired": true,
         "duration": "1m 22s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -27708,7 +27832,7 @@
         "status": "passed",
         "duration": "5m 31s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -27817,7 +27941,7 @@
         "status": "passed",
         "duration": "9m 40s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -27926,7 +28050,7 @@
         "status": "passed",
         "duration": "7m 36s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -28035,7 +28159,7 @@
         "status": "passed",
         "duration": "5m 34s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -28144,7 +28268,7 @@
         "status": "passed",
         "duration": "6m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -28253,7 +28377,7 @@
         "status": "passed",
         "duration": "5m 15s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -28362,7 +28486,7 @@
         "status": "passed",
         "duration": "5m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -28471,7 +28595,7 @@
         "status": "passed",
         "duration": "9m 37s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -28580,7 +28704,7 @@
         "status": "passed",
         "duration": "9m 35s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -28689,7 +28813,7 @@
         "status": "passed",
         "duration": "4m 51s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -28798,7 +28922,7 @@
         "status": "passed",
         "duration": "4m 58s",
         "lastFailure": "Yesterday",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -28907,7 +29031,7 @@
         "status": "passed",
         "duration": "4m 26s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -29016,7 +29140,7 @@
         "status": "passed",
         "duration": "4m 31s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -29125,7 +29249,7 @@
         "status": "passed",
         "duration": "5m 29s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -29234,7 +29358,7 @@
         "status": "passed",
         "duration": "4m 48s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -29343,7 +29467,7 @@
         "status": "passed",
         "duration": "5m 35s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -29452,7 +29576,7 @@
         "status": "passed",
         "duration": "8m 59s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -29561,7 +29685,7 @@
         "status": "passed",
         "duration": "4m 41s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -29670,7 +29794,7 @@
         "status": "passed",
         "duration": "7m 51s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -29779,7 +29903,7 @@
         "status": "passed",
         "duration": "6m 11s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -29888,7 +30012,7 @@
         "status": "passed",
         "duration": "7m 25s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -29997,7 +30121,7 @@
         "status": "passed",
         "duration": "5m 52s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -30106,7 +30230,7 @@
         "status": "passed",
         "duration": "6m 33s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -30215,7 +30339,7 @@
         "status": "passed",
         "duration": "5m 45s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -30324,7 +30448,7 @@
         "status": "passed",
         "duration": "5m 27s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -30433,7 +30557,7 @@
         "status": "passed",
         "duration": "5m 13s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -30542,7 +30666,7 @@
         "status": "passed",
         "duration": "6m 38s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -30651,7 +30775,7 @@
         "status": "passed",
         "duration": "5m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -30760,7 +30884,7 @@
         "status": "passed",
         "duration": "5m 13s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -30869,7 +30993,7 @@
         "status": "passed",
         "duration": "5m 52s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -30978,7 +31102,7 @@
         "status": "passed",
         "duration": "5m 21s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -31087,7 +31211,7 @@
         "status": "passed",
         "duration": "5m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -31196,7 +31320,7 @@
         "status": "passed",
         "duration": "5m 18s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -31305,7 +31429,7 @@
         "status": "passed",
         "duration": "4m 47s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -31414,7 +31538,7 @@
         "status": "passed",
         "duration": "5m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -31523,7 +31647,7 @@
         "status": "passed",
         "duration": "5m 15s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -31632,7 +31756,7 @@
         "status": "passed",
         "duration": "5m 35s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -31741,7 +31865,7 @@
         "status": "passed",
         "duration": "5m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -31850,7 +31974,7 @@
         "status": "passed",
         "duration": "5m 10s",
         "lastFailure": "Never",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -31959,7 +32083,7 @@
         "status": "passed",
         "duration": "8m 17s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -32068,7 +32192,7 @@
         "status": "passed",
         "duration": "7m 11s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -32177,7 +32301,7 @@
         "status": "passed",
         "duration": "7m 13s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "1h ago",
+        "lastSuccess": "3h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -32403,8 +32527,8 @@
         "fullName": "e2e / E2E tests on libvirt for the amd64 architecture / Libvirt e2e tests: (ubuntu-24.04, containerd, mkosi: true",
         "status": "passed",
         "duration": "32m 32s",
-        "lastFailure": "20h ago",
-        "lastSuccess": "16h ago",
+        "lastFailure": "23h ago",
+        "lastSuccess": "19h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -32622,7 +32746,7 @@
         "status": "passed",
         "duration": "29m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -32839,8 +32963,8 @@
         "fullName": "e2e / aws (crio, ubuntu, generic, amd64) / AWS e2e tests: (onprem, crio)",
         "status": "passed",
         "duration": "38m 18s",
-        "lastFailure": "20h ago",
-        "lastSuccess": "16h ago",
+        "lastFailure": "23h ago",
+        "lastSuccess": "19h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -32949,7 +33073,7 @@
         "status": "passed",
         "duration": "0m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -33058,7 +33182,7 @@
         "status": "passed",
         "duration": "4m 39s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -33167,7 +33291,7 @@
         "status": "passed",
         "duration": "3m 36s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -33276,7 +33400,7 @@
         "status": "passed",
         "duration": "6m 1s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -33385,7 +33509,7 @@
         "status": "passed",
         "duration": "3m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -33494,7 +33618,7 @@
         "status": "passed",
         "duration": "17m 31s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -33603,7 +33727,7 @@
         "status": "passed",
         "duration": "4m 56s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -33712,7 +33836,7 @@
         "status": "passed",
         "duration": "10m 10s",
         "lastFailure": "Yesterday",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -34039,7 +34163,7 @@
         "status": "passed",
         "duration": "31m 54s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -34393,7 +34517,7 @@
         "status": "passed",
         "duration": "36m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -34638,7 +34762,7 @@
         "status": "passed",
         "duration": "0m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -34747,7 +34871,7 @@
         "status": "passed",
         "duration": "10m 36s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -34965,7 +35089,7 @@
         "status": "passed",
         "duration": "8m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -35074,7 +35198,7 @@
         "status": "passed",
         "duration": "2m 12s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -35183,7 +35307,7 @@
         "status": "passed",
         "duration": "2m 32s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -35292,7 +35416,7 @@
         "status": "passed",
         "duration": "2m 35s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -35401,7 +35525,7 @@
         "status": "passed",
         "duration": "8m 27s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -35510,7 +35634,7 @@
         "status": "passed",
         "duration": "13m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -35619,7 +35743,7 @@
         "status": "passed",
         "duration": "0m 9s",
         "lastFailure": "Never",
-        "lastSuccess": "20h ago",
+        "lastSuccess": "23h ago",
         "weatherHistory": [
           {
             "date": "2025-12-31T00:00:00.000Z",
@@ -42125,6 +42249,28 @@
           "latestDate": "2025-12-19T00:00:00.000Z",
           "jobIds": [
             "58560676194"
+          ]
+        }
+      ],
+      "uniqueJobsAffected": 1
+    },
+    "Test we can pull an image inside the guest using trusted storage": {
+      "occurrences": [
+        {
+          "date": "2026-01-09T00:00:00.000Z",
+          "jobName": "non-TEE with nydus snapshotter",
+          "jobId": "59863029492",
+          "runId": "20836507424"
+        }
+      ],
+      "totalCount": 1,
+      "affectedJobs": [
+        {
+          "jobName": "non-TEE with nydus snapshotter",
+          "count": 1,
+          "latestDate": "2026-01-09T00:00:00.000Z",
+          "jobIds": [
+            "59863029492"
           ]
         }
       ],
