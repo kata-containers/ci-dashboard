@@ -1,10 +1,10 @@
 {
-  "lastRefresh": "2026-01-15T20:22:49.868Z",
+  "lastRefresh": "2026-01-16T01:07:21.635Z",
   "periodDays": 14,
-  "totalFailures": 144,
+  "totalFailures": 148,
   "totalPRs": 11,
   "confirmedFlakyCount": 41,
-  "mergedDespiteFailureCount": 1,
+  "mergedDespiteFailureCount": 2,
   "failedTests": [
     {
       "name": "Empty dir volume with subPath shares data from initContainer",
@@ -938,6 +938,104 @@
           "runId": "20986295160",
           "runAttempt": 1,
           "isFlaky": false,
+          "prMerged": true
+        }
+      ]
+    },
+    {
+      "name": "Verify nginx connectivity between pods",
+      "file": "k8s-nginx-connectivity.bats",
+      "totalFailures": 6,
+      "flakyCount": 6,
+      "mergedCount": 2,
+      "isConfirmedFlaky": true,
+      "mergedDespiteFailure": true,
+      "uniquePRs": 3,
+      "uniqueDates": [
+        "2026-01-15",
+        "2026-01-14",
+        "2026-01-13"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "count": 6,
+          "flakyCount": 6,
+          "mergedCount": 2
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-01-15",
+          "prNumber": "12334",
+          "prTitle": "Rust linting improvements",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "jobId": "60524692891",
+          "runId": "21029937628",
+          "runAttempt": 3,
+          "isFlaky": true,
+          "prMerged": false
+        },
+        {
+          "date": "2026-01-15",
+          "prNumber": "12334",
+          "prTitle": "Rust linting improvements",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "jobId": "60524692891",
+          "runId": "21029937628",
+          "runAttempt": 3,
+          "isFlaky": true,
+          "prMerged": false
+        },
+        {
+          "date": "2026-01-14",
+          "prNumber": "12280",
+          "prTitle": "runtime: Support subPath mounts for emptyDir volumes in Kata runtime",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "jobId": "60322092792",
+          "runId": "20986108896",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": false
+        },
+        {
+          "date": "2026-01-14",
+          "prNumber": "12280",
+          "prTitle": "runtime: Support subPath mounts for emptyDir volumes in Kata runtime",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "jobId": "60322092792",
+          "runId": "20986108896",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": false
+        },
+        {
+          "date": "2026-01-13",
+          "prNumber": "12252",
+          "prTitle": "kernel: Bump to the new LTS",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "jobId": "60252109915",
+          "runId": "20963766971",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": true
+        },
+        {
+          "date": "2026-01-13",
+          "prNumber": "12252",
+          "prTitle": "kernel: Bump to the new LTS",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
+          "jobId": "60252109915",
+          "runId": "20963766971",
+          "runAttempt": 1,
+          "isFlaky": true,
           "prMerged": true
         }
       ]
@@ -2638,54 +2736,6 @@
       ]
     },
     {
-      "name": "Verify nginx connectivity between pods",
-      "file": "k8s-nginx-connectivity.bats",
-      "totalFailures": 2,
-      "flakyCount": 2,
-      "mergedCount": 0,
-      "isConfirmedFlaky": true,
-      "mergedDespiteFailure": false,
-      "uniquePRs": 1,
-      "uniqueDates": [
-        "2026-01-14"
-      ],
-      "affectedJobs": [
-        {
-          "name": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
-          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
-          "count": 2,
-          "flakyCount": 2,
-          "mergedCount": 0
-        }
-      ],
-      "recentOccurrences": [
-        {
-          "date": "2026-01-14",
-          "prNumber": "12280",
-          "prTitle": "runtime: Support subPath mounts for emptyDir volumes in Kata runtime",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
-          "jobId": "60322092792",
-          "runId": "20986108896",
-          "runAttempt": 1,
-          "isFlaky": true,
-          "prMerged": false
-        },
-        {
-          "date": "2026-01-14",
-          "prNumber": "12280",
-          "prTitle": "runtime: Support subPath mounts for emptyDir volumes in Kata runtime",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
-          "jobId": "60322092792",
-          "runId": "20986108896",
-          "runAttempt": 1,
-          "isFlaky": true,
-          "prMerged": false
-        }
-      ]
-    },
-    {
       "name": "Containers with shared volume",
       "file": "k8s-shared-volume.bats",
       "totalFailures": 2,
@@ -2809,19 +2859,15 @@
   "summary": {
     "totalFailedTests": 41,
     "confirmedFlaky": 41,
-    "mergedDespiteFailure": 1,
+    "mergedDespiteFailure": 2,
     "mostAffectedJob": {
       "name": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
       "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
-      "count": 37,
-      "flakyCount": 37,
-      "mergedCount": 0
+      "count": 41,
+      "flakyCount": 41,
+      "mergedCount": 2
     },
     "trend": [
-      {
-        "date": "2026-01-02",
-        "failures": 0
-      },
       {
         "date": "2026-01-03",
         "failures": 0
@@ -2864,7 +2910,7 @@
       },
       {
         "date": "2026-01-13",
-        "failures": 2
+        "failures": 4
       },
       {
         "date": "2026-01-14",
@@ -2872,16 +2918,20 @@
       },
       {
         "date": "2026-01-15",
-        "failures": 47
+        "failures": 49
+      },
+      {
+        "date": "2026-01-16",
+        "failures": 0
       }
     ],
     "jobBreakdown": [
       {
         "name": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
         "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
-        "count": 37,
-        "flakyCount": 37,
-        "mergedCount": 0
+        "count": 41,
+        "flakyCount": 41,
+        "mergedCount": 2
       },
       {
         "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
