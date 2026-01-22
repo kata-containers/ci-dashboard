@@ -1,8 +1,8 @@
 {
-  "lastRefresh": "2026-01-21T20:30:53.534Z",
+  "lastRefresh": "2026-01-22T01:08:55.997Z",
   "periodDays": 14,
-  "totalFailures": 262,
-  "totalPRs": 14,
+  "totalFailures": 264,
+  "totalPRs": 16,
   "confirmedFlakyCount": 2,
   "mergedDespiteFailureCount": 0,
   "failedTests": [
@@ -4304,6 +4304,54 @@
       ]
     },
     {
+      "name": "Test we cannot pull a large image that pull time exceeds createcontainer timeout inside the guest",
+      "file": "k8s-guest-pull-image.bats",
+      "totalFailures": 2,
+      "flakyCount": 0,
+      "mergedCount": 0,
+      "isConfirmedFlaky": false,
+      "mergedDespiteFailure": false,
+      "uniquePRs": 1,
+      "uniqueDates": [
+        "2026-01-21"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
+          "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-01-21",
+          "prNumber": "12380",
+          "prTitle": "kata-deploy: Update debian in the container image to 13 (trixie)",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
+          "jobId": "61073512463",
+          "runId": "21225705527",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-01-21",
+          "prNumber": "12380",
+          "prTitle": "kata-deploy: Update debian in the container image to 13 (trixie)",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
+          "jobId": "61073512463",
+          "runId": "21225705527",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        }
+      ]
+    },
+    {
       "name": "configmap update works, and preserves symlinks",
       "file": "k8s-inotify.bats",
       "totalFailures": 2,
@@ -4785,7 +4833,7 @@
     }
   ],
   "summary": {
-    "totalFailedTests": 58,
+    "totalFailedTests": 59,
     "confirmedFlaky": 2,
     "mergedDespiteFailure": 0,
     "mostAffectedJob": {
@@ -4796,10 +4844,6 @@
       "mergedCount": 0
     },
     "trend": [
-      {
-        "date": "2026-01-08",
-        "failures": 0
-      },
       {
         "date": "2026-01-09",
         "failures": 0
@@ -4850,7 +4894,11 @@
       },
       {
         "date": "2026-01-21",
-        "failures": 110
+        "failures": 112
+      },
+      {
+        "date": "2026-01-22",
+        "failures": 0
       }
     ],
     "jobBreakdown": [
@@ -4862,17 +4910,17 @@
         "mergedCount": 0
       },
       {
+        "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
+        "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
+        "count": 12,
+        "flakyCount": 0,
+        "mergedCount": 0
+      },
+      {
         "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
         "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
         "count": 10,
         "flakyCount": 2,
-        "mergedCount": 0
-      },
-      {
-        "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
-        "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)",
-        "count": 10,
-        "flakyCount": 0,
         "mergedCount": 0
       },
       {
