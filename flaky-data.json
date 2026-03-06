@@ -1,10 +1,10 @@
 {
-  "lastRefresh": "2026-03-06T16:35:33.500Z",
+  "lastRefresh": "2026-03-06T20:26:11.584Z",
   "periodDays": 14,
   "totalFailures": 292,
-  "totalPRs": 7,
+  "totalPRs": 6,
   "confirmedFlakyCount": 56,
-  "mergedDespiteFailureCount": 8,
+  "mergedDespiteFailureCount": 9,
   "failedTests": [
     {
       "name": "Containers with shared volume",
@@ -1156,8 +1156,8 @@
     {
       "name": "Verify nginx connectivity between pods",
       "file": "k8s-nginx-connectivity.bats",
-      "totalFailures": 8,
-      "flakyCount": 8,
+      "totalFailures": 6,
+      "flakyCount": 6,
       "mergedCount": 2,
       "isConfirmedFlaky": true,
       "mergedDespiteFailure": true,
@@ -1171,8 +1171,8 @@
         {
           "name": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
           "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
-          "count": 6,
-          "flakyCount": 6,
+          "count": 4,
+          "flakyCount": 4,
           "mergedCount": 0
         },
         {
@@ -1228,30 +1228,6 @@
           "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
           "jobId": "65805779607",
           "runId": "22696386852",
-          "runAttempt": 1,
-          "isFlaky": true,
-          "prMerged": false
-        },
-        {
-          "date": "2026-03-04",
-          "prNumber": "12623",
-          "prTitle": "runtime-rs: Fix dragonball's flaky unit tests",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
-          "jobId": "65681243902",
-          "runId": "22660095346",
-          "runAttempt": 1,
-          "isFlaky": true,
-          "prMerged": false
-        },
-        {
-          "date": "2026-03-04",
-          "prNumber": "12623",
-          "prTitle": "runtime-rs: Fix dragonball's flaky unit tests",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
-          "jobId": "65681243902",
-          "runId": "22660095346",
           "runAttempt": 1,
           "isFlaky": true,
           "prMerged": false
@@ -1516,6 +1492,79 @@
           "runId": "22676670749",
           "runAttempt": 1,
           "isFlaky": true,
+          "prMerged": true
+        }
+      ]
+    },
+    {
+      "name": "Test we can pull a large image inside the guest with large createcontainer timeout",
+      "file": "k8s-guest-pull-image.bats",
+      "totalFailures": 4,
+      "flakyCount": 2,
+      "mergedCount": 2,
+      "isConfirmedFlaky": true,
+      "mergedDespiteFailure": true,
+      "uniquePRs": 2,
+      "uniqueDates": [
+        "2026-03-05",
+        "2026-03-04"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "count": 4,
+          "flakyCount": 2,
+          "mergedCount": 2
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-03-05",
+          "prNumber": "12623",
+          "prTitle": "runtime-rs: Fix dragonball's flaky unit tests",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "jobId": "65815357698",
+          "runId": "22699662670",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": false
+        },
+        {
+          "date": "2026-03-05",
+          "prNumber": "12623",
+          "prTitle": "runtime-rs: Fix dragonball's flaky unit tests",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "jobId": "65815357698",
+          "runId": "22699662670",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": false
+        },
+        {
+          "date": "2026-03-04",
+          "prNumber": "12555",
+          "prTitle": "k8s-policy-pvc: use local PV/PVC when no default StorageClass exists",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "jobId": "65794696952",
+          "runId": "22688723608",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": true
+        },
+        {
+          "date": "2026-03-04",
+          "prNumber": "12555",
+          "prTitle": "k8s-policy-pvc: use local PV/PVC when no default StorageClass exists",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "jobId": "65794696952",
+          "runId": "22688723608",
+          "runAttempt": 2,
+          "isFlaky": false,
           "prMerged": true
         }
       ]
@@ -3516,54 +3565,6 @@
     },
     {
       "name": "Test we cannot pull a large image that pull time exceeds createcontainer timeout inside the guest",
-      "file": "k8s-guest-pull-image.bats",
-      "totalFailures": 2,
-      "flakyCount": 2,
-      "mergedCount": 0,
-      "isConfirmedFlaky": true,
-      "mergedDespiteFailure": false,
-      "uniquePRs": 1,
-      "uniqueDates": [
-        "2026-03-05"
-      ],
-      "affectedJobs": [
-        {
-          "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
-          "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
-          "count": 2,
-          "flakyCount": 2,
-          "mergedCount": 0
-        }
-      ],
-      "recentOccurrences": [
-        {
-          "date": "2026-03-05",
-          "prNumber": "12623",
-          "prTitle": "runtime-rs: Fix dragonball's flaky unit tests",
-          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
-          "jobId": "65815357698",
-          "runId": "22699662670",
-          "runAttempt": 1,
-          "isFlaky": true,
-          "prMerged": false
-        },
-        {
-          "date": "2026-03-05",
-          "prNumber": "12623",
-          "prTitle": "runtime-rs: Fix dragonball's flaky unit tests",
-          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
-          "jobId": "65815357698",
-          "runId": "22699662670",
-          "runAttempt": 1,
-          "isFlaky": true,
-          "prMerged": false
-        }
-      ]
-    },
-    {
-      "name": "Test we can pull a large image inside the guest with large createcontainer timeout",
       "file": "k8s-guest-pull-image.bats",
       "totalFailures": 2,
       "flakyCount": 2,
@@ -6098,7 +6099,7 @@
   "summary": {
     "totalFailedTests": 95,
     "confirmedFlaky": 56,
-    "mergedDespiteFailure": 8,
+    "mergedDespiteFailure": 9,
     "mostAffectedJob": {
       "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (sev-snp, qemu-snp)",
       "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (sev-snp, qemu-snp)",
@@ -6175,9 +6176,9 @@
       {
         "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
         "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
-        "count": 90,
+        "count": 92,
         "flakyCount": 90,
-        "mergedCount": 0
+        "mergedCount": 2
       },
       {
         "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
@@ -6222,15 +6223,15 @@
         "mergedCount": 0
       },
       {
-        "name": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
-        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
-        "count": 6,
-        "flakyCount": 6,
+        "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter (qemu-coco-dev, erofs, default)",
+        "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter (qemu-coco-dev, erofs, default)",
+        "count": 4,
+        "flakyCount": 4,
         "mergedCount": 0
       },
       {
-        "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter (qemu-coco-dev, erofs, default)",
-        "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter (qemu-coco-dev, erofs, default)",
+        "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
         "count": 4,
         "flakyCount": 4,
         "mergedCount": 0
