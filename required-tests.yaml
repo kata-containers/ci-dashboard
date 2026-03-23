@@ -8,6 +8,7 @@ required_tests:
   - Cargo Crates Check Runner / cargo-deny-runner
   - GHA security analysis / zizmor
   - Lint GHA workflows / run-actionlint
+  - EditorConfig checker / editorconfig-checker
 
 required_regexps:
   # Always required regexps
@@ -18,6 +19,8 @@ paths:
   - "^ci/openshift-ci/": []
   - "^\\.github/workflows/static-checks": ["static"]
   - "^\\.github/workflows/": []
+  - "^docs/": ["static"]
+  - "^mkdocs\\.yaml$": ["static"]
   - "\\.md$": ["static"]
   # TODO: Expand filters
   # Sources
@@ -46,20 +49,23 @@ mapping:
       - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-containerd-stability (active, cloud-hypervisor)
       - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-containerd-stability (active, dragonball)
       - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-containerd-stability (active, qemu)
+      - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-containerd-stability (active, qemu-runtime-rs)
       - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-containerd-stability (lts, clh)
       - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-containerd-stability (lts, cloud-hypervisor)
       - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-containerd-stability (lts, dragonball)
       - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-containerd-stability (lts, qemu)
+      - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-containerd-stability (lts, qemu-runtime-rs)
       - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-kata-agent-apis
       - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nerdctl-tests (cloud-hypervisor)
       - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nerdctl-tests (dragonball)
       - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nerdctl-tests (qemu)
-      # - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nydus (active, clh)
-      # - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nydus (active, dragonball)
-      # - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nydus (active, qemu)
-      # - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nydus (lts, clh)
-      # - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nydus (lts, dragonball)
-      # - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nydus (lts, qemu)
+      - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nerdctl-tests (qemu-runtime-rs)
+      - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nydus (active, clh)
+      - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nydus (active, dragonball)
+      - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nydus (active, qemu)
+      - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nydus (lts, clh)
+      - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nydus (lts, dragonball)
+      - Kata Containers CI / kata-containers-ci-on-push / run-basic-amd64-tests / run-nydus (lts, qemu)
       - Kata Containers CI / kata-containers-ci-on-push / run-cri-containerd-amd64 (active, cloud-hypervisor) / run-cri-containerd-amd64 (active, cloud-hypervisor)
       - Kata Containers CI / kata-containers-ci-on-push / run-cri-containerd-amd64 (active, clh) / run-cri-containerd-amd64 (active, clh)
       - Kata Containers CI / kata-containers-ci-on-push / run-cri-containerd-amd64 (active, dragonball) / run-cri-containerd-amd64 (active, dragonball)
@@ -75,24 +81,28 @@ mapping:
       - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh, normal)
       - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh, small, containerd)
       - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh, small, oci-distribution)
-      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (ubuntu, clh, normal)
-      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (ubuntu, clh, small)
-      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (ubuntu, cloud-hypervisor, normal)
-      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (ubuntu, cloud-hypervisor, small)
-      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (ubuntu, dragonball, normal)
-      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (ubuntu, dragonball, small)
-      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (ubuntu, qemu, normal)
-      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (ubuntu, qemu, small)
+      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (clh, lts)
+      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (clh, active)
+      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (dragonball, lts)
+      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (dragonball, active)
+      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, lts)
+      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, active)
+      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-runtime-rs, lts)
+      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-runtime-rs, active)
+      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (cloud-hypervisor, lts)
+      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (cloud-hypervisor, active)
       - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (devmapper, qemu, kubeadm)
       - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)
       # - Kata Containers CI / kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (sev-snp, qemu-snp)
       - Kata Containers CI / kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)
+      - Kata Containers CI / kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)
       - Kata Containers CI / kata-containers-ci-on-push / run-kata-deploy-tests / run-kata-deploy-tests (qemu, k0s)
       - Kata Containers CI / kata-containers-ci-on-push / run-kata-deploy-tests / run-kata-deploy-tests (qemu, k3s)
       - Kata Containers CI / kata-containers-ci-on-push / run-kata-deploy-tests / run-kata-deploy-tests (qemu, microk8s)
       - Kata Containers CI / kata-containers-ci-on-push / run-kata-deploy-tests / run-kata-deploy-tests (qemu, rke2)
       - Kata Containers CI / kata-containers-ci-on-push / run-kata-monitor-tests / run-monitor (qemu, crio)
       - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64
+      - Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64
     required-labels:
       - ok-to-test
   build:
@@ -100,22 +110,26 @@ mapping:
     names:
       # ci-on-push.yaml (ci.yaml)
       - Kata Containers CI / kata-containers-ci-on-push / build-and-publish-tee-confidential-unencrypted-image
-      - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (agent-ctl, test)
       - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (cloud-hypervisor-glibc, test)
       - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (cloud-hypervisor, test)
       - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (firecracker, test)
-      - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (kata-ctl, test)
       - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (kernel-dragonball-experimental, test)
       - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (kernel-nvidia-gpu, test)
       - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (kernel, test)
       - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (nydus, test)
       - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (ovmf-sev, test)
+      # - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (ovmf-tdx, test)
       - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (ovmf, test)
       - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (qemu-snp-experimental, test)
       - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (qemu, test)
-      - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (trace-forwarder, test)
       - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-asset (virtiofsd, test)
       - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / create-kata-tarball
+      - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-tools-asset (agent-ctl, test)
+      - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-tools-asset (genpolicy, test)
+      - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-tools-asset (kata-ctl, test)
+      - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-tools-asset (kata-manager, test)
+      - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / build-tools-asset (trace-forwarder, test)
+      - Kata Containers CI / kata-containers-ci-on-push / build-kata-static-tarball-amd64 / create-kata-tools-tarball
       - Kata Containers CI / kata-containers-ci-on-push / publish-kata-deploy-payload-amd64 / kata-payload
     required-labels:
   static:
@@ -160,6 +174,7 @@ mapping:
       - Static checks / build-checks-depending-on-kvm (runtime-rs)
       - Static checks / check-kernel-config-version
       - Static checks / static-checks (make static-checks)
+      - Spelling check / check-spelling
       # static-checks-self-hosted.yaml
       - Static checks self-hosted / build-checks (ubuntu-24.04-s390x) / check (make check, agent, src/agent, rust, libdevmapper, libseccomp, protobuf-compiler, clang, ub...
       - Static checks self-hosted / build-checks (ubuntu-24.04-s390x) / check (make check, dragonball, src/dragonball, rust, ubuntu-24.04-s390x)

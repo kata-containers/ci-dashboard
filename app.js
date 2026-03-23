@@ -12,7 +12,7 @@ let state = {
   loading: true,
   error: null,
   filter: 'all',
-  viewMode: 'all', // 'all', 'tee', 'nvidia', 'ibm' - which section to show
+  viewMode: 'all', // 'all', 'tee', 'nvidia', 'ibm', 'autogen-policy' - which section to show
   showRequiredOnly: false, // filter to show only required jobs
   searchQuery: '',
   sortBy: 'failures-desc', // 'name', 'failures-desc', 'pass-rate-asc', 'last-failure', 'status'
@@ -157,6 +157,9 @@ function getTotalStats() {
   } else if (state.viewMode === 'ibm') {
     const section = state.data.sections?.find(s => s.id === 'ibm');
     testsToCount = section?.tests || [];
+  } else if (state.viewMode === 'autogen-policy') {
+    const section = state.data.sections?.find(s => s.id === 'nightly-autogen-policy');
+    testsToCount = section?.tests || [];
   } else if (state.viewMode === 'coco-charts') {
     testsToCount = state.data.cocoChartsSection?.tests || [];
   } else {
@@ -194,10 +197,10 @@ function matchesCategory(test, category) {
   
   const jobName = test.jobName || test.fullName || test.name || '';
   
-  // For 'tee', 'nvidia', and 'ibm', use the configured sections (exact match)
-  if (category === 'tee' || category === 'nvidia' || category === 'ibm') {
+  // For 'tee', 'nvidia', 'ibm', and 'autogen-policy', use the configured sections (exact match)
+  if (category === 'tee' || category === 'nvidia' || category === 'ibm' || category === 'autogen-policy') {
     // Check if this job is in the configured section
-    const sectionId = category === 'tee' ? 'tee' : (category === 'nvidia' ? 'nvidia-gpu' : 'ibm');
+    const sectionId = category === 'tee' ? 'tee' : (category === 'nvidia' ? 'nvidia-gpu' : (category === 'ibm' ? 'ibm' : 'nightly-autogen-policy'));
     const section = state.data?.sections?.find(s => s.id === sectionId);
     if (section) {
       return section.tests.some(t => t.fullName === jobName || t.jobName === jobName);
@@ -600,6 +603,14 @@ function renderSections() {
         sectionsToRender.push({ ...ibmSection, tests: filteredTests });
       }
     }
+  } else if (state.viewMode === 'autogen-policy') {
+    const autogenSection = state.data.sections?.find(s => s.id === 'nightly-autogen-policy');
+    if (autogenSection) {
+      const filteredTests = filterTests(autogenSection.tests || []);
+      if (filteredTests.length > 0) {
+        sectionsToRender.push({ ...autogenSection, tests: filteredTests });
+      }
+    }
   } else if (state.viewMode === 'coco-charts') {
     // Use the CoCo Charts section (external repo)
     const cocoSection = state.data.cocoChartsSection;
@@ -893,6 +904,9 @@ function updateStats() {
   } else if (state.viewMode === 'ibm') {
     const section = state.data?.sections?.find(s => s.id === 'ibm');
     viewTests = section?.tests || [];
+  } else if (state.viewMode === 'autogen-policy') {
+    const section = state.data?.sections?.find(s => s.id === 'nightly-autogen-policy');
+    viewTests = section?.tests || [];
   } else if (state.viewMode === 'coco-charts') {
     viewTests = state.data?.cocoChartsSection?.tests || [];
   } else {
@@ -1020,6 +1034,9 @@ function updateJobCount() {
     visibleTests = filterTests(section?.tests || []);
   } else if (state.viewMode === 'ibm') {
     const section = state.data.sections?.find(s => s.id === 'ibm');
+    visibleTests = filterTests(section?.tests || []);
+  } else if (state.viewMode === 'autogen-policy') {
+    const section = state.data.sections?.find(s => s.id === 'nightly-autogen-policy');
     visibleTests = filterTests(section?.tests || []);
   } else if (state.viewMode === 'coco-charts') {
     visibleTests = filterTests(state.data.cocoChartsSection?.tests || []);
