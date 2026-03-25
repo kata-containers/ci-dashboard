@@ -1,5 +1,5 @@
 {
-  "lastRefresh": "2026-03-25T09:55:36.188Z",
+  "lastRefresh": "2026-03-25T13:07:48.540Z",
   "sections": [
     {
       "id": "nvidia-gpu",
@@ -19,7 +19,7 @@
           "isRequired": true,
           "duration": "9m 2s",
           "lastFailure": "Never",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -131,12 +131,11 @@
           "status": "failed",
           "categories": [
             "tee",
-            "nvidia",
-            "required"
+            "nvidia"
           ],
-          "isRequired": true,
-          "duration": "8m 16s",
-          "lastFailure": "5h ago",
+          "isRequired": false,
+          "duration": "8m 35s",
+          "lastFailure": "12h ago",
           "lastSuccess": "2 days ago",
           "weatherHistory": [
             {
@@ -248,11 +247,17 @@
               "date": "2026-03-25T00:00:00.000Z",
               "status": "failed",
               "runId": "23518714846",
-              "jobId": "68475519224",
-              "duration": "8m 16s",
-              "failureStep": "k8s-nvidia-nim.bats",
+              "jobId": "68458234891",
+              "duration": "8m 35s",
+              "failureStep": "k8s-confidential-attestation.bats, k8s-nvidia-nim.bats",
               "failureDetails": {
                 "failures": [
+                  {
+                    "number": 4,
+                    "name": "Can get CDH resource when affirming policy is set with reference values",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
                   {
                     "number": 1,
                     "name": "setup_file failed",
@@ -264,15 +269,22 @@
                     "name": "setup_file failed",
                     "comment": "",
                     "file": "##[group]k8s-nvidia-nim.bats"
+                  },
+                  {
+                    "number": 4,
+                    "name": "Can get CDH resource when affirming policy is set with reference values",
+                    "comment": "",
+                    "file": "##[group]k8s-confidential-attestation.bats"
                   }
                 ],
                 "stats": {
                   "total": 12,
-                  "passed": 10,
-                  "failed": 2,
+                  "passed": 8,
+                  "failed": 4,
                   "skipped": 0
                 },
                 "batsFiles": [
+                  "k8s-confidential-attestation.bats",
                   "k8s-nvidia-nim.bats"
                 ]
               }
@@ -282,8 +294,9 @@
           "failedTestsInWeather": [
             {
               "name": "Can get CDH resource when affirming policy is set with reference values",
-              "count": 1,
+              "count": 2,
               "dates": [
+                "2026-03-25",
                 "2026-03-24"
               ],
               "files": [
@@ -301,23 +314,31 @@
               ]
             }
           ],
-          "retried": 1,
+          "retried": 0,
           "setupRetry": false,
           "runId": "23518714846",
-          "jobId": "68475519224",
+          "jobId": "68458234891",
           "error": {
-            "step": "k8s-nvidia-nim.bats, ##[group]k8s-nvidia-nim.bats",
+            "step": "k8s-confidential-attestation.bats, k8s-nvidia-nim.bats, ##[group]k8s-nvidia-nim.bats, ##[group]k8s-confidential-attestation.bats",
             "batsFiles": [
+              "k8s-confidential-attestation.bats",
               "k8s-nvidia-nim.bats",
-              "##[group]k8s-nvidia-nim.bats"
+              "##[group]k8s-nvidia-nim.bats",
+              "##[group]k8s-confidential-attestation.bats"
             ],
             "testResults": {
               "total": 12,
-              "passed": 10,
-              "failed": 2,
+              "passed": 8,
+              "failed": 4,
               "skipped": 0
             },
             "failures": [
+              {
+                "number": 4,
+                "name": "Can get CDH resource when affirming policy is set with reference values",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
               {
                 "number": 1,
                 "name": "setup_file failed",
@@ -329,9 +350,15 @@
                 "name": "setup_file failed",
                 "comment": "",
                 "file": "##[group]k8s-nvidia-nim.bats"
+              },
+              {
+                "number": 4,
+                "name": "Can get CDH resource when affirming policy is set with reference values",
+                "comment": "",
+                "file": "##[group]k8s-confidential-attestation.bats"
               }
             ],
-            "output": "not ok 1 - setup_file failed\nnot ok 1 - setup_file failed"
+            "output": "not ok 4 - Can get CDH resource when affirming policy is set with reference values\nnot ok 1 - setup_file failed\nnot ok 1 - setup_file failed\nnot ok 4 - Can get CDH resource when affirming policy is set with reference values"
           },
           "maintainers": [
             "@fidencio"
@@ -357,7 +384,7 @@
           "isRequired": true,
           "duration": "44m 3s",
           "lastFailure": "Never",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -467,14 +494,14 @@
           "name": "AMD SEV-SNP with nydus snapshotter",
           "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (sev-snp, qemu-snp)",
           "fullName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (sev-snp, qemu-snp)",
-          "status": "passed",
+          "status": "failed",
           "categories": [
             "tee"
           ],
           "isRequired": false,
-          "duration": "50m 58s",
-          "lastFailure": "9h ago",
-          "lastSuccess": "5h ago",
+          "duration": "70m 1s",
+          "lastFailure": "12h ago",
+          "lastSuccess": "Yesterday",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -559,21 +586,117 @@
             },
             {
               "date": "2026-03-25T00:00:00.000Z",
-              "status": "passed",
+              "status": "failed",
               "runId": "23518714846",
-              "jobId": "68475519219",
-              "duration": "50m 58s",
-              "failureStep": null,
-              "failureDetails": null
+              "jobId": "68458234885",
+              "duration": "70m 1s",
+              "failureStep": "k8s-confidential-attestation.bats",
+              "failureDetails": {
+                "failures": [
+                  {
+                    "number": 1,
+                    "name": "Get CDH resource",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 4,
+                    "name": "Can get CDH resource when affirming policy is set with reference values",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "Get CDH resource",
+                    "comment": "",
+                    "file": "##[group]k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 4,
+                    "name": "Can get CDH resource when affirming policy is set with reference values",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  }
+                ],
+                "stats": {
+                  "total": 264,
+                  "passed": 260,
+                  "failed": 4,
+                  "skipped": 0
+                },
+                "batsFiles": [
+                  "k8s-confidential-attestation.bats"
+                ]
+              }
             }
           ],
-          "failureCount": 0,
-          "failedTestsInWeather": [],
-          "retried": 1,
+          "failureCount": 1,
+          "failedTestsInWeather": [
+            {
+              "name": "Get CDH resource",
+              "count": 1,
+              "dates": [
+                "2026-03-25"
+              ],
+              "files": [
+                "k8s-confidential-attestation.bats"
+              ]
+            },
+            {
+              "name": "Can get CDH resource when affirming policy is set with reference values",
+              "count": 1,
+              "dates": [
+                "2026-03-25"
+              ],
+              "files": [
+                "k8s-confidential-attestation.bats"
+              ]
+            }
+          ],
+          "retried": 0,
           "setupRetry": false,
           "runId": "23518714846",
-          "jobId": "68475519219",
-          "error": null,
+          "jobId": "68458234885",
+          "error": {
+            "step": "k8s-confidential-attestation.bats, ##[group]k8s-confidential-attestation.bats",
+            "batsFiles": [
+              "k8s-confidential-attestation.bats",
+              "##[group]k8s-confidential-attestation.bats"
+            ],
+            "testResults": {
+              "total": 264,
+              "passed": 260,
+              "failed": 4,
+              "skipped": 0
+            },
+            "failures": [
+              {
+                "number": 1,
+                "name": "Get CDH resource",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 4,
+                "name": "Can get CDH resource when affirming policy is set with reference values",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 1,
+                "name": "Get CDH resource",
+                "comment": "",
+                "file": "##[group]k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 4,
+                "name": "Can get CDH resource when affirming policy is set with reference values",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              }
+            ],
+            "output": "not ok 1 - Get CDH resource\nnot ok 4 - Can get CDH resource when affirming policy is set with reference values\nnot ok 1 - Get CDH resource\nnot ok 4 - Can get CDH resource when affirming policy is set with reference values"
+          },
           "maintainers": [
             "@AdithyaKrishnan",
             "@hgowda-amd"
@@ -589,7 +712,7 @@
             "tee"
           ],
           "isRequired": false,
-          "duration": "75m 40s",
+          "duration": "20m 40s",
           "lastFailure": "Yesterday",
           "lastSuccess": "2 days ago",
           "weatherHistory": [
@@ -1282,8 +1405,8 @@
               "date": "2026-03-25T00:00:00.000Z",
               "status": "none",
               "runId": "23518714846",
-              "jobId": "68475519228",
-              "duration": "75m 40s",
+              "jobId": "68458234867",
+              "duration": "20m 40s",
               "failureStep": null,
               "failureDetails": null
             }
@@ -1761,10 +1884,10 @@
               ]
             }
           ],
-          "retried": 1,
+          "retried": 0,
           "setupRetry": false,
           "runId": "23518714846",
-          "jobId": "68475519228",
+          "jobId": "68458234867",
           "error": null,
           "maintainers": [
             "@mythi"
@@ -1784,7 +1907,7 @@
           "isRequired": true,
           "duration": "32m 17s",
           "lastFailure": "Never",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -1896,12 +2019,11 @@
           "status": "failed",
           "categories": [
             "tee",
-            "nvidia",
-            "required"
+            "nvidia"
           ],
-          "isRequired": true,
-          "duration": "8m 16s",
-          "lastFailure": "5h ago",
+          "isRequired": false,
+          "duration": "8m 35s",
+          "lastFailure": "12h ago",
           "lastSuccess": "2 days ago",
           "weatherHistory": [
             {
@@ -2013,11 +2135,17 @@
               "date": "2026-03-25T00:00:00.000Z",
               "status": "failed",
               "runId": "23518714846",
-              "jobId": "68475519224",
-              "duration": "8m 16s",
-              "failureStep": "k8s-nvidia-nim.bats",
+              "jobId": "68458234891",
+              "duration": "8m 35s",
+              "failureStep": "k8s-confidential-attestation.bats, k8s-nvidia-nim.bats",
               "failureDetails": {
                 "failures": [
+                  {
+                    "number": 4,
+                    "name": "Can get CDH resource when affirming policy is set with reference values",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
                   {
                     "number": 1,
                     "name": "setup_file failed",
@@ -2029,15 +2157,22 @@
                     "name": "setup_file failed",
                     "comment": "",
                     "file": "##[group]k8s-nvidia-nim.bats"
+                  },
+                  {
+                    "number": 4,
+                    "name": "Can get CDH resource when affirming policy is set with reference values",
+                    "comment": "",
+                    "file": "##[group]k8s-confidential-attestation.bats"
                   }
                 ],
                 "stats": {
                   "total": 12,
-                  "passed": 10,
-                  "failed": 2,
+                  "passed": 8,
+                  "failed": 4,
                   "skipped": 0
                 },
                 "batsFiles": [
+                  "k8s-confidential-attestation.bats",
                   "k8s-nvidia-nim.bats"
                 ]
               }
@@ -2047,8 +2182,9 @@
           "failedTestsInWeather": [
             {
               "name": "Can get CDH resource when affirming policy is set with reference values",
-              "count": 1,
+              "count": 2,
               "dates": [
+                "2026-03-25",
                 "2026-03-24"
               ],
               "files": [
@@ -2066,23 +2202,31 @@
               ]
             }
           ],
-          "retried": 1,
+          "retried": 0,
           "setupRetry": false,
           "runId": "23518714846",
-          "jobId": "68475519224",
+          "jobId": "68458234891",
           "error": {
-            "step": "k8s-nvidia-nim.bats, ##[group]k8s-nvidia-nim.bats",
+            "step": "k8s-confidential-attestation.bats, k8s-nvidia-nim.bats, ##[group]k8s-nvidia-nim.bats, ##[group]k8s-confidential-attestation.bats",
             "batsFiles": [
+              "k8s-confidential-attestation.bats",
               "k8s-nvidia-nim.bats",
-              "##[group]k8s-nvidia-nim.bats"
+              "##[group]k8s-nvidia-nim.bats",
+              "##[group]k8s-confidential-attestation.bats"
             ],
             "testResults": {
               "total": 12,
-              "passed": 10,
-              "failed": 2,
+              "passed": 8,
+              "failed": 4,
               "skipped": 0
             },
             "failures": [
+              {
+                "number": 4,
+                "name": "Can get CDH resource when affirming policy is set with reference values",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
               {
                 "number": 1,
                 "name": "setup_file failed",
@@ -2094,9 +2238,15 @@
                 "name": "setup_file failed",
                 "comment": "",
                 "file": "##[group]k8s-nvidia-nim.bats"
+              },
+              {
+                "number": 4,
+                "name": "Can get CDH resource when affirming policy is set with reference values",
+                "comment": "",
+                "file": "##[group]k8s-confidential-attestation.bats"
               }
             ],
-            "output": "not ok 1 - setup_file failed\nnot ok 1 - setup_file failed"
+            "output": "not ok 4 - Can get CDH resource when affirming policy is set with reference values\nnot ok 1 - setup_file failed\nnot ok 1 - setup_file failed\nnot ok 4 - Can get CDH resource when affirming policy is set with reference values"
           },
           "maintainers": [
             "@fidencio"
@@ -2114,7 +2264,7 @@
           "isRequired": false,
           "duration": "50m 53s",
           "lastFailure": "5 days ago",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -2231,7 +2381,7 @@
           "isRequired": true,
           "duration": "41m 40s",
           "lastFailure": "Never",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -2348,7 +2498,7 @@
           "isRequired": false,
           "duration": "18m 54s",
           "lastFailure": "Never",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -2466,7 +2616,7 @@
           "isRequired": false,
           "duration": "0m 6s",
           "lastFailure": "Never",
-          "lastSuccess": "4h ago",
+          "lastSuccess": "7h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -2583,7 +2733,7 @@
           "isRequired": false,
           "duration": "0m 9s",
           "lastFailure": "2 days ago",
-          "lastSuccess": "4h ago",
+          "lastSuccess": "7h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -2700,7 +2850,7 @@
           "isRequired": false,
           "duration": "0m 6s",
           "lastFailure": "Never",
-          "lastSuccess": "4h ago",
+          "lastSuccess": "7h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -2824,7 +2974,7 @@
           "isRequired": false,
           "duration": "45m 33s",
           "lastFailure": "3/17/2026",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -2977,7 +3127,7 @@
           "isRequired": false,
           "duration": "48m 1s",
           "lastFailure": "Never",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -3094,7 +3244,7 @@
           "isRequired": false,
           "duration": "40m 29s",
           "lastFailure": "Never",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -3212,7 +3362,7 @@
           "isRequired": false,
           "duration": "49m 24s",
           "lastFailure": "Never",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -3322,15 +3472,15 @@
           "name": "k3s · qemu-coco-dev · experimental force guest pull",
           "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-extensive-matrix (k3s, qemu-coco-dev, experimental-force-guest-pull)",
           "fullName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-extensive-matrix (k3s, qemu-coco-dev, experimental-force-guest-pull)",
-          "status": "passed",
+          "status": "failed",
           "categories": [
             "tee",
             "autogen_policy"
           ],
           "isRequired": false,
-          "duration": "53m 2s",
-          "lastFailure": "9h ago",
-          "lastSuccess": "5h ago",
+          "duration": "49m 37s",
+          "lastFailure": "12h ago",
+          "lastSuccess": "2 days ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -3463,20 +3613,45 @@
             },
             {
               "date": "2026-03-25T00:00:00.000Z",
-              "status": "passed",
+              "status": "failed",
               "runId": "23518714846",
-              "jobId": "68475519521",
-              "duration": "53m 2s",
-              "failureStep": null,
-              "failureDetails": null
+              "jobId": "68458234981",
+              "duration": "49m 37s",
+              "failureStep": "k8s-cron-job.bats",
+              "failureDetails": {
+                "failures": [
+                  {
+                    "number": 1,
+                    "name": "Run a cron job to completion",
+                    "comment": "",
+                    "file": "k8s-cron-job.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "Run a cron job to completion",
+                    "comment": "",
+                    "file": "##[group]k8s-cron-job.bats"
+                  }
+                ],
+                "stats": {
+                  "total": 264,
+                  "passed": 262,
+                  "failed": 2,
+                  "skipped": 0
+                },
+                "batsFiles": [
+                  "k8s-cron-job.bats"
+                ]
+              }
             }
           ],
-          "failureCount": 2,
+          "failureCount": 3,
           "failedTestsInWeather": [
             {
               "name": "Run a cron job to completion",
-              "count": 2,
+              "count": 3,
               "dates": [
+                "2026-03-25",
                 "2026-03-24",
                 "2026-03-18"
               ],
@@ -3485,11 +3660,38 @@
               ]
             }
           ],
-          "retried": 1,
+          "retried": 0,
           "setupRetry": false,
           "runId": "23518714846",
-          "jobId": "68475519521",
-          "error": null,
+          "jobId": "68458234981",
+          "error": {
+            "step": "k8s-cron-job.bats, ##[group]k8s-cron-job.bats",
+            "batsFiles": [
+              "k8s-cron-job.bats",
+              "##[group]k8s-cron-job.bats"
+            ],
+            "testResults": {
+              "total": 264,
+              "passed": 262,
+              "failed": 2,
+              "skipped": 0
+            },
+            "failures": [
+              {
+                "number": 1,
+                "name": "Run a cron job to completion",
+                "comment": "",
+                "file": "k8s-cron-job.bats"
+              },
+              {
+                "number": 1,
+                "name": "Run a cron job to completion",
+                "comment": "",
+                "file": "##[group]k8s-cron-job.bats"
+              }
+            ],
+            "output": "not ok 1 - Run a cron job to completion\nnot ok 1 - Run a cron job to completion"
+          },
           "maintainers": [
             "@fidencio"
           ]
@@ -3499,15 +3701,15 @@
           "name": "k3s · runtime-rs · nydus · guest-pull",
           "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-extensive-matrix (k3s, qemu-coco-dev-runtime-rs, nydus, guest-pull)",
           "fullName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-extensive-matrix (k3s, qemu-coco-dev-runtime-rs, nydus, guest-pull)",
-          "status": "passed",
+          "status": "failed",
           "categories": [
             "tee",
             "autogen_policy"
           ],
           "isRequired": false,
-          "duration": "45m 26s",
-          "lastFailure": "9h ago",
-          "lastSuccess": "5h ago",
+          "duration": "45m 15s",
+          "lastFailure": "12h ago",
+          "lastSuccess": "Yesterday",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -3640,33 +3842,122 @@
             },
             {
               "date": "2026-03-25T00:00:00.000Z",
-              "status": "passed",
+              "status": "failed",
               "runId": "23518714846",
-              "jobId": "68475519536",
-              "duration": "45m 26s",
-              "failureStep": null,
-              "failureDetails": null
+              "jobId": "68458234963",
+              "duration": "45m 15s",
+              "failureStep": "k8s-cron-job.bats, k8s-oom.bats",
+              "failureDetails": {
+                "failures": [
+                  {
+                    "number": 1,
+                    "name": "Run a cron job to completion",
+                    "comment": "",
+                    "file": "k8s-cron-job.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "Test OOM events for pods",
+                    "comment": "",
+                    "file": "k8s-oom.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "Test OOM events for pods",
+                    "comment": "",
+                    "file": "##[group]k8s-oom.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "Run a cron job to completion",
+                    "comment": "",
+                    "file": "##[group]k8s-cron-job.bats"
+                  }
+                ],
+                "stats": {
+                  "total": 264,
+                  "passed": 260,
+                  "failed": 4,
+                  "skipped": 0
+                },
+                "batsFiles": [
+                  "k8s-cron-job.bats",
+                  "k8s-oom.bats"
+                ]
+              }
             }
           ],
-          "failureCount": 2,
+          "failureCount": 3,
           "failedTestsInWeather": [
             {
               "name": "Run a cron job to completion",
-              "count": 2,
+              "count": 3,
               "dates": [
+                "2026-03-25",
                 "2026-03-22",
                 "2026-03-21"
               ],
               "files": [
                 "k8s-cron-job.bats"
               ]
+            },
+            {
+              "name": "Test OOM events for pods",
+              "count": 1,
+              "dates": [
+                "2026-03-25"
+              ],
+              "files": [
+                "k8s-oom.bats"
+              ]
             }
           ],
-          "retried": 1,
+          "retried": 0,
           "setupRetry": false,
           "runId": "23518714846",
-          "jobId": "68475519536",
-          "error": null,
+          "jobId": "68458234963",
+          "error": {
+            "step": "k8s-cron-job.bats, k8s-oom.bats, ##[group]k8s-oom.bats, ##[group]k8s-cron-job.bats",
+            "batsFiles": [
+              "k8s-cron-job.bats",
+              "k8s-oom.bats",
+              "##[group]k8s-oom.bats",
+              "##[group]k8s-cron-job.bats"
+            ],
+            "testResults": {
+              "total": 264,
+              "passed": 260,
+              "failed": 4,
+              "skipped": 0
+            },
+            "failures": [
+              {
+                "number": 1,
+                "name": "Run a cron job to completion",
+                "comment": "",
+                "file": "k8s-cron-job.bats"
+              },
+              {
+                "number": 1,
+                "name": "Test OOM events for pods",
+                "comment": "",
+                "file": "k8s-oom.bats"
+              },
+              {
+                "number": 1,
+                "name": "Test OOM events for pods",
+                "comment": "",
+                "file": "##[group]k8s-oom.bats"
+              },
+              {
+                "number": 1,
+                "name": "Run a cron job to completion",
+                "comment": "",
+                "file": "##[group]k8s-cron-job.bats"
+              }
+            ],
+            "output": "not ok 1 - Run a cron job to completion\nnot ok 1 - Test OOM events for pods\nnot ok 1 - Test OOM events for pods\nnot ok 1 - Run a cron job to completion"
+          },
           "maintainers": [
             "@pmores",
             "@lifupan"
@@ -3685,7 +3976,7 @@
           "isRequired": false,
           "duration": "51m 29s",
           "lastFailure": "Never",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -3803,7 +4094,7 @@
           "isRequired": false,
           "duration": "48m 11s",
           "lastFailure": "Never",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -3920,7 +4211,7 @@
           "isRequired": false,
           "duration": "47m 12s",
           "lastFailure": "Yesterday",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -4475,7 +4766,7 @@
           "isRequired": false,
           "duration": "45m 32s",
           "lastFailure": "Never",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -4593,7 +4884,7 @@
           "isRequired": false,
           "duration": "46m 0s",
           "lastFailure": "Yesterday",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -4745,7 +5036,7 @@
           "isRequired": false,
           "duration": "41m 4s",
           "lastFailure": "Never",
-          "lastSuccess": "9h ago",
+          "lastSuccess": "12h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -4869,7 +5160,7 @@
           "isRequired": false,
           "duration": "0m 6s",
           "lastFailure": "5 days ago",
-          "lastSuccess": "4h ago",
+          "lastSuccess": "7h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -4986,7 +5277,7 @@
           "isRequired": false,
           "duration": "0m 6s",
           "lastFailure": "Never",
-          "lastSuccess": "4h ago",
+          "lastSuccess": "7h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -5103,7 +5394,7 @@
           "isRequired": false,
           "duration": "0m 9s",
           "lastFailure": "2 days ago",
-          "lastSuccess": "4h ago",
+          "lastSuccess": "7h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -5220,7 +5511,7 @@
           "isRequired": false,
           "duration": "0m 6s",
           "lastFailure": "Never",
-          "lastSuccess": "4h ago",
+          "lastSuccess": "7h ago",
           "weatherHistory": [
             {
               "date": "2026-03-16T00:00:00.000Z",
@@ -5345,7 +5636,7 @@
         "isRequired": false,
         "duration": "0m 9s",
         "lastFailure": "2 days ago",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "7h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -5462,7 +5753,7 @@
         "isRequired": false,
         "duration": "0m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "7h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -5579,7 +5870,7 @@
         "isRequired": false,
         "duration": "0m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "7h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -5695,7 +5986,7 @@
         "isRequired": false,
         "duration": "0m 6s",
         "lastFailure": "5 days ago",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "7h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -5811,7 +6102,7 @@
         "isRequired": true,
         "duration": "0m 33s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -5932,7 +6223,7 @@
         "isRequired": false,
         "duration": "0m 47s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -6027,7 +6318,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021095",
             "duration": "0m 47s",
@@ -6036,7 +6327,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021095",
@@ -6053,7 +6344,7 @@
         "isRequired": false,
         "duration": "0m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -6176,7 +6467,7 @@
         "isRequired": true,
         "duration": "0m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -6299,7 +6590,7 @@
         "isRequired": true,
         "duration": "0m 45s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -6422,7 +6713,7 @@
         "isRequired": false,
         "duration": "0m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -6517,7 +6808,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021120",
             "duration": "0m 53s",
@@ -6526,7 +6817,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021120",
@@ -6545,7 +6836,7 @@
         "isRequired": true,
         "duration": "0m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -6640,7 +6931,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021105",
             "duration": "0m 40s",
@@ -6649,7 +6940,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021105",
@@ -6668,7 +6959,7 @@
         "isRequired": true,
         "duration": "0m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -6789,7 +7080,7 @@
         "isRequired": false,
         "duration": "0m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -6884,7 +7175,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021122",
             "duration": "0m 53s",
@@ -6893,7 +7184,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021122",
@@ -6912,7 +7203,7 @@
         "isRequired": true,
         "duration": "0m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -7007,7 +7298,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021115",
             "duration": "0m 40s",
@@ -7016,7 +7307,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021115",
@@ -7036,7 +7327,7 @@
         "isRequired": true,
         "duration": "0m 47s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -7131,7 +7422,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021124",
             "duration": "0m 47s",
@@ -7140,7 +7431,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021124",
@@ -7159,7 +7450,7 @@
         "isRequired": true,
         "duration": "0m 43s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -7254,7 +7545,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021150",
             "duration": "0m 43s",
@@ -7263,7 +7554,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021150",
@@ -7282,7 +7573,7 @@
         "isRequired": true,
         "duration": "0m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -7377,7 +7668,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021103",
             "duration": "0m 50s",
@@ -7386,7 +7677,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021103",
@@ -7406,7 +7697,7 @@
         "isRequired": true,
         "duration": "0m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -7501,7 +7792,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021117",
             "duration": "0m 58s",
@@ -7510,7 +7801,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021117",
@@ -7529,7 +7820,7 @@
         "isRequired": false,
         "duration": "0m 43s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -7624,7 +7915,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021127",
             "duration": "0m 43s",
@@ -7633,7 +7924,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021127",
@@ -7650,7 +7941,7 @@
         "isRequired": false,
         "duration": "0m 51s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -7745,7 +8036,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021112",
             "duration": "0m 51s",
@@ -7754,7 +8045,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021112",
@@ -7773,7 +8064,7 @@
         "isRequired": true,
         "duration": "0m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -7868,7 +8159,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021121",
             "duration": "0m 50s",
@@ -7877,7 +8168,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021121",
@@ -7897,7 +8188,7 @@
         "isRequired": true,
         "duration": "0m 46s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -7992,7 +8283,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021110",
             "duration": "0m 46s",
@@ -8001,7 +8292,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021110",
@@ -8020,7 +8311,7 @@
         "isRequired": false,
         "duration": "0m 49s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -8115,7 +8406,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021123",
             "duration": "0m 49s",
@@ -8124,7 +8415,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021123",
@@ -8143,7 +8434,7 @@
         "isRequired": true,
         "duration": "0m 43s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -8238,7 +8529,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021134",
             "duration": "0m 43s",
@@ -8247,7 +8538,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021134",
@@ -8264,7 +8555,7 @@
         "isRequired": false,
         "duration": "1m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -8359,7 +8650,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457111646",
             "duration": "1m 4s",
@@ -8368,7 +8659,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457111646",
@@ -8385,7 +8676,7 @@
         "isRequired": false,
         "duration": "0m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -8480,7 +8771,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457111614",
             "duration": "0m 50s",
@@ -8489,7 +8780,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457111614",
@@ -8506,7 +8797,7 @@
         "isRequired": false,
         "duration": "0m 45s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -8601,7 +8892,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457111607",
             "duration": "0m 45s",
@@ -8610,7 +8901,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457111607",
@@ -8629,7 +8920,7 @@
         "isRequired": false,
         "duration": "1m 15s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -8724,7 +9015,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457111640",
             "duration": "1m 15s",
@@ -8733,7 +9024,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457111640",
@@ -8752,7 +9043,7 @@
         "isRequired": false,
         "duration": "1m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -8847,7 +9138,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457111603",
             "duration": "1m 0s",
@@ -8856,7 +9147,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457111603",
@@ -8873,7 +9164,7 @@
         "isRequired": false,
         "duration": "0m 43s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -8968,7 +9259,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457111613",
             "duration": "0m 43s",
@@ -8977,7 +9268,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457111613",
@@ -8994,7 +9285,7 @@
         "isRequired": false,
         "duration": "0m 51s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -9089,7 +9380,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457111635",
             "duration": "0m 51s",
@@ -9098,7 +9389,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457111635",
@@ -9361,7 +9652,7 @@
         "isRequired": false,
         "duration": "1m 18s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -9456,7 +9747,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457247631",
             "duration": "1m 18s",
@@ -9465,7 +9756,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457247631",
@@ -9484,7 +9775,7 @@
         "isRequired": true,
         "duration": "0m 56s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -9728,7 +10019,7 @@
         "isRequired": true,
         "duration": "0m 43s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -9851,7 +10142,7 @@
         "isRequired": true,
         "duration": "0m 52s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -9946,7 +10237,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457020979",
             "duration": "0m 52s",
@@ -9955,7 +10246,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457020979",
@@ -9974,7 +10265,7 @@
         "isRequired": true,
         "duration": "1m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -10097,7 +10388,7 @@
         "isRequired": true,
         "duration": "0m 47s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -10220,7 +10511,7 @@
         "isRequired": true,
         "duration": "1m 30s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -10315,7 +10606,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457372287",
             "duration": "1m 30s",
@@ -10324,7 +10615,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457372287",
@@ -10343,7 +10634,7 @@
         "isRequired": true,
         "duration": "0m 16s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -10438,7 +10729,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457194455",
             "duration": "0m 16s",
@@ -10447,7 +10738,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457194455",
@@ -10464,7 +10755,7 @@
         "isRequired": false,
         "duration": "0m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -10559,7 +10850,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457237123",
             "duration": "0m 3s",
@@ -10568,7 +10859,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457237123",
@@ -10587,7 +10878,7 @@
         "isRequired": false,
         "duration": "0m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -10682,7 +10973,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457237115",
             "duration": "0m 3s",
@@ -10691,7 +10982,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457237115",
@@ -10710,7 +11001,7 @@
         "isRequired": false,
         "duration": "0m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -10805,7 +11096,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457237109",
             "duration": "0m 5s",
@@ -10814,7 +11105,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457237109",
@@ -10831,7 +11122,7 @@
         "isRequired": false,
         "duration": "0m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -10926,7 +11217,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457237107",
             "duration": "0m 6s",
@@ -10935,7 +11226,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457237107",
@@ -10952,7 +11243,7 @@
         "isRequired": false,
         "duration": "0m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -11047,7 +11338,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457237101",
             "duration": "0m 2s",
@@ -11056,7 +11347,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457237101",
@@ -11073,7 +11364,7 @@
         "isRequired": false,
         "duration": "0m 57s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -11168,7 +11459,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021063",
             "duration": "0m 57s",
@@ -11177,7 +11468,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021063",
@@ -11194,7 +11485,7 @@
         "isRequired": false,
         "duration": "0m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -11315,7 +11606,7 @@
         "isRequired": false,
         "duration": "1m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -11410,7 +11701,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021041",
             "duration": "1m 2s",
@@ -11419,7 +11710,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021041",
@@ -11436,7 +11727,7 @@
         "isRequired": false,
         "duration": "1m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -11557,7 +11848,7 @@
         "isRequired": false,
         "duration": "1m 1s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -11678,7 +11969,7 @@
         "isRequired": false,
         "duration": "7m 2s",
         "lastFailure": "6 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -11773,7 +12064,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021040",
             "duration": "7m 2s",
@@ -11782,7 +12073,7 @@
           }
         ],
         "failureCount": 1,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021040",
@@ -11799,7 +12090,7 @@
         "isRequired": false,
         "duration": "1m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -11894,7 +12185,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021068",
             "duration": "1m 4s",
@@ -11903,7 +12194,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021068",
@@ -11920,7 +12211,7 @@
         "isRequired": false,
         "duration": "1m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -12043,7 +12334,7 @@
         "isRequired": false,
         "duration": "1m 9s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -12138,7 +12429,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021076",
             "duration": "1m 9s",
@@ -12147,7 +12438,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021076",
@@ -12164,7 +12455,7 @@
         "isRequired": false,
         "duration": "1m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -12259,7 +12550,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021043",
             "duration": "1m 6s",
@@ -12268,7 +12559,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021043",
@@ -12285,7 +12576,7 @@
         "isRequired": false,
         "duration": "1m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -12380,7 +12671,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021078",
             "duration": "1m 7s",
@@ -12389,7 +12680,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021078",
@@ -12406,7 +12697,7 @@
         "isRequired": false,
         "duration": "1m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -12501,7 +12792,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021039",
             "duration": "1m 4s",
@@ -12510,7 +12801,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021039",
@@ -12527,7 +12818,7 @@
         "isRequired": false,
         "duration": "0m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -12622,7 +12913,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457021050",
             "duration": "0m 58s",
@@ -12631,7 +12922,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457021050",
@@ -12769,7 +13060,7 @@
         "isRequired": false,
         "duration": "1m 14s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -12864,7 +13155,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457656649",
             "duration": "1m 14s",
@@ -12873,7 +13164,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457656649",
@@ -12892,7 +13183,7 @@
         "isRequired": false,
         "duration": "1m 27s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -12987,7 +13278,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457656642",
             "duration": "1m 27s",
@@ -12996,7 +13287,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457656642",
@@ -13013,7 +13304,7 @@
         "isRequired": false,
         "duration": "1m 8s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -13108,7 +13399,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457656635",
             "duration": "1m 8s",
@@ -13117,7 +13408,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457656635",
@@ -13257,7 +13548,7 @@
         "isRequired": false,
         "duration": "8m 1s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -13352,7 +13643,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457810111",
             "duration": "8m 1s",
@@ -13361,7 +13652,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457810111",
@@ -13378,7 +13669,7 @@
         "isRequired": false,
         "duration": "0m 45s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -13473,7 +13764,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458508137",
             "duration": "0m 45s",
@@ -13482,7 +13773,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458508137",
@@ -13620,7 +13911,7 @@
         "isRequired": false,
         "duration": "0m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -13715,7 +14006,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457798356",
             "duration": "0m 4s",
@@ -13724,7 +14015,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457798356",
@@ -13743,7 +14034,7 @@
         "isRequired": false,
         "duration": "0m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -13838,7 +14129,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457798372",
             "duration": "0m 6s",
@@ -13847,7 +14138,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457798372",
@@ -13985,7 +14276,7 @@
         "isRequired": false,
         "duration": "0m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -14080,7 +14371,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457798330",
             "duration": "0m 3s",
@@ -14089,7 +14380,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457798330",
@@ -14106,7 +14397,7 @@
         "isRequired": false,
         "duration": "2m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -14227,7 +14518,7 @@
         "isRequired": false,
         "duration": "2m 11s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -14348,7 +14639,7 @@
         "isRequired": false,
         "duration": "2m 37s",
         "lastFailure": "5 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -14469,7 +14760,7 @@
         "isRequired": false,
         "duration": "2m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -14711,7 +15002,7 @@
         "isRequired": false,
         "duration": "1m 54s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -14832,7 +15123,7 @@
         "isRequired": false,
         "duration": "1m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -14927,7 +15218,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457443791",
             "duration": "1m 58s",
@@ -14936,7 +15227,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457443791",
@@ -14953,7 +15244,7 @@
         "isRequired": false,
         "duration": "0m 26s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -15048,7 +15339,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457617934",
             "duration": "0m 26s",
@@ -15057,7 +15348,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457617934",
@@ -15195,7 +15486,7 @@
         "isRequired": false,
         "duration": "0m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -15290,7 +15581,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457438422",
             "duration": "0m 2s",
@@ -15299,7 +15590,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457438422",
@@ -15318,7 +15609,7 @@
         "isRequired": false,
         "duration": "1m 13s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -15442,7 +15733,7 @@
         "isRequired": false,
         "duration": "1m 52s",
         "lastFailure": "3 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -15565,7 +15856,7 @@
         "isRequired": false,
         "duration": "1m 13s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -15688,7 +15979,7 @@
         "isRequired": false,
         "duration": "1m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -15783,7 +16074,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457020991",
             "duration": "1m 50s",
@@ -15792,7 +16083,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457020991",
@@ -15811,7 +16102,7 @@
         "isRequired": false,
         "duration": "1m 9s",
         "lastFailure": "5 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -15934,7 +16225,7 @@
         "isRequired": false,
         "duration": "1m 13s",
         "lastFailure": "5 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -16057,7 +16348,7 @@
         "isRequired": false,
         "duration": "1m 28s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -16152,7 +16443,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457931820",
             "duration": "1m 28s",
@@ -16161,7 +16452,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457931820",
@@ -16303,7 +16594,7 @@
         "isRequired": false,
         "duration": "1m 31s",
         "lastFailure": "2 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -16398,7 +16689,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457199335",
             "duration": "1m 31s",
@@ -16407,7 +16698,7 @@
           }
         ],
         "failureCount": 1,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457199335",
@@ -16426,7 +16717,7 @@
         "isRequired": false,
         "duration": "1m 15s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -16521,7 +16812,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457199320",
             "duration": "1m 15s",
@@ -16530,7 +16821,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457199320",
@@ -16549,7 +16840,7 @@
         "isRequired": false,
         "duration": "1m 37s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -16644,7 +16935,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457199294",
             "duration": "1m 37s",
@@ -16653,7 +16944,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457199294",
@@ -16672,7 +16963,7 @@
         "isRequired": false,
         "duration": "1m 13s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -16767,7 +17058,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457199298",
             "duration": "1m 13s",
@@ -16776,7 +17067,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457199298",
@@ -16795,7 +17086,7 @@
         "isRequired": false,
         "duration": "1m 20s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -16890,7 +17181,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458068056",
             "duration": "1m 20s",
@@ -16899,7 +17190,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458068056",
@@ -16918,7 +17209,7 @@
         "isRequired": false,
         "duration": "0m 37s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -17013,7 +17304,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458188240",
             "duration": "0m 37s",
@@ -17022,7 +17313,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458188240",
@@ -17164,7 +17455,7 @@
         "isRequired": false,
         "duration": "0m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -17259,7 +17550,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458062758",
             "duration": "0m 2s",
@@ -17268,7 +17559,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458062758",
@@ -17288,7 +17579,7 @@
         "isRequired": false,
         "duration": "0m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -17383,7 +17674,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458062781",
             "duration": "0m 2s",
@@ -17392,7 +17683,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458062781",
@@ -17411,7 +17702,7 @@
         "isRequired": false,
         "duration": "0m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -17506,7 +17797,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458062768",
             "duration": "0m 2s",
@@ -17515,7 +17806,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458062768",
@@ -17534,7 +17825,7 @@
         "isRequired": true,
         "duration": "8m 10s",
         "lastFailure": "3/16/2026",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -17629,7 +17920,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503809",
             "duration": "8m 10s",
@@ -17638,7 +17929,7 @@
           }
         ],
         "failureCount": 1,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503809",
@@ -17776,7 +18067,7 @@
         "isRequired": false,
         "duration": "5m 9s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -17871,7 +18162,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458579459",
             "duration": "5m 9s",
@@ -17880,7 +18171,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458579459",
@@ -18018,7 +18309,7 @@
         "isRequired": false,
         "duration": "7m 21s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -18113,7 +18404,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457656805",
             "duration": "7m 21s",
@@ -18122,7 +18413,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457656805",
@@ -18264,7 +18555,7 @@
         "isRequired": false,
         "duration": "7m 13s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -18359,7 +18650,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458246172",
             "duration": "7m 13s",
@@ -18368,7 +18659,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458246172",
@@ -18480,7 +18771,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "none",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457504292",
             "duration": "0m 0s",
@@ -18489,7 +18780,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457504292",
@@ -18508,7 +18799,7 @@
         "isRequired": true,
         "duration": "3m 26s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -18603,7 +18894,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503882",
             "duration": "3m 26s",
@@ -18612,7 +18903,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503882",
@@ -18631,7 +18922,7 @@
         "isRequired": true,
         "duration": "3m 27s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -18726,7 +19017,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503896",
             "duration": "3m 27s",
@@ -18735,7 +19026,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503896",
@@ -18754,7 +19045,7 @@
         "isRequired": true,
         "duration": "3m 20s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -18849,7 +19140,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503894",
             "duration": "3m 20s",
@@ -18858,7 +19149,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503894",
@@ -18877,7 +19168,7 @@
         "isRequired": true,
         "duration": "3m 20s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -18972,7 +19263,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503910",
             "duration": "3m 20s",
@@ -18981,7 +19272,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503910",
@@ -19000,7 +19291,7 @@
         "isRequired": true,
         "duration": "3m 24s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -19095,7 +19386,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503971",
             "duration": "3m 24s",
@@ -19104,7 +19395,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503971",
@@ -19123,7 +19414,7 @@
         "isRequired": true,
         "duration": "3m 32s",
         "lastFailure": "5 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -19218,7 +19509,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503876",
             "duration": "3m 32s",
@@ -19227,7 +19518,7 @@
           }
         ],
         "failureCount": 1,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503876",
@@ -19246,7 +19537,7 @@
         "isRequired": true,
         "duration": "4m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -19341,7 +19632,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503916",
             "duration": "4m 5s",
@@ -19350,7 +19641,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503916",
@@ -19369,7 +19660,7 @@
         "isRequired": true,
         "duration": "3m 45s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -19464,7 +19755,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503931",
             "duration": "3m 45s",
@@ -19473,7 +19764,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503931",
@@ -19492,7 +19783,7 @@
         "isRequired": true,
         "duration": "3m 44s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -19587,7 +19878,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503953",
             "duration": "3m 44s",
@@ -19596,7 +19887,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503953",
@@ -19615,7 +19906,7 @@
         "isRequired": true,
         "duration": "3m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -19710,7 +20001,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503929",
             "duration": "3m 58s",
@@ -19719,7 +20010,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503929",
@@ -19738,7 +20029,7 @@
         "isRequired": true,
         "duration": "3m 47s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -19833,7 +20124,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503872",
             "duration": "3m 47s",
@@ -19842,7 +20133,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503872",
@@ -19859,7 +20150,7 @@
         "isRequired": false,
         "duration": "1m 47s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -19954,7 +20245,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503862",
             "duration": "1m 47s",
@@ -19963,7 +20254,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503862",
@@ -19982,7 +20273,7 @@
         "isRequired": true,
         "duration": "1m 29s",
         "lastFailure": "4 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -20077,7 +20368,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503808",
             "duration": "1m 29s",
@@ -20086,7 +20377,7 @@
           }
         ],
         "failureCount": 2,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503808",
@@ -20105,7 +20396,7 @@
         "isRequired": true,
         "duration": "1m 26s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -20200,7 +20491,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503830",
             "duration": "1m 26s",
@@ -20209,7 +20500,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503830",
@@ -20228,7 +20519,7 @@
         "isRequired": true,
         "duration": "1m 51s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -20323,7 +20614,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503875",
             "duration": "1m 51s",
@@ -20332,7 +20623,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503875",
@@ -20351,7 +20642,7 @@
         "isRequired": true,
         "duration": "1m 49s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -20446,7 +20737,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503847",
             "duration": "1m 49s",
@@ -20455,7 +20746,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503847",
@@ -20474,7 +20765,7 @@
         "isRequired": true,
         "duration": "1m 27s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -20569,7 +20860,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503845",
             "duration": "1m 27s",
@@ -20578,7 +20869,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503845",
@@ -20597,7 +20888,7 @@
         "isRequired": true,
         "duration": "1m 39s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -20692,7 +20983,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503972",
             "duration": "1m 39s",
@@ -20701,7 +20992,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503972",
@@ -20720,7 +21011,7 @@
         "isRequired": true,
         "duration": "1m 11s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -20815,7 +21106,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503868",
             "duration": "1m 11s",
@@ -20824,7 +21115,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503868",
@@ -20841,7 +21132,7 @@
         "isRequired": false,
         "duration": "1m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -20936,7 +21227,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503886",
             "duration": "1m 0s",
@@ -20945,7 +21236,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503886",
@@ -20964,7 +21255,7 @@
         "isRequired": true,
         "duration": "1m 17s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -21059,7 +21350,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503920",
             "duration": "1m 17s",
@@ -21068,7 +21359,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503920",
@@ -21087,7 +21378,7 @@
         "isRequired": true,
         "duration": "1m 39s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -21182,7 +21473,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503912",
             "duration": "1m 39s",
@@ -21191,7 +21482,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503912",
@@ -21210,7 +21501,7 @@
         "isRequired": true,
         "duration": "1m 12s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -21305,7 +21596,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503902",
             "duration": "1m 12s",
@@ -21314,7 +21605,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503902",
@@ -21331,7 +21622,7 @@
         "isRequired": false,
         "duration": "1m 43s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -21426,7 +21717,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503851",
             "duration": "1m 43s",
@@ -21435,7 +21726,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503851",
@@ -21547,7 +21838,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "none",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457504113",
             "duration": "0m 0s",
@@ -21556,7 +21847,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457504113",
@@ -21668,7 +21959,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "none",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457504290",
             "duration": "0m 0s",
@@ -21677,7 +21968,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457504290",
@@ -21914,7 +22205,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "none",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458246494",
             "duration": "0m 0s",
@@ -21923,7 +22214,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458246494",
@@ -21942,7 +22233,7 @@
         "isRequired": false,
         "duration": "3m 38s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -22037,7 +22328,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458246151",
             "duration": "3m 38s",
@@ -22046,7 +22337,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458246151",
@@ -22065,7 +22356,7 @@
         "isRequired": false,
         "duration": "3m 30s",
         "lastFailure": "3/16/2026",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -22160,7 +22451,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458246149",
             "duration": "3m 30s",
@@ -22169,7 +22460,7 @@
           }
         ],
         "failureCount": 1,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458246149",
@@ -22188,7 +22479,7 @@
         "isRequired": true,
         "duration": "4m 49s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -22283,7 +22574,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503951",
             "duration": "4m 49s",
@@ -22292,7 +22583,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503951",
@@ -22311,7 +22602,7 @@
         "isRequired": true,
         "duration": "4m 44s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -22406,7 +22697,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503941",
             "duration": "4m 44s",
@@ -22415,7 +22706,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503941",
@@ -22434,7 +22725,7 @@
         "isRequired": true,
         "duration": "4m 56s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -22529,7 +22820,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503937",
             "duration": "4m 56s",
@@ -22538,7 +22829,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503937",
@@ -22557,7 +22848,7 @@
         "isRequired": true,
         "duration": "4m 42s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -22652,7 +22943,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457504032",
             "duration": "4m 42s",
@@ -22661,7 +22952,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457504032",
@@ -22680,7 +22971,7 @@
         "isRequired": true,
         "duration": "5m 8s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -22775,7 +23066,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457504019",
             "duration": "5m 8s",
@@ -22784,7 +23075,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457504019",
@@ -22803,7 +23094,7 @@
         "isRequired": true,
         "duration": "5m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -22898,7 +23189,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503947",
             "duration": "5m 6s",
@@ -22907,7 +23198,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503947",
@@ -22926,7 +23217,7 @@
         "isRequired": true,
         "duration": "4m 1s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -23021,7 +23312,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503908",
             "duration": "4m 1s",
@@ -23030,7 +23321,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503908",
@@ -23049,7 +23340,7 @@
         "isRequired": true,
         "duration": "5m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -23144,7 +23435,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457504018",
             "duration": "5m 0s",
@@ -23153,7 +23444,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457504018",
@@ -23172,7 +23463,7 @@
         "isRequired": true,
         "duration": "4m 14s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -23267,7 +23558,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503970",
             "duration": "4m 14s",
@@ -23276,7 +23567,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503970",
@@ -23295,7 +23586,7 @@
         "isRequired": true,
         "duration": "4m 42s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -23390,7 +23681,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457504009",
             "duration": "4m 42s",
@@ -23399,7 +23690,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457504009",
@@ -23542,7 +23833,7 @@
         "isRequired": true,
         "duration": "5m 34s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -23637,7 +23928,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458246213",
             "duration": "5m 34s",
@@ -23646,7 +23937,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458246213",
@@ -23665,7 +23956,7 @@
         "isRequired": false,
         "duration": "5m 39s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -23760,7 +24051,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458246211",
             "duration": "5m 39s",
@@ -23769,7 +24060,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458246211",
@@ -23881,7 +24172,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "none",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458579737",
             "duration": "0m 0s",
@@ -23890,7 +24181,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458579737",
@@ -24028,7 +24319,7 @@
         "isRequired": false,
         "duration": "3m 43s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -24123,7 +24414,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457656835",
             "duration": "3m 43s",
@@ -24132,7 +24423,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457656835",
@@ -24272,7 +24563,7 @@
         "isRequired": true,
         "duration": "17m 41s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -24367,7 +24658,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234913",
             "duration": "17m 41s",
@@ -24376,7 +24667,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234913",
@@ -24395,7 +24686,7 @@
         "isRequired": true,
         "duration": "51m 12s",
         "lastFailure": "5 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -24490,7 +24781,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234896",
             "duration": "51m 12s",
@@ -24499,7 +24790,7 @@
           }
         ],
         "failureCount": 1,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234896",
@@ -24518,7 +24809,7 @@
         "isRequired": true,
         "duration": "46m 30s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -24613,7 +24904,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234934",
             "duration": "46m 30s",
@@ -24622,7 +24913,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234934",
@@ -24762,7 +25053,7 @@
         "isRequired": true,
         "duration": "17m 21s",
         "lastFailure": "2 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -24857,7 +25148,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68459017249",
             "duration": "17m 21s",
@@ -24866,7 +25157,7 @@
           }
         ],
         "failureCount": 3,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68459017249",
@@ -24883,7 +25174,7 @@
         "isRequired": false,
         "duration": "16m 49s",
         "lastFailure": "2 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -24978,7 +25269,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68459017264",
             "duration": "16m 49s",
@@ -24987,7 +25278,7 @@
           }
         ],
         "failureCount": 4,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68459017264",
@@ -25127,7 +25418,7 @@
         "isRequired": true,
         "duration": "20m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -25222,7 +25513,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234937",
             "duration": "20m 4s",
@@ -25231,7 +25522,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234937",
@@ -25250,7 +25541,7 @@
         "isRequired": true,
         "duration": "18m 49s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -25345,7 +25636,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234947",
             "duration": "18m 49s",
@@ -25354,7 +25645,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234947",
@@ -25373,7 +25664,7 @@
         "isRequired": true,
         "duration": "16m 43s",
         "lastFailure": "6 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -25468,7 +25759,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234984",
             "duration": "16m 43s",
@@ -25477,7 +25768,7 @@
           }
         ],
         "failureCount": 1,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234984",
@@ -25496,7 +25787,7 @@
         "isRequired": true,
         "duration": "15m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -25591,7 +25882,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234918",
             "duration": "15m 50s",
@@ -25600,7 +25891,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234918",
@@ -25619,7 +25910,7 @@
         "isRequired": true,
         "duration": "19m 31s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -25714,7 +26005,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234931",
             "duration": "19m 31s",
@@ -25723,7 +26014,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234931",
@@ -25742,7 +26033,7 @@
         "isRequired": true,
         "duration": "13m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -25837,7 +26128,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234941",
             "duration": "13m 53s",
@@ -25846,7 +26137,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234941",
@@ -25865,7 +26156,7 @@
         "isRequired": true,
         "duration": "17m 20s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -25960,7 +26251,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234942",
             "duration": "17m 20s",
@@ -25969,7 +26260,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234942",
@@ -25988,7 +26279,7 @@
         "isRequired": true,
         "duration": "14m 23s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -26083,7 +26374,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234907",
             "duration": "14m 23s",
@@ -26092,7 +26383,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234907",
@@ -26111,7 +26402,7 @@
         "isRequired": true,
         "duration": "16m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -26206,7 +26497,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234933",
             "duration": "16m 48s",
@@ -26215,7 +26506,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234933",
@@ -26234,7 +26525,7 @@
         "isRequired": true,
         "duration": "14m 44s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -26329,7 +26620,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234916",
             "duration": "14m 44s",
@@ -26338,7 +26629,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234916",
@@ -26476,12 +26767,11 @@
         "status": "failed",
         "categories": [
           "tee",
-          "nvidia",
-          "required"
+          "nvidia"
         ],
-        "isRequired": true,
-        "duration": "8m 16s",
-        "lastFailure": "5h ago",
+        "isRequired": false,
+        "duration": "8m 35s",
+        "lastFailure": "12h ago",
         "lastSuccess": "2 days ago",
         "weatherHistory": [
           {
@@ -26593,11 +26883,17 @@
             "date": "2026-03-25T00:00:00.000Z",
             "status": "failed",
             "runId": "23518714846",
-            "jobId": "68475519224",
-            "duration": "8m 16s",
-            "failureStep": "k8s-nvidia-nim.bats",
+            "jobId": "68458234891",
+            "duration": "8m 35s",
+            "failureStep": "k8s-confidential-attestation.bats, k8s-nvidia-nim.bats",
             "failureDetails": {
               "failures": [
+                {
+                  "number": 4,
+                  "name": "Can get CDH resource when affirming policy is set with reference values",
+                  "comment": "",
+                  "file": "k8s-confidential-attestation.bats"
+                },
                 {
                   "number": 1,
                   "name": "setup_file failed",
@@ -26609,15 +26905,22 @@
                   "name": "setup_file failed",
                   "comment": "",
                   "file": "##[group]k8s-nvidia-nim.bats"
+                },
+                {
+                  "number": 4,
+                  "name": "Can get CDH resource when affirming policy is set with reference values",
+                  "comment": "",
+                  "file": "##[group]k8s-confidential-attestation.bats"
                 }
               ],
               "stats": {
                 "total": 12,
-                "passed": 10,
-                "failed": 2,
+                "passed": 8,
+                "failed": 4,
                 "skipped": 0
               },
               "batsFiles": [
+                "k8s-confidential-attestation.bats",
                 "k8s-nvidia-nim.bats"
               ]
             }
@@ -26627,8 +26930,9 @@
         "failedTestsInWeather": [
           {
             "name": "Can get CDH resource when affirming policy is set with reference values",
-            "count": 1,
+            "count": 2,
             "dates": [
+              "2026-03-25",
               "2026-03-24"
             ],
             "files": [
@@ -26646,23 +26950,31 @@
             ]
           }
         ],
-        "retried": 1,
+        "retried": 0,
         "setupRetry": false,
         "runId": "23518714846",
-        "jobId": "68475519224",
+        "jobId": "68458234891",
         "error": {
-          "step": "k8s-nvidia-nim.bats, ##[group]k8s-nvidia-nim.bats",
+          "step": "k8s-confidential-attestation.bats, k8s-nvidia-nim.bats, ##[group]k8s-nvidia-nim.bats, ##[group]k8s-confidential-attestation.bats",
           "batsFiles": [
+            "k8s-confidential-attestation.bats",
             "k8s-nvidia-nim.bats",
-            "##[group]k8s-nvidia-nim.bats"
+            "##[group]k8s-nvidia-nim.bats",
+            "##[group]k8s-confidential-attestation.bats"
           ],
           "testResults": {
             "total": 12,
-            "passed": 10,
-            "failed": 2,
+            "passed": 8,
+            "failed": 4,
             "skipped": 0
           },
           "failures": [
+            {
+              "number": 4,
+              "name": "Can get CDH resource when affirming policy is set with reference values",
+              "comment": "",
+              "file": "k8s-confidential-attestation.bats"
+            },
             {
               "number": 1,
               "name": "setup_file failed",
@@ -26674,9 +26986,15 @@
               "name": "setup_file failed",
               "comment": "",
               "file": "##[group]k8s-nvidia-nim.bats"
+            },
+            {
+              "number": 4,
+              "name": "Can get CDH resource when affirming policy is set with reference values",
+              "comment": "",
+              "file": "##[group]k8s-confidential-attestation.bats"
             }
           ],
-          "output": "not ok 1 - setup_file failed\nnot ok 1 - setup_file failed"
+          "output": "not ok 4 - Can get CDH resource when affirming policy is set with reference values\nnot ok 1 - setup_file failed\nnot ok 1 - setup_file failed\nnot ok 4 - Can get CDH resource when affirming policy is set with reference values"
         },
         "maintainers": [
           "@fidencio"
@@ -26695,7 +27013,7 @@
         "isRequired": true,
         "duration": "9m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -26930,7 +27248,7 @@
         "isRequired": false,
         "duration": "18m 29s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -27025,7 +27343,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458314977",
             "duration": "18m 29s",
@@ -27034,7 +27352,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458314977",
@@ -27179,7 +27497,7 @@
         "isRequired": true,
         "duration": "18m 34s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -27274,7 +27592,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458861170",
             "duration": "18m 34s",
@@ -27283,7 +27601,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458861170",
@@ -27304,7 +27622,7 @@
         "isRequired": true,
         "duration": "32m 17s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -27421,7 +27739,7 @@
         "isRequired": false,
         "duration": "18m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -27516,7 +27834,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458861161",
             "duration": "18m 5s",
@@ -27525,7 +27843,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458861161",
@@ -27667,7 +27985,7 @@
         "isRequired": false,
         "duration": "50m 53s",
         "lastFailure": "5 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -27784,7 +28102,7 @@
         "isRequired": true,
         "duration": "44m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -27902,7 +28220,7 @@
         "isRequired": true,
         "duration": "41m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -28020,7 +28338,7 @@
         "isRequired": false,
         "duration": "48m 1s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -28137,7 +28455,7 @@
         "isRequired": false,
         "duration": "45m 33s",
         "lastFailure": "3/17/2026",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -28290,7 +28608,7 @@
         "isRequired": false,
         "duration": "40m 29s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -28400,15 +28718,15 @@
         "name": "run-k8s-tests-coco-nontee-extensive-matrix (k3s, qemu-coco-dev, experimental-force-guest-pull)",
         "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-extensive-matrix (k3s, qemu-coco-dev, experimental-force-guest-pull)",
         "fullName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-extensive-matrix (k3s, qemu-coco-dev, experimental-force-guest-pull)",
-        "status": "passed",
+        "status": "failed",
         "categories": [
           "tee",
           "autogen_policy"
         ],
         "isRequired": false,
-        "duration": "53m 2s",
-        "lastFailure": "9h ago",
-        "lastSuccess": "5h ago",
+        "duration": "49m 37s",
+        "lastFailure": "12h ago",
+        "lastSuccess": "2 days ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -28541,20 +28859,45 @@
           },
           {
             "date": "2026-03-25T00:00:00.000Z",
-            "status": "passed",
+            "status": "failed",
             "runId": "23518714846",
-            "jobId": "68475519521",
-            "duration": "53m 2s",
-            "failureStep": null,
-            "failureDetails": null
+            "jobId": "68458234981",
+            "duration": "49m 37s",
+            "failureStep": "k8s-cron-job.bats",
+            "failureDetails": {
+              "failures": [
+                {
+                  "number": 1,
+                  "name": "Run a cron job to completion",
+                  "comment": "",
+                  "file": "k8s-cron-job.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "Run a cron job to completion",
+                  "comment": "",
+                  "file": "##[group]k8s-cron-job.bats"
+                }
+              ],
+              "stats": {
+                "total": 264,
+                "passed": 262,
+                "failed": 2,
+                "skipped": 0
+              },
+              "batsFiles": [
+                "k8s-cron-job.bats"
+              ]
+            }
           }
         ],
-        "failureCount": 2,
+        "failureCount": 3,
         "failedTestsInWeather": [
           {
             "name": "Run a cron job to completion",
-            "count": 2,
+            "count": 3,
             "dates": [
+              "2026-03-25",
               "2026-03-24",
               "2026-03-18"
             ],
@@ -28563,11 +28906,38 @@
             ]
           }
         ],
-        "retried": 1,
+        "retried": 0,
         "setupRetry": false,
         "runId": "23518714846",
-        "jobId": "68475519521",
-        "error": null,
+        "jobId": "68458234981",
+        "error": {
+          "step": "k8s-cron-job.bats, ##[group]k8s-cron-job.bats",
+          "batsFiles": [
+            "k8s-cron-job.bats",
+            "##[group]k8s-cron-job.bats"
+          ],
+          "testResults": {
+            "total": 264,
+            "passed": 262,
+            "failed": 2,
+            "skipped": 0
+          },
+          "failures": [
+            {
+              "number": 1,
+              "name": "Run a cron job to completion",
+              "comment": "",
+              "file": "k8s-cron-job.bats"
+            },
+            {
+              "number": 1,
+              "name": "Run a cron job to completion",
+              "comment": "",
+              "file": "##[group]k8s-cron-job.bats"
+            }
+          ],
+          "output": "not ok 1 - Run a cron job to completion\nnot ok 1 - Run a cron job to completion"
+        },
         "maintainers": [
           "@fidencio"
         ]
@@ -28585,7 +28955,7 @@
         "isRequired": false,
         "duration": "49m 24s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -28695,15 +29065,15 @@
         "name": "run-k8s-tests-coco-nontee-extensive-matrix (k3s, qemu-coco-dev-runtime-rs, nydus, guest-pull)",
         "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-extensive-matrix (k3s, qemu-coco-dev-runtime-rs, nydus, guest-pull)",
         "fullName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-extensive-matrix (k3s, qemu-coco-dev-runtime-rs, nydus, guest-pull)",
-        "status": "passed",
+        "status": "failed",
         "categories": [
           "tee",
           "autogen_policy"
         ],
         "isRequired": false,
-        "duration": "45m 26s",
-        "lastFailure": "9h ago",
-        "lastSuccess": "5h ago",
+        "duration": "45m 15s",
+        "lastFailure": "12h ago",
+        "lastSuccess": "Yesterday",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -28836,33 +29206,122 @@
           },
           {
             "date": "2026-03-25T00:00:00.000Z",
-            "status": "passed",
+            "status": "failed",
             "runId": "23518714846",
-            "jobId": "68475519536",
-            "duration": "45m 26s",
-            "failureStep": null,
-            "failureDetails": null
+            "jobId": "68458234963",
+            "duration": "45m 15s",
+            "failureStep": "k8s-cron-job.bats, k8s-oom.bats",
+            "failureDetails": {
+              "failures": [
+                {
+                  "number": 1,
+                  "name": "Run a cron job to completion",
+                  "comment": "",
+                  "file": "k8s-cron-job.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "Test OOM events for pods",
+                  "comment": "",
+                  "file": "k8s-oom.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "Test OOM events for pods",
+                  "comment": "",
+                  "file": "##[group]k8s-oom.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "Run a cron job to completion",
+                  "comment": "",
+                  "file": "##[group]k8s-cron-job.bats"
+                }
+              ],
+              "stats": {
+                "total": 264,
+                "passed": 260,
+                "failed": 4,
+                "skipped": 0
+              },
+              "batsFiles": [
+                "k8s-cron-job.bats",
+                "k8s-oom.bats"
+              ]
+            }
           }
         ],
-        "failureCount": 2,
+        "failureCount": 3,
         "failedTestsInWeather": [
           {
             "name": "Run a cron job to completion",
-            "count": 2,
+            "count": 3,
             "dates": [
+              "2026-03-25",
               "2026-03-22",
               "2026-03-21"
             ],
             "files": [
               "k8s-cron-job.bats"
             ]
+          },
+          {
+            "name": "Test OOM events for pods",
+            "count": 1,
+            "dates": [
+              "2026-03-25"
+            ],
+            "files": [
+              "k8s-oom.bats"
+            ]
           }
         ],
-        "retried": 1,
+        "retried": 0,
         "setupRetry": false,
         "runId": "23518714846",
-        "jobId": "68475519536",
-        "error": null,
+        "jobId": "68458234963",
+        "error": {
+          "step": "k8s-cron-job.bats, k8s-oom.bats, ##[group]k8s-oom.bats, ##[group]k8s-cron-job.bats",
+          "batsFiles": [
+            "k8s-cron-job.bats",
+            "k8s-oom.bats",
+            "##[group]k8s-oom.bats",
+            "##[group]k8s-cron-job.bats"
+          ],
+          "testResults": {
+            "total": 264,
+            "passed": 260,
+            "failed": 4,
+            "skipped": 0
+          },
+          "failures": [
+            {
+              "number": 1,
+              "name": "Run a cron job to completion",
+              "comment": "",
+              "file": "k8s-cron-job.bats"
+            },
+            {
+              "number": 1,
+              "name": "Test OOM events for pods",
+              "comment": "",
+              "file": "k8s-oom.bats"
+            },
+            {
+              "number": 1,
+              "name": "Test OOM events for pods",
+              "comment": "",
+              "file": "##[group]k8s-oom.bats"
+            },
+            {
+              "number": 1,
+              "name": "Run a cron job to completion",
+              "comment": "",
+              "file": "##[group]k8s-cron-job.bats"
+            }
+          ],
+          "output": "not ok 1 - Run a cron job to completion\nnot ok 1 - Test OOM events for pods\nnot ok 1 - Test OOM events for pods\nnot ok 1 - Run a cron job to completion"
+        },
         "maintainers": [
           "@pmores",
           "@lifupan"
@@ -28881,7 +29340,7 @@
         "isRequired": false,
         "duration": "46m 0s",
         "lastFailure": "Yesterday",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -29033,7 +29492,7 @@
         "isRequired": false,
         "duration": "45m 32s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -29151,7 +29610,7 @@
         "isRequired": false,
         "duration": "41m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -29269,7 +29728,7 @@
         "isRequired": false,
         "duration": "48m 11s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -29386,7 +29845,7 @@
         "isRequired": false,
         "duration": "51m 29s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -29504,7 +29963,7 @@
         "isRequired": false,
         "duration": "47m 12s",
         "lastFailure": "Yesterday",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -30058,7 +30517,7 @@
         "isRequired": false,
         "duration": "18m 54s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -30168,14 +30627,14 @@
         "name": "run-k8s-tests-on-tee (sev-snp, qemu-snp)",
         "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (sev-snp, qemu-snp)",
         "fullName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (sev-snp, qemu-snp)",
-        "status": "passed",
+        "status": "failed",
         "categories": [
           "tee"
         ],
         "isRequired": false,
-        "duration": "50m 58s",
-        "lastFailure": "9h ago",
-        "lastSuccess": "5h ago",
+        "duration": "70m 1s",
+        "lastFailure": "12h ago",
+        "lastSuccess": "Yesterday",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -30260,21 +30719,117 @@
           },
           {
             "date": "2026-03-25T00:00:00.000Z",
-            "status": "passed",
+            "status": "failed",
             "runId": "23518714846",
-            "jobId": "68475519219",
-            "duration": "50m 58s",
-            "failureStep": null,
-            "failureDetails": null
+            "jobId": "68458234885",
+            "duration": "70m 1s",
+            "failureStep": "k8s-confidential-attestation.bats",
+            "failureDetails": {
+              "failures": [
+                {
+                  "number": 1,
+                  "name": "Get CDH resource",
+                  "comment": "",
+                  "file": "k8s-confidential-attestation.bats"
+                },
+                {
+                  "number": 4,
+                  "name": "Can get CDH resource when affirming policy is set with reference values",
+                  "comment": "",
+                  "file": "k8s-confidential-attestation.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "Get CDH resource",
+                  "comment": "",
+                  "file": "##[group]k8s-confidential-attestation.bats"
+                },
+                {
+                  "number": 4,
+                  "name": "Can get CDH resource when affirming policy is set with reference values",
+                  "comment": "",
+                  "file": "k8s-confidential-attestation.bats"
+                }
+              ],
+              "stats": {
+                "total": 264,
+                "passed": 260,
+                "failed": 4,
+                "skipped": 0
+              },
+              "batsFiles": [
+                "k8s-confidential-attestation.bats"
+              ]
+            }
           }
         ],
-        "failureCount": 0,
-        "failedTestsInWeather": [],
-        "retried": 1,
+        "failureCount": 1,
+        "failedTestsInWeather": [
+          {
+            "name": "Get CDH resource",
+            "count": 1,
+            "dates": [
+              "2026-03-25"
+            ],
+            "files": [
+              "k8s-confidential-attestation.bats"
+            ]
+          },
+          {
+            "name": "Can get CDH resource when affirming policy is set with reference values",
+            "count": 1,
+            "dates": [
+              "2026-03-25"
+            ],
+            "files": [
+              "k8s-confidential-attestation.bats"
+            ]
+          }
+        ],
+        "retried": 0,
         "setupRetry": false,
         "runId": "23518714846",
-        "jobId": "68475519219",
-        "error": null,
+        "jobId": "68458234885",
+        "error": {
+          "step": "k8s-confidential-attestation.bats, ##[group]k8s-confidential-attestation.bats",
+          "batsFiles": [
+            "k8s-confidential-attestation.bats",
+            "##[group]k8s-confidential-attestation.bats"
+          ],
+          "testResults": {
+            "total": 264,
+            "passed": 260,
+            "failed": 4,
+            "skipped": 0
+          },
+          "failures": [
+            {
+              "number": 1,
+              "name": "Get CDH resource",
+              "comment": "",
+              "file": "k8s-confidential-attestation.bats"
+            },
+            {
+              "number": 4,
+              "name": "Can get CDH resource when affirming policy is set with reference values",
+              "comment": "",
+              "file": "k8s-confidential-attestation.bats"
+            },
+            {
+              "number": 1,
+              "name": "Get CDH resource",
+              "comment": "",
+              "file": "##[group]k8s-confidential-attestation.bats"
+            },
+            {
+              "number": 4,
+              "name": "Can get CDH resource when affirming policy is set with reference values",
+              "comment": "",
+              "file": "k8s-confidential-attestation.bats"
+            }
+          ],
+          "output": "not ok 1 - Get CDH resource\nnot ok 4 - Can get CDH resource when affirming policy is set with reference values\nnot ok 1 - Get CDH resource\nnot ok 4 - Can get CDH resource when affirming policy is set with reference values"
+        },
         "maintainers": [
           "@AdithyaKrishnan",
           "@hgowda-amd"
@@ -30290,7 +30845,7 @@
           "tee"
         ],
         "isRequired": false,
-        "duration": "75m 40s",
+        "duration": "20m 40s",
         "lastFailure": "Yesterday",
         "lastSuccess": "2 days ago",
         "weatherHistory": [
@@ -30983,8 +31538,8 @@
             "date": "2026-03-25T00:00:00.000Z",
             "status": "none",
             "runId": "23518714846",
-            "jobId": "68475519228",
-            "duration": "75m 40s",
+            "jobId": "68458234867",
+            "duration": "20m 40s",
             "failureStep": null,
             "failureDetails": null
           }
@@ -31462,10 +32017,10 @@
             ]
           }
         ],
-        "retried": 1,
+        "retried": 0,
         "setupRetry": false,
         "runId": "23518714846",
-        "jobId": "68475519228",
+        "jobId": "68458234867",
         "error": null,
         "maintainers": [
           "@mythi"
@@ -31604,7 +32159,7 @@
         "isRequired": true,
         "duration": "7m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -31699,7 +32254,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234923",
             "duration": "7m 48s",
@@ -31708,7 +32263,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234923",
@@ -31727,7 +32282,7 @@
         "isRequired": true,
         "duration": "8m 22s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -31822,7 +32377,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234873",
             "duration": "8m 22s",
@@ -31831,7 +32386,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234873",
@@ -31850,7 +32405,7 @@
         "isRequired": true,
         "duration": "6m 16s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -31945,7 +32500,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234864",
             "duration": "6m 16s",
@@ -31954,7 +32509,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234864",
@@ -31973,7 +32528,7 @@
         "isRequired": true,
         "duration": "10m 24s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -32068,7 +32623,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68458234914",
             "duration": "10m 24s",
@@ -32077,7 +32632,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68458234914",
@@ -32096,7 +32651,7 @@
         "isRequired": true,
         "duration": "1m 26s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -32191,7 +32746,7 @@
           {
             "date": "2026-03-25T00:00:00.000Z",
             "status": "passed",
-            "retried": true,
+            "retried": false,
             "runId": "23518714846",
             "jobId": "68457503768",
             "duration": "1m 26s",
@@ -32200,7 +32755,7 @@
           }
         ],
         "failureCount": 0,
-        "retried": true,
+        "retried": false,
         "retriedAndPassed": false,
         "runId": "23518714846",
         "jobId": "68457503768",
@@ -32224,7 +32779,7 @@
         "status": "passed",
         "duration": "5m 59s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -32333,7 +32888,7 @@
         "status": "passed",
         "duration": "5m 49s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -32442,7 +32997,7 @@
         "status": "passed",
         "duration": "4m 59s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -32551,7 +33106,7 @@
         "status": "passed",
         "duration": "5m 54s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -32660,7 +33215,7 @@
         "status": "passed",
         "duration": "5m 42s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -32769,7 +33324,7 @@
         "status": "passed",
         "duration": "6m 9s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -32878,7 +33433,7 @@
         "status": "passed",
         "duration": "6m 7s",
         "lastFailure": "2 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -32987,7 +33542,7 @@
         "status": "passed",
         "duration": "4m 52s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -33096,7 +33651,7 @@
         "status": "passed",
         "duration": "4m 37s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -33205,7 +33760,7 @@
         "status": "passed",
         "duration": "3m 17s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -33313,8 +33868,8 @@
         "fullName": "E2E (\n  ci /\n  kubeadm-containerd-1.7 /\n  nydus\n   /\n  qemu-coco-dev /\n  x86_64\n)",
         "status": "passed",
         "duration": "4m 43s",
-        "lastFailure": "9h ago",
-        "lastSuccess": "1h ago",
+        "lastFailure": "12h ago",
+        "lastSuccess": "4h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -33423,7 +33978,7 @@
         "status": "passed",
         "duration": "3m 18s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -33532,7 +34087,7 @@
         "status": "passed",
         "duration": "4m 57s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -33641,7 +34196,7 @@
         "status": "passed",
         "duration": "3m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -33750,7 +34305,7 @@
         "status": "passed",
         "duration": "5m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -33859,7 +34414,7 @@
         "status": "passed",
         "duration": "4m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -33968,7 +34523,7 @@
         "status": "passed",
         "duration": "5m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -34077,7 +34632,7 @@
         "status": "passed",
         "duration": "4m 56s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -34186,7 +34741,7 @@
         "status": "passed",
         "duration": "3m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -34295,7 +34850,7 @@
         "status": "passed",
         "duration": "4m 45s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -34404,7 +34959,7 @@
         "status": "passed",
         "duration": "3m 15s",
         "lastFailure": "Never",
-        "lastSuccess": "8h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -34513,7 +35068,7 @@
         "status": "passed",
         "duration": "4m 54s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -34622,7 +35177,7 @@
         "status": "passed",
         "duration": "4m 51s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -34731,7 +35286,7 @@
         "status": "passed",
         "duration": "4m 57s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -34840,7 +35395,7 @@
         "status": "passed",
         "duration": "5m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -34949,7 +35504,7 @@
         "status": "passed",
         "duration": "6m 55s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -35058,7 +35613,7 @@
         "status": "passed",
         "duration": "6m 30s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -35167,7 +35722,7 @@
         "status": "passed",
         "duration": "6m 27s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -35276,7 +35831,7 @@
         "status": "passed",
         "duration": "5m 39s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -35385,7 +35940,7 @@
         "status": "passed",
         "duration": "4m 36s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -35494,7 +36049,7 @@
         "status": "passed",
         "duration": "5m 30s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -35603,7 +36158,7 @@
         "status": "passed",
         "duration": "5m 43s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -35712,7 +36267,7 @@
         "status": "passed",
         "duration": "6m 55s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -35821,7 +36376,7 @@
         "status": "passed",
         "duration": "5m 51s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -35930,7 +36485,7 @@
         "status": "passed",
         "duration": "6m 37s",
         "lastFailure": "2 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -36039,7 +36594,7 @@
         "status": "passed",
         "duration": "3m 24s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -36148,7 +36703,7 @@
         "status": "passed",
         "duration": "4m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -36257,7 +36812,7 @@
         "status": "passed",
         "duration": "3m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -36366,7 +36921,7 @@
         "status": "passed",
         "duration": "4m 27s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -36475,7 +37030,7 @@
         "status": "passed",
         "duration": "3m 15s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -36584,7 +37139,7 @@
         "status": "passed",
         "duration": "4m 41s",
         "lastFailure": "4 days ago",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -36693,7 +37248,7 @@
         "status": "passed",
         "duration": "3m 17s",
         "lastFailure": "Yesterday",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -36802,7 +37357,7 @@
         "status": "passed",
         "duration": "4m 29s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -36911,7 +37466,7 @@
         "status": "passed",
         "duration": "3m 36s",
         "lastFailure": "Never",
-        "lastSuccess": "8h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -37020,7 +37575,7 @@
         "status": "passed",
         "duration": "4m 26s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -37129,7 +37684,7 @@
         "status": "passed",
         "duration": "4m 21s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -37238,7 +37793,7 @@
         "status": "passed",
         "duration": "3m 18s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -37347,7 +37902,7 @@
         "status": "passed",
         "duration": "4m 31s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -37456,7 +38011,7 @@
         "status": "passed",
         "duration": "3m 8s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -37565,7 +38120,7 @@
         "status": "passed",
         "duration": "4m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -37674,7 +38229,7 @@
         "status": "passed",
         "duration": "4m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -37783,7 +38338,7 @@
         "status": "passed",
         "duration": "5m 21s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -37892,7 +38447,7 @@
         "status": "passed",
         "duration": "4m 32s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -38001,7 +38556,7 @@
         "status": "passed",
         "duration": "7m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -38110,7 +38665,7 @@
         "status": "passed",
         "duration": "7m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -38219,7 +38774,7 @@
         "status": "passed",
         "duration": "6m 19s",
         "lastFailure": "Never",
-        "lastSuccess": "9h ago",
+        "lastSuccess": "12h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -38337,7 +38892,7 @@
         "status": "passed",
         "duration": "31m 35s",
         "lastFailure": "Never",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -38445,8 +39000,8 @@
         "fullName": "e2e / E2E tests on libvirt for the s390x architecture / Libvirt e2e tests: (s390x-large, containerd) on mkosi",
         "status": "passed",
         "duration": "30m 41s",
-        "lastFailure": "4h ago",
-        "lastSuccess": "1h ago",
+        "lastFailure": "7h ago",
+        "lastSuccess": "4h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -38555,7 +39110,7 @@
         "status": "passed",
         "duration": "37m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "7h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -38664,7 +39219,7 @@
         "status": "passed",
         "duration": "0m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "7h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -38773,7 +39328,7 @@
         "status": "passed",
         "duration": "4m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "5h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -38882,7 +39437,7 @@
         "status": "passed",
         "duration": "3m 54s",
         "lastFailure": "Never",
-        "lastSuccess": "5h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -38991,7 +39546,7 @@
         "status": "passed",
         "duration": "7m 44s",
         "lastFailure": "Never",
-        "lastSuccess": "5h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -39100,7 +39655,7 @@
         "status": "passed",
         "duration": "5m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "5h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -39209,7 +39764,7 @@
         "status": "passed",
         "duration": "15m 20s",
         "lastFailure": "Never",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -39318,7 +39873,7 @@
         "status": "passed",
         "duration": "4m 55s",
         "lastFailure": "Never",
-        "lastSuccess": "5h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -39427,7 +39982,7 @@
         "status": "passed",
         "duration": "10m 31s",
         "lastFailure": "Never",
-        "lastSuccess": "5h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -39536,7 +40091,7 @@
         "status": "passed",
         "duration": "0m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "5h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -39645,7 +40200,7 @@
         "status": "passed",
         "duration": "10m 43s",
         "lastFailure": "Never",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -39754,7 +40309,7 @@
         "status": "passed",
         "duration": "10m 28s",
         "lastFailure": "Never",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -39863,7 +40418,7 @@
         "status": "passed",
         "duration": "8m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -39972,7 +40527,7 @@
         "status": "passed",
         "duration": "2m 20s",
         "lastFailure": "Never",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -40081,7 +40636,7 @@
         "status": "passed",
         "duration": "2m 17s",
         "lastFailure": "Never",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -40190,7 +40745,7 @@
         "status": "passed",
         "duration": "2m 16s",
         "lastFailure": "Never",
-        "lastSuccess": "4h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -40299,7 +40854,7 @@
         "status": "passed",
         "duration": "2m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "5h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -40408,7 +40963,7 @@
         "status": "passed",
         "duration": "9m 35s",
         "lastFailure": "Never",
-        "lastSuccess": "5h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -40517,7 +41072,7 @@
         "status": "passed",
         "duration": "20m 23s",
         "lastFailure": "Never",
-        "lastSuccess": "5h ago",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-03-16T00:00:00.000Z",
@@ -40685,7 +41240,6 @@
     "Kata Containers CI / kata-containers-ci-on-push / run-kata-deploy-tests / run-kata-deploy-tests (qemu, rke2)",
     "Kata Containers CI / kata-containers-ci-on-push / run-kata-monitor-tests / run-monitor (qemu, crio)",
     "Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64",
-    "Kata Containers CI / kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
     "Static checks / build-checks / check (make check, agent-ctl, src/tools/agent-ctl, rust, protobuf-compiler, clang, ubuntu-22.04)",
     "Static checks / build-checks / check (make check, agent, src/agent, rust, libdevmapper, libseccomp, protobuf-compiler, clang, ub...",
     "Static checks / build-checks / check (make check, dragonball, src/dragonball, rust, ubuntu-22.04)",
