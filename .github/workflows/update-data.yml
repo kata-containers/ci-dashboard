@@ -316,6 +316,8 @@ jobs:
       
       - name: Process data
         id: process
+        env:
+          NODE_OPTIONS: "--max-old-space-size=6144"
         run: |
           # Process raw data into dashboard format using config
           # Also outputs new failures for notifications

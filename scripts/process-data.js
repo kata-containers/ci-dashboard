@@ -50,221 +50,204 @@ try {
 
 const allJobs = rawData.jobs || [];
 
-// Load job logs for failed jobs
-const jobLogs = {};
-const logsDir = 'job-logs';
-if (fs.existsSync(logsDir)) {
-  const logFiles = fs.readdirSync(logsDir).filter(f => f.endsWith('.log'));
-  console.log(`Found ${logFiles.length} job log files`);
-  
-  logFiles.forEach(file => {
-    const jobId = file.replace('.log', '');
-    try {
-      const content = fs.readFileSync(path.join(logsDir, file), 'utf8');
-      jobLogs[jobId] = content;
-      
-      // Debug: show log size and check for test failure lines (bats and Go)
-      const notOkCount = (content.match(/not ok \d+/gi) || []).length;
-      const goFailCount = (content.match(/FAIL:\s+\S+/gi) || []).length;
-      console.log(`  Log ${jobId}: ${content.length} bytes, ${notOkCount} "not ok" (bats), ${goFailCount} "FAIL:" (Go) lines found`);
-      
-      // Show sample failure lines if found
-      if (notOkCount > 0 || goFailCount > 0) {
-        const lines = content.split('\n');
-        const failLines = lines.filter(l => /not ok \d+/i.test(l) || l.includes('FAIL:')).slice(0, 3);
-        failLines.forEach(l => console.log(`    ${l.substring(0, 100)}`));
-      }
-    } catch (e) {
-      console.warn(`Could not read log for job ${jobId}: ${e.message}`);
+// Pre-parsed test results cache (stores only parsed failures, NOT raw log content).
+// This avoids OOM: 71 failed-job logs can total 12GB+ of raw text;
+// keeping them all in memory as strings crashed Node with heap exhaustion.
+const parsedJobResults = {};
+
+const MAX_SYNC_LOG_SIZE = 400 * 1024 * 1024; // 400MB - above this, use chunked reading
+const CHUNK_SIZE = 8 * 1024 * 1024; // 8MB read chunks for streaming
+
+/**
+ * Core line-processing logic for test failure extraction.
+ * Shared between sync and chunked readers.
+ * Mutates the provided `state` object.
+ */
+function processLogLine(line, state) {
+  const fileMatch = line.match(/Running\s+(\S+\.bats)/i) || line.match(/(\S+\.bats)/);
+  if (fileMatch) {
+    state.currentFile = fileMatch[1];
+  }
+
+  const notOkMatch = line.match(/(?:^\d{4}-\d{2}-\d{2}T[\d:\.]+Z\s+)?not ok (\d+)\s+(?:-\s+)?(.+?)(?:\s+in \d+ms)?(?:\s*#\s*(.*))?$/i);
+  if (notOkMatch) {
+    state.failedTests++;
+    state.totalTests++;
+    const testNumber = notOkMatch[1];
+    let testName = notOkMatch[2].trim().replace(/\s+in \d+ms$/, '');
+    const comment = notOkMatch[3] || '';
+    if (comment.toLowerCase().includes('skip') || comment.toLowerCase().includes('todo')) {
+      state.skippedTests++;
+      state.failedTests--;
+    } else {
+      state.failures.push({ number: parseInt(testNumber), name: testName, comment, file: state.currentFile });
     }
-  });
-} else {
-  console.log('No job-logs directory found');
+    return;
+  }
+
+  const okMatch = line.match(/(?:^\d{4}-\d{2}-\d{2}T[\d:\.]+Z\s+)?ok (\d+)\s+(?:-\s+)?(.+?)(?:\s+in \d+ms)?(?:\s*#\s*(.*))?$/i);
+  if (okMatch) {
+    state.passedTests++;
+    state.totalTests++;
+    return;
+  }
+
+  if (line.includes('FAIL:')) {
+    const goFailMatch = line.match(/FAIL:\s+(\S+)/i);
+    if (goFailMatch) {
+      state.failedTests++;
+      state.totalTests++;
+      state.failures.push({ number: state.failedTests, name: goFailMatch[1], comment: '', file: state.currentFile });
+      return;
+    }
+  }
+
+  const goPassMatch = line.match(/(?:^\d{4}-\d{2}-\d{2}T[\d:\.]+Z\s+)?---\s*PASS:\s+\S+\s+\([\d.]+s\)/i);
+  if (goPassMatch) {
+    state.passedTests++;
+    state.totalTests++;
+    return;
+  }
+
+  const goPackageFailMatch = line.match(/(?:^\d{4}-\d{2}-\d{2}T[\d:\.]+Z\s+)?FAIL\s+(\S+)\s+[\d.]+s/);
+  if (goPackageFailMatch) {
+    state.currentFile = goPackageFailMatch[1];
+    return;
+  }
+
+  const batsFileMatch = line.match(/^\s*(\S+\.bats)\s*$/);
+  if (batsFileMatch) {
+    state.currentFile = batsFileMatch[1];
+  }
 }
 
-// Load CoCo Charts job logs
-const cocoChartsLogsDir = 'coco-charts-logs';
-if (fs.existsSync(cocoChartsLogsDir)) {
-  const logFiles = fs.readdirSync(cocoChartsLogsDir).filter(f => f.endsWith('.log'));
-  console.log(`Found ${logFiles.length} CoCo Charts job log files`);
-  
-  logFiles.forEach(file => {
-    const jobId = file.replace('.log', '');
-    try {
-      const content = fs.readFileSync(path.join(cocoChartsLogsDir, file), 'utf8');
-      jobLogs[jobId] = content;
-      
-      const goFailCount = (content.match(/FAIL:\s+\S+/gi) || []).length;
-      console.log(`  CoCo Charts Log ${jobId}: ${content.length} bytes, ${goFailCount} "FAIL:" (Go) lines found`);
-    } catch (e) {
-      console.warn(`Could not read CoCo Charts log for job ${jobId}: ${e.message}`);
-    }
-  });
-} else {
-  console.log('No coco-charts-logs directory found');
+function newParseState() {
+  return { failures: [], totalTests: 0, passedTests: 0, failedTests: 0, skippedTests: 0, currentFile: null };
 }
 
-// Load CAA job logs
-const caaLogsDir = 'coco-caa-logs';
-if (fs.existsSync(caaLogsDir)) {
-  const logFiles = fs.readdirSync(caaLogsDir).filter(f => f.endsWith('.log'));
-  console.log(`Found ${logFiles.length} CAA job log files`);
-  
-  logFiles.forEach(file => {
-    const jobId = file.replace('.log', '');
-    try {
-      const content = fs.readFileSync(path.join(caaLogsDir, file), 'utf8');
-      jobLogs[jobId] = content;
-      
-      const goFailCount = (content.match(/FAIL:\s+\S+/gi) || []).length;
-      console.log(`  CAA Log ${jobId}: ${content.length} bytes, ${goFailCount} "FAIL:" (Go) lines found`);
-    } catch (e) {
-      console.warn(`Could not read CAA log for job ${jobId}: ${e.message}`);
-    }
-  });
-} else {
-  console.log('No coco-caa-logs directory found');
+function stateToResult(state) {
+  if (state.failures.length === 0 && state.totalTests === 0) return null;
+  return {
+    failures: state.failures,
+    stats: { total: state.totalTests, passed: state.passedTests, failed: state.failedTests, skipped: state.skippedTests }
+  };
 }
 
 /**
- * Parse job logs to extract test failure details from TAP output
+ * Parse a log file using chunked reading (handles files of any size).
  */
-function parseTestFailures(jobId) {
-  const log = jobLogs[jobId];
-  if (!log) return null;
-  
-  const failures = [];
-  const lines = log.split('\n');
-  
-  let totalTests = 0;
-  let passedTests = 0;
-  let failedTests = 0;
-  let skippedTests = 0;
-  
-  // Keep track of which test file we are in (for context)
-  let currentFile = null;
-  
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    
-    // Try to detect filename from output (often appears before results)
-    // Example: "Running k8s-policy-deployment.bats" or similar
-    const fileMatch = line.match(/Running\s+(\S+\.bats)/i) || line.match(/(\S+\.bats)/);
-    if (fileMatch) {
-      currentFile = fileMatch[1];
-    }
-    
-    // Parse TAP output - handle both formats:
-    // Standard TAP: "not ok 1 - Test name # comment"
-    // Bats format:  "not ok 1 Test name in 12345ms"
-    // GitHub Actions logs: "2025-11-27T00:53:00.5185123Z not ok 1 Test name in 12345ms"
-    // We use a flexible regex that looks for "not ok" followed by a number
-    // Case insensitive match for "not ok", handle leading timestamp/whitespace
-    const notOkMatch = line.match(/(?:^\d{4}-\d{2}-\d{2}T[\d:\.]+Z\s+)?not ok (\d+)\s+(?:-\s+)?(.+?)(?:\s+in \d+ms)?(?:\s*#\s*(.*))?$/i);
-    if (notOkMatch) {
-      failedTests++;
-      totalTests++;
-      const testNumber = notOkMatch[1];
-      let testName = notOkMatch[2].trim();
-      const comment = notOkMatch[3] || '';
-      
-      // Remove timing suffix if present (bats adds "in Xms")
-      testName = testName.replace(/\s+in \d+ms$/, '');
-      
-      // Check if it's a skip/todo
-      if (comment.toLowerCase().includes('skip') || comment.toLowerCase().includes('todo')) {
-        skippedTests++;
-        failedTests--;
-      } else {
-        failures.push({
-          number: parseInt(testNumber),
-          name: testName,
-          comment: comment,
-          file: currentFile // Attach file context if found
-        });
-      }
-      continue;
-    }
-    
-    // "ok 1 - Test name" or "ok 1 Test name in Xms"
-    // GitHub Actions logs: "2025-11-27T00:53:00.5185123Z ok 1 Test name in Xms"
-    const okMatch = line.match(/(?:^\d{4}-\d{2}-\d{2}T[\d:\.]+Z\s+)?ok (\d+)\s+(?:-\s+)?(.+?)(?:\s+in \d+ms)?(?:\s*#\s*(.*))?$/i);
-    if (okMatch) {
-      passedTests++;
-      totalTests++;
-      continue;
-    }
-    
-    // Parse Go test output format:
-    // "--- FAIL: TestName (0.00s)" or "=== FAIL: TestName/SubTest (0.00s)"
-    // Use includes() for fast check, then extract test name
-    if (line.includes('FAIL:')) {
-      const goFailMatch = line.match(/FAIL:\s+(\S+)/i);
-      if (goFailMatch) {
-        failedTests++;
-        totalTests++;
-        const testName = goFailMatch[1];
-        failures.push({
-          number: failedTests,
-          name: testName,
-          comment: '',
-          file: currentFile
-        });
-        continue;
+function parseLogFileChunked(filePath) {
+  const fd = fs.openSync(filePath, 'r');
+  const buffer = Buffer.alloc(CHUNK_SIZE);
+  let leftover = '';
+  const state = newParseState();
+
+  try {
+    let bytesRead;
+    while ((bytesRead = fs.readSync(fd, buffer, 0, CHUNK_SIZE)) > 0) {
+      const chunk = leftover + buffer.toString('utf8', 0, bytesRead);
+      const lines = chunk.split('\n');
+      leftover = lines.pop() || '';
+      for (const line of lines) {
+        processLogLine(line, state);
       }
     }
-    
-    // Go test pass: "--- PASS: TestName (0.00s)" or "=== RUN   TestName"
-    const goPassMatch = line.match(/(?:^\d{4}-\d{2}-\d{2}T[\d:\.]+Z\s+)?---\s*PASS:\s+\S+\s+\([\d.]+s\)/i);
-    if (goPassMatch) {
-      passedTests++;
-      totalTests++;
-      continue;
-    }
-    
-    // Go test package failure: "FAIL	package/path	0.123s"
-    // This indicates at least one test in the package failed (already counted above)
-    // We use this to track the package/file context
-    const goPackageFailMatch = line.match(/(?:^\d{4}-\d{2}-\d{2}T[\d:\.]+Z\s+)?FAIL\s+(\S+)\s+[\d.]+s/);
-    if (goPackageFailMatch) {
-      currentFile = goPackageFailMatch[1];
-      continue;
-    }
-    
-    // Go test package pass: "ok  	package/path	0.123s"
-    const goPackagePassMatch = line.match(/(?:^\d{4}-\d{2}-\d{2}T[\d:\.]+Z\s+)?ok\s+\S+\s+[\d.]+s/);
-    if (goPackagePassMatch) {
-      // Package passed - don't count individual tests here as they're counted above
-      continue;
-    }
-    
-    // Also capture bats test file names as standalone lines if they look like file headers
-    // Example: "k8s-policy-deployment.bats"
-    const batsFileMatch = line.match(/^\s*(\S+\.bats)\s*$/);
-    if (batsFileMatch) {
-      currentFile = batsFileMatch[1];
-    }
+    if (leftover.trim()) processLogLine(leftover, state);
+  } finally {
+    fs.closeSync(fd);
   }
-  
-  // Debug output
-  if (failures.length > 0) {
-    console.log(`Job ${jobId}: Found ${failures.length} failures (Total parsed: ${totalTests})`);
-    failures.forEach(f => console.log(`  - [${f.file || 'unknown'}] ${f.name}`));
-  }
-  
-  if (failures.length === 0 && totalTests === 0) {
+
+  return stateToResult(state);
+}
+
+/**
+ * Parse a log file. Uses readFileSync for small files, chunked reading for large ones.
+ */
+function parseLogFile(filePath) {
+  let fileSize;
+  try {
+    fileSize = fs.statSync(filePath).size;
+  } catch (e) {
     return null;
   }
-  
-  return {
-    failures: failures,
-    stats: {
-      total: totalTests,
-      passed: passedTests,
-      failed: failedTests,
-      skipped: skippedTests
+  if (fileSize < 100) return null;
+
+  if (fileSize > MAX_SYNC_LOG_SIZE) {
+    return parseLogFileChunked(filePath);
+  }
+
+  try {
+    const content = fs.readFileSync(filePath, 'utf8');
+    const state = newParseState();
+    const lines = content.split('\n');
+    for (const line of lines) {
+      processLogLine(line, state);
     }
-  };
+    return stateToResult(state);
+  } catch (e) {
+    if (e.message.includes('Cannot create a string')) {
+      return parseLogFileChunked(filePath);
+    }
+    return null;
+  }
+}
+
+/**
+ * Load and parse all log files from a directory.
+ * Stores only parsed results (not raw content) to avoid OOM.
+ */
+function loadAndParseLogs(logsDir, label) {
+  if (!fs.existsSync(logsDir)) {
+    console.log(`No ${logsDir} directory found`);
+    return;
+  }
+
+  const logFiles = fs.readdirSync(logsDir).filter(f => f.endsWith('.log'));
+  console.log(`Found ${logFiles.length} ${label}job log files`);
+
+  logFiles.forEach(file => {
+    const jobId = file.replace('.log', '');
+    const filePath = path.join(logsDir, file);
+    try {
+      const fileSize = fs.statSync(filePath).size;
+      const result = parseLogFile(filePath);
+      if (result) {
+        parsedJobResults[jobId] = result;
+      }
+
+      const batsCount = result ? result.failures.filter(f => !/^Test[A-Z]/.test(f.name)).length : 0;
+      const goCount = result ? result.failures.filter(f => /^Test[A-Z]/.test(f.name) || f.name.includes('/')).length : 0;
+      console.log(`  Log ${jobId}: ${fileSize} bytes, ${batsCount} "not ok" (bats), ${goCount} "FAIL:" (Go) lines found`);
+
+      if (result && result.failures.length > 0) {
+        result.failures.slice(0, 3).forEach(f => {
+          console.log(`    ${f.name.substring(0, 100)}`);
+        });
+      }
+    } catch (e) {
+      console.warn(`  Could not process log for job ${jobId}: ${e.message}`);
+    }
+  });
+}
+
+loadAndParseLogs('job-logs', '');
+loadAndParseLogs('coco-charts-logs', 'CoCo Charts ');
+loadAndParseLogs('coco-caa-logs', 'CAA ');
+
+/**
+ * Look up pre-parsed test failure details for a job.
+ * All logs are parsed during the loading phase above; this is just a cache lookup.
+ */
+function parseTestFailures(jobId) {
+  const result = parsedJobResults[jobId];
+  if (!result) return null;
+
+  if (result.failures.length > 0) {
+    console.log(`Job ${jobId}: Found ${result.failures.length} failures (Total parsed: ${result.stats.total})`);
+    result.failures.forEach(f => console.log(`  - [${f.file || 'unknown'}] ${f.name}`));
+  }
+
+  return result;
 }
 
 // Get the job names we care about from config
@@ -577,7 +560,7 @@ const sections = (config.sections || []).map(sectionConfig => {
           
           // Debug: log if parsing failed
           if (!dayFailures) {
-            const hasLog = !!jobLogs[dayJob.id.toString()];
+            const hasLog = !!parsedJobResults[dayJob.id.toString()];
             console.log(`  Day ${date.toISOString().split('T')[0]}: No parsed failures. Has log: ${hasLog}, Job ID: ${dayJob.id}`);
           }
           
@@ -1005,15 +988,11 @@ const allJobsSection = {
           if (failedStep) {
             failureStep = failedStep.name;
           }
-          // Try to get failure details from parsed logs if available
-          const logFile = `job-logs/${dayJob.id}.log`;
-          if (fs.existsSync(logFile)) {
-            const logContent = fs.readFileSync(logFile, 'utf-8');
-            const parsed = parseTestFailures(logContent);
-            if (parsed && parsed.failures && parsed.failures.length > 0) {
-              failureDetails = parsed;
-              failureStep = parsed.batsFiles?.join(', ') || failureStep;
-            }
+          // Get failure details from pre-parsed cache
+          const parsed = parsedJobResults[dayJob.id.toString()];
+          if (parsed && parsed.failures && parsed.failures.length > 0) {
+            failureDetails = parsed;
+            failureStep = parsed.batsFiles?.join(', ') || failureStep;
           }
         }
       }
