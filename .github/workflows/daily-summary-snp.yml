@@ -1,0 +1,393 @@
+name: Daily SNP CI Summary
+
+on:
+  schedule:
+    # Try at 8 AM, 12 PM, and 4 PM UTC
+    # Send once per day - first successful attempt wins
+    - cron: '0 8 * * *'
+    - cron: '0 12 * * *'
+    - cron: '0 16 * * *'
+
+  workflow_dispatch:
+    # Manual trigger for testing
+    inputs:
+      force:
+        description: 'Force send even if already sent today'
+        type: boolean
+        default: false
+
+jobs:
+  daily-summary-snp:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout dashboard repo
+        uses: actions/checkout@v4
+
+      - name: Get today's date
+        id: date
+        run: |
+          TODAY=$(date -u '+%Y-%m-%d')
+          echo "today=$TODAY" >> $GITHUB_OUTPUT
+          echo "Today is: $TODAY"
+
+      - name: Check if already sent today
+        id: check-sent
+        uses: actions/cache@v4
+        with:
+          path: .slack-sent-marker-snp
+          key: slack-snp-summary-${{ steps.date.outputs.today }}
+          lookup-only: true
+
+      - name: Skip if already sent today
+        if: steps.check-sent.outputs.cache-hit == 'true' && github.event.inputs.force != 'true'
+        run: |
+          echo "✅ Already sent SNP notification for ${{ steps.date.outputs.today }}, skipping"
+          echo "Use 'force' option in manual trigger to send anyway"
+
+      - name: Check if nightly ran today
+        id: check-nightly
+        if: steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Checking if nightly workflow ran today..."
+
+          TODAY="${{ steps.date.outputs.today }}"
+
+          # Check for completed nightly runs that started today
+          NIGHTLY_RUN=$(gh api repos/kata-containers/kata-containers/actions/workflows/ci-nightly.yaml/runs \
+            -q ".workflow_runs[] | select(.created_at | startswith(\"$TODAY\")) | select(.status == \"completed\") | .id" | head -1)
+
+          if [ -z "$NIGHTLY_RUN" ]; then
+            echo "⏳ No completed nightly run found for today ($TODAY)"
+            echo "Will retry at next scheduled time"
+            echo "nightly_ran=false" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Found completed nightly run: $NIGHTLY_RUN"
+            echo "nightly_ran=true" >> $GITHUB_OUTPUT
+            echo "run_id=$NIGHTLY_RUN" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Setup Node.js
+        if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
+        run: npm install js-yaml
+
+      - name: Generate summary
+        if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
+        id: summary
+        run: |
+          node scripts/generate-summary.js > summary.json
+          cat summary.json
+
+          # Validate summary.json exists and is valid JSON
+          if [ ! -f summary.json ]; then
+            echo "❌ ERROR: summary.json not found"
+            exit 1
+          fi
+
+          if ! jq empty summary.json 2>/dev/null; then
+            echo "❌ ERROR: summary.json is not valid JSON"
+            cat summary.json
+            exit 1
+          fi
+
+          # Filter for SNP jobs only (sev-snp, qemu-snp)
+          echo "Filtering for SNP jobs..."
+          SNP_FAILED=$(jq '[.failing_tests[] | select(.name | test("sev-snp|qemu-snp"; "i"))]' summary.json)
+          SNP_FAILED_COUNT=$(echo "$SNP_FAILED" | jq 'length')
+
+          SNP_FLAKY=$(jq '[.flaky_tests[] | select(.name | test("sev-snp|qemu-snp"; "i"))]' summary.json)
+          SNP_FLAKY_COUNT=$(echo "$SNP_FLAKY" | jq 'length')
+
+          # Save filtered data for detailed output
+          echo "$SNP_FAILED" > snp-failures.json
+          echo "$SNP_FLAKY" > snp-flaky.json
+
+          # Calculate SNP-specific stats from all sections
+          SNP_TOTAL=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i"))] | length' summary.json)
+          SNP_PASSED=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.status == "passed")] | length' summary.json)
+          SNP_NOT_RUN=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.status == "not_run")] | length' summary.json)
+
+          # Validate SNP jobs exist
+          if [ "$SNP_TOTAL" -eq 0 ]; then
+            echo "⚠️ WARNING: No SNP jobs found in summary"
+            echo "This could mean:"
+            echo "  - Job names changed (sev-snp/qemu-snp → something else)"
+            echo "  - SNP tests didn't run in this nightly build"
+            echo "  - Filter pattern needs updating"
+            echo "Skipping notification to avoid sending misleading 0% message"
+
+            # Set outputs to avoid empty values in subsequent steps
+            echo "snp_total=0" >> $GITHUB_OUTPUT
+            echo "snp_passed=0" >> $GITHUB_OUTPUT
+            echo "snp_failed_count=0" >> $GITHUB_OUTPUT
+            echo "snp_not_run=0" >> $GITHUB_OUTPUT
+            echo "snp_flaky_count=0" >> $GITHUB_OUTPUT
+            echo "snp_pass_rate=0" >> $GITHUB_OUTPUT
+            echo "ten_day_avg_failed=0" >> $GITHUB_OUTPUT
+            echo "failed_delta=0" >> $GITHUB_OUTPUT
+            echo "ten_day_avg_flaky=0" >> $GITHUB_OUTPUT
+            echo "flaky_delta=0" >> $GITHUB_OUTPUT
+            echo "snp_arch_summary=" >> $GITHUB_OUTPUT
+            echo "snp_flaky_arch_summary=" >> $GITHUB_OUTPUT
+            echo "skip_notification=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Calculate SNP pass rate
+          SNP_PASS_RATE=$(echo "scale=0; ($SNP_PASSED * 100) / $SNP_TOTAL" | bc)
+
+          echo "snp_total=$SNP_TOTAL" >> $GITHUB_OUTPUT
+          echo "snp_passed=$SNP_PASSED" >> $GITHUB_OUTPUT
+          echo "snp_failed_count=$SNP_FAILED_COUNT" >> $GITHUB_OUTPUT
+          echo "snp_not_run=$SNP_NOT_RUN" >> $GITHUB_OUTPUT
+          echo "snp_flaky_count=$SNP_FLAKY_COUNT" >> $GITHUB_OUTPUT
+          echo "snp_pass_rate=$SNP_PASS_RATE" >> $GITHUB_OUTPUT
+
+          # Calculate SNP-specific 10-day averages from weather history
+          # Get all SNP tests and their weather history
+          SNP_TESTS=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i"))]' summary.json)
+
+          # Count failures per day over last 10 days from weather history
+          # weatherHistory is an array of {date, status} objects
+          SNP_DAILY_FAILURES=$(echo "$SNP_TESTS" | jq -r '
+            [.[].weatherHistory[]? | select(.status == "failed")] |
+            group_by(.date) |
+            map({date: .[0].date, count: length})
+          ')
+
+          # Calculate 10-day average for failed SNP jobs
+          SNP_10D_AVG_FAILED=$(echo "$SNP_DAILY_FAILURES" | jq -r '
+            if length > 0 then
+              (map(.count) | add / length | floor)
+            else
+              0
+            end
+          ')
+
+          # Count flaky per day over last 10 days
+          SNP_DAILY_FLAKY=$(echo "$SNP_TESTS" | jq -r '
+            [.[] | select(.isFlaky == true)] |
+            if length > 0 then
+              # Group by weather history dates
+              [.[].weatherHistory[]? | select(.status == "failed")] |
+              group_by(.date) |
+              map({date: .[0].date, count: length})
+            else
+              []
+            end
+          ')
+
+          # Calculate 10-day average for flaky SNP jobs
+          SNP_10D_AVG_FLAKY=$(echo "$SNP_DAILY_FLAKY" | jq -r '
+            if length > 0 then
+              (map(.count) | add / length | floor)
+            else
+              0
+            end
+          ')
+
+          # Calculate deltas (today vs 10-day average)
+          SNP_FAILED_DELTA=$(echo "scale=1; $SNP_FAILED_COUNT - $SNP_10D_AVG_FAILED" | bc)
+          SNP_FLAKY_DELTA=$(echo "scale=1; $SNP_FLAKY_COUNT - $SNP_10D_AVG_FLAKY" | bc)
+
+          echo "ten_day_avg_failed=$SNP_10D_AVG_FAILED" >> $GITHUB_OUTPUT
+          echo "failed_delta=$SNP_FAILED_DELTA" >> $GITHUB_OUTPUT
+          echo "ten_day_avg_flaky=$SNP_10D_AVG_FLAKY" >> $GITHUB_OUTPUT
+          echo "flaky_delta=$SNP_FLAKY_DELTA" >> $GITHUB_OUTPUT
+
+          # Get architecture breakdown for SNP jobs if available
+          SNP_ARCH=$(echo "$SNP_FAILED" | jq -r 'group_by(.arch) | map("\(length)x \(.[0].arch)") | join(" ")' 2>/dev/null || echo "")
+          echo "snp_arch_summary=$SNP_ARCH" >> $GITHUB_OUTPUT
+          if [ -z "$SNP_ARCH" ] && [ "$SNP_FAILED_COUNT" -gt 0 ]; then
+            echo "ℹ️ Note: Architecture data not available for failed SNP jobs"
+          fi
+
+          SNP_FLAKY_ARCH=$(echo "$SNP_FLAKY" | jq -r 'group_by(.arch) | map("\(length)x \(.[0].arch)") | join(" ")' 2>/dev/null || echo "")
+          echo "snp_flaky_arch_summary=$SNP_FLAKY_ARCH" >> $GITHUB_OUTPUT
+          if [ -z "$SNP_FLAKY_ARCH" ] && [ "$SNP_FLAKY_COUNT" -gt 0 ]; then
+            echo "ℹ️ Note: Architecture data not available for flaky SNP jobs"
+          fi
+
+          echo "skip_notification=false" >> $GITHUB_OUTPUT
+
+          echo "=== SNP Summary ==="
+          echo "Total SNP jobs: $SNP_TOTAL"
+          echo "Passed: $SNP_PASSED"
+          echo "Failed: $SNP_FAILED_COUNT"
+          echo "Not run: $SNP_NOT_RUN"
+          echo "Flaky: $SNP_FLAKY_COUNT"
+          echo "Pass rate: $SNP_PASS_RATE%"
+
+      - name: Send Slack notification
+        if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true' && steps.summary.outputs.skip_notification != 'true'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_SNP }}
+        run: |
+          # Skip if no webhook configured
+          if [ -z "$SLACK_WEBHOOK_URL" ]; then
+            echo "No SLACK_WEBHOOK_URL_SNP secret configured, skipping notification"
+            exit 0
+          fi
+
+          # Get outputs with defaults to avoid unary operator errors
+          pass_rate=${{ steps.summary.outputs.snp_pass_rate }}
+          pass_rate=${pass_rate:-0}
+          if [ "$pass_rate" -ge 95 ]; then
+            status_emoji="☀️"
+            status_text="Excellent"
+          elif [ "$pass_rate" -ge 85 ]; then
+            status_emoji="🌤️"
+            status_text="Good"
+          elif [ "$pass_rate" -ge 70 ]; then
+            status_emoji="⛅"
+            status_text="Fair"
+          elif [ "$pass_rate" -ge 50 ]; then
+            status_emoji="🌧️"
+            status_text="Needs Attention"
+          else
+            status_emoji="⛈️"
+            status_text="Critical"
+          fi
+
+          # Get arch breakdowns and 10-day averages from summary with defaults
+          failed_count=${{ steps.summary.outputs.snp_failed_count }}
+          failed_count=${failed_count:-0}
+          failing_arch="${{ steps.summary.outputs.snp_arch_summary }}"
+          ten_day_avg_failed=${{ steps.summary.outputs.ten_day_avg_failed }}
+          ten_day_avg_failed=${ten_day_avg_failed:-0}
+          failed_delta=${{ steps.summary.outputs.failed_delta }}
+          failed_delta=${failed_delta:-0}
+
+          flaky_count=${{ steps.summary.outputs.snp_flaky_count }}
+          flaky_count=${flaky_count:-0}
+          flaky_arch="${{ steps.summary.outputs.snp_flaky_arch_summary }}"
+          ten_day_avg_flaky=${{ steps.summary.outputs.ten_day_avg_flaky }}
+          ten_day_avg_flaky=${ten_day_avg_flaky:-0}
+          flaky_delta=${{ steps.summary.outputs.flaky_delta }}
+          flaky_delta=${flaky_delta:-0}
+
+          # Build 10-day average comparison for failed jobs (SNP-specific)
+          # Use awk for floating point comparison
+          failed_cmp_dir=$(echo "$failed_delta" | awk '{if ($1 > 0.5) print "above"; else if ($1 < -0.5) print "below"; else print "at"}')
+          if [ "$failed_cmp_dir" = "above" ]; then
+            avg_cmp="(↑ 10d avg: ${ten_day_avg_failed})"
+          elif [ "$failed_cmp_dir" = "below" ]; then
+            avg_cmp="(↓ 10d avg: ${ten_day_avg_failed})"
+          else
+            avg_cmp="(→ 10d avg: ${ten_day_avg_failed})"
+          fi
+
+          # Build 10-day average comparison for flaky jobs (SNP-specific)
+          flaky_cmp_dir=$(echo "$flaky_delta" | awk '{if ($1 > 0.5) print "above"; else if ($1 < -0.5) print "below"; else print "at"}')
+          if [ "$flaky_cmp_dir" = "above" ]; then
+            flaky_avg_cmp="(↑ 10d avg: ${ten_day_avg_flaky})"
+          elif [ "$flaky_cmp_dir" = "below" ]; then
+            flaky_avg_cmp="(↓ 10d avg: ${ten_day_avg_flaky})"
+          else
+            flaky_avg_cmp="(→ 10d avg: ${ten_day_avg_flaky})"
+          fi
+
+          # Build summary lines with arch breakdown
+          if [ "$failed_count" -eq 0 ]; then
+            failed_line="🔴 *0 SNP jobs failed* 🎉 ${avg_cmp}"
+          else
+            if [ -n "$failing_arch" ]; then
+              failed_line="🔴 *${failed_count} SNP jobs failed* [${failing_arch}] ${avg_cmp}"
+            else
+              failed_line="🔴 *${failed_count} SNP jobs failed* ${avg_cmp}"
+            fi
+          fi
+
+          if [ "$flaky_count" -eq 0 ]; then
+            flaky_line="⚡ *0 SNP jobs are flaky* ${flaky_avg_cmp}"
+          else
+            if [ -n "$flaky_arch" ]; then
+              flaky_line="⚡ *${flaky_count} SNP jobs are flaky* [${flaky_arch}] ${flaky_avg_cmp}"
+            else
+              flaky_line="⚡ *${flaky_count} SNP jobs are flaky* ${flaky_avg_cmp}"
+            fi
+          fi
+
+          # Send to Slack webhook
+          curl -X POST "$SLACK_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d @- <<EOF
+          {
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "${status_emoji} AMD SEV-SNP Nightly Summary",
+                  "emoji": true
+                }
+              },
+              {
+                "type": "context",
+                "elements": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "$(date -u '+%A, %B %d, %Y')"
+                  }
+                ]
+              },
+              {
+                "type": "divider"
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Pass Rate*\n${status_emoji} ${pass_rate}%"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Status*\n${status_text}"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*SNP Jobs*\n${{ steps.summary.outputs.snp_total }} total"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Results*\n🟢 ${{ steps.summary.outputs.snp_passed }} | 🔴 ${{ steps.summary.outputs.snp_failed_count }} | 🟡 ${{ steps.summary.outputs.snp_not_run }}"
+                  }
+                ]
+              },
+              {
+                "type": "divider"
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "${failed_line}\n${flaky_line}\n\n📊 <https://kata-containers.github.io/ci-dashboard/|View details on CI Dashboard>"
+                }
+              }
+            ]
+          }
+          EOF
+
+          echo "✅ Slack notification sent!"
+
+      - name: Create sent marker
+        if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
+        run: |
+          echo "Sent SNP notification for ${{ steps.date.outputs.today }} at $(date -u)" > .slack-sent-marker-snp
+
+      - name: Save sent marker to cache
+        if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
+        continue-on-error: true  # Cache may already exist from concurrent run
+        uses: actions/cache/save@v4
+        with:
+          path: .slack-sent-marker-snp
+          key: slack-snp-summary-${{ steps.date.outputs.today }}
