@@ -336,12 +336,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          git add data.json
+          # Keep required-tests.yaml in lockstep with gatekeeper (same revision used to build data.json)
+          git add data.json required-tests.yaml
           
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Update dashboard data [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
+            git commit -m "Update dashboard data and required tests [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
             # Stash any unstaged changes (temp files from processing)
             git stash --include-untracked || true
             # Rebase to avoid conflicts with other concurrent jobs
