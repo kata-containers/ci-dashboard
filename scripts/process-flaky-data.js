@@ -104,22 +104,40 @@ function stateToResult(state) {
   };
 }
 
+/**
+ * Buffer newline scan — avoids ConsString + giant String#split OOM (see process-data.js).
+ */
 function parseLogFileChunked(filePath) {
   const fd = fs.openSync(filePath, 'r');
   const buffer = Buffer.alloc(CHUNK_SIZE);
-  let leftover = '';
+  let leftover = Buffer.alloc(0);
   const state = newParseState();
   try {
     let bytesRead;
     while ((bytesRead = fs.readSync(fd, buffer, 0, CHUNK_SIZE)) > 0) {
-      const chunk = leftover + buffer.toString('utf8', 0, bytesRead);
-      const lines = chunk.split('\n');
-      leftover = lines.pop() || '';
-      for (const line of lines) {
-        processLogLine(line, state);
+      const chunk = Buffer.from(buffer.subarray(0, bytesRead));
+      const combined = leftover.length ? Buffer.concat([leftover, chunk]) : chunk;
+
+      let lineStart = 0;
+      for (let i = 0; i < combined.length; i++) {
+        if (combined[i] === 0x0a) {
+          let line = combined.toString('utf8', lineStart, i);
+          if (line.charCodeAt(line.length - 1) === 13) line = line.slice(0, -1);
+          processLogLine(line, state);
+          lineStart = i + 1;
+        }
       }
+
+      leftover =
+        lineStart < combined.length
+          ? Buffer.from(combined.subarray(lineStart))
+          : Buffer.alloc(0);
     }
-    if (leftover.trim()) processLogLine(leftover, state);
+    if (leftover.length > 0) {
+      let tail = leftover.toString('utf8');
+      if (tail.charCodeAt(tail.length - 1) === 13) tail = tail.slice(0, -1);
+      if (tail.trim()) processLogLine(tail, state);
+    }
   } finally {
     fs.closeSync(fd);
   }
