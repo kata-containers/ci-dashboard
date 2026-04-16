@@ -61,7 +61,8 @@ const sections = [{
   passed: passedCount,
   not_run: notRunCount,
   pass_rate: overallPassRate,
-  weather_emoji: overallPassRate >= 95 ? '☀️' : overallPassRate >= 85 ? '🌤️' : overallPassRate >= 70 ? '⛅' : overallPassRate >= 50 ? '🌧️' : '⛈️'
+  weather_emoji: overallPassRate >= 95 ? '☀️' : overallPassRate >= 85 ? '🌤️' : overallPassRate >= 70 ? '⛅' : overallPassRate >= 50 ? '🌧️' : '⛈️',
+  tests: allTests  // Include full test list for filtering (e.g., SNP-specific workflows)
 }];
 
 /**

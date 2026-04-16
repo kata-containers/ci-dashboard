@@ -2,10 +2,11 @@ name: Daily SNP CI Summary
 
 on:
   schedule:
-    # Try at 8 AM, 12 PM, and 4 PM UTC
+    # Run at 12 PM, 2 PM, and 4 PM UTC (4 AM, 6 AM, 8 AM PST)
+    # This is after the previous night's CI run completes (~7 AM UTC / 11 PM PST)
     # Send once per day - first successful attempt wins
-    - cron: '0 8 * * *'
     - cron: '0 12 * * *'
+    - cron: '0 14 * * *'
     - cron: '0 16 * * *'
 
   workflow_dispatch:
@@ -98,30 +99,28 @@ jobs:
             exit 1
           fi
 
-          # Filter for SNP jobs only (sev-snp, qemu-snp)
+          # Filter for SNP jobs only (sev-snp, qemu-snp, qemu-snp-runtime-rs)
+          # Exclude qemu-snp-experimental by filtering it out after initial match
           echo "Filtering for SNP jobs..."
-          SNP_FAILED=$(jq '[.failing_tests[] | select(.name | test("sev-snp|qemu-snp"; "i"))]' summary.json)
+          SNP_FAILED=$(jq '[.failing_tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.name | test("experimental"; "i") | not)]' summary.json)
           SNP_FAILED_COUNT=$(echo "$SNP_FAILED" | jq 'length')
 
-          SNP_FLAKY=$(jq '[.flaky_tests[] | select(.name | test("sev-snp|qemu-snp"; "i"))]' summary.json)
+          SNP_FLAKY=$(jq '[.flaky_tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.name | test("experimental"; "i") | not)]' summary.json)
           SNP_FLAKY_COUNT=$(echo "$SNP_FLAKY" | jq 'length')
 
-          # Save filtered data for detailed output
-          echo "$SNP_FAILED" > snp-failures.json
-          echo "$SNP_FLAKY" > snp-flaky.json
-
           # Calculate SNP-specific stats from all sections
-          SNP_TOTAL=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i"))] | length' summary.json)
-          SNP_PASSED=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.status == "passed")] | length' summary.json)
-          SNP_NOT_RUN=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.status == "not_run")] | length' summary.json)
+          SNP_TOTAL=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.name | test("experimental"; "i") | not)] | length' summary.json)
+          SNP_PASSED=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.name | test("experimental"; "i") | not) | select(.status == "passed")] | length' summary.json)
+          SNP_NOT_RUN=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.name | test("experimental"; "i") | not) | select(.status == "not_run")] | length' summary.json)
 
           # Validate SNP jobs exist
           if [ "$SNP_TOTAL" -eq 0 ]; then
             echo "⚠️ WARNING: No SNP jobs found in summary"
             echo "This could mean:"
-            echo "  - Job names changed (sev-snp/qemu-snp → something else)"
+            echo "  - Job names changed (sev-snp/qemu-snp/qemu-snp-runtime-rs → something else)"
             echo "  - SNP tests didn't run in this nightly build"
             echo "  - Filter pattern needs updating"
+            echo "Note: qemu-snp-experimental is intentionally excluded"
             echo "Skipping notification to avoid sending misleading 0% message"
 
             # Set outputs to avoid empty values in subsequent steps
@@ -131,10 +130,6 @@ jobs:
             echo "snp_not_run=0" >> $GITHUB_OUTPUT
             echo "snp_flaky_count=0" >> $GITHUB_OUTPUT
             echo "snp_pass_rate=0" >> $GITHUB_OUTPUT
-            echo "ten_day_avg_failed=0" >> $GITHUB_OUTPUT
-            echo "failed_delta=0" >> $GITHUB_OUTPUT
-            echo "ten_day_avg_flaky=0" >> $GITHUB_OUTPUT
-            echo "flaky_delta=0" >> $GITHUB_OUTPUT
             echo "snp_arch_summary=" >> $GITHUB_OUTPUT
             echo "snp_flaky_arch_summary=" >> $GITHUB_OUTPUT
             echo "skip_notification=true" >> $GITHUB_OUTPUT
@@ -151,70 +146,12 @@ jobs:
           echo "snp_flaky_count=$SNP_FLAKY_COUNT" >> $GITHUB_OUTPUT
           echo "snp_pass_rate=$SNP_PASS_RATE" >> $GITHUB_OUTPUT
 
-          # Calculate SNP-specific 10-day averages from weather history
-          # Get all SNP tests and their weather history
-          SNP_TESTS=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i"))]' summary.json)
-
-          # Count failures per day over last 10 days from weather history
-          # weatherHistory is an array of {date, status} objects
-          SNP_DAILY_FAILURES=$(echo "$SNP_TESTS" | jq -r '
-            [.[].weatherHistory[]? | select(.status == "failed")] |
-            group_by(.date) |
-            map({date: .[0].date, count: length})
-          ')
-
-          # Calculate 10-day average for failed SNP jobs
-          SNP_10D_AVG_FAILED=$(echo "$SNP_DAILY_FAILURES" | jq -r '
-            if length > 0 then
-              (map(.count) | add / length | floor)
-            else
-              0
-            end
-          ')
-
-          # Count flaky per day over last 10 days
-          SNP_DAILY_FLAKY=$(echo "$SNP_TESTS" | jq -r '
-            [.[] | select(.isFlaky == true)] |
-            if length > 0 then
-              # Group by weather history dates
-              [.[].weatherHistory[]? | select(.status == "failed")] |
-              group_by(.date) |
-              map({date: .[0].date, count: length})
-            else
-              []
-            end
-          ')
-
-          # Calculate 10-day average for flaky SNP jobs
-          SNP_10D_AVG_FLAKY=$(echo "$SNP_DAILY_FLAKY" | jq -r '
-            if length > 0 then
-              (map(.count) | add / length | floor)
-            else
-              0
-            end
-          ')
-
-          # Calculate deltas (today vs 10-day average)
-          SNP_FAILED_DELTA=$(echo "scale=1; $SNP_FAILED_COUNT - $SNP_10D_AVG_FAILED" | bc)
-          SNP_FLAKY_DELTA=$(echo "scale=1; $SNP_FLAKY_COUNT - $SNP_10D_AVG_FLAKY" | bc)
-
-          echo "ten_day_avg_failed=$SNP_10D_AVG_FAILED" >> $GITHUB_OUTPUT
-          echo "failed_delta=$SNP_FAILED_DELTA" >> $GITHUB_OUTPUT
-          echo "ten_day_avg_flaky=$SNP_10D_AVG_FLAKY" >> $GITHUB_OUTPUT
-          echo "flaky_delta=$SNP_FLAKY_DELTA" >> $GITHUB_OUTPUT
-
           # Get architecture breakdown for SNP jobs if available
           SNP_ARCH=$(echo "$SNP_FAILED" | jq -r 'group_by(.arch) | map("\(length)x \(.[0].arch)") | join(" ")' 2>/dev/null || echo "")
           echo "snp_arch_summary=$SNP_ARCH" >> $GITHUB_OUTPUT
-          if [ -z "$SNP_ARCH" ] && [ "$SNP_FAILED_COUNT" -gt 0 ]; then
-            echo "ℹ️ Note: Architecture data not available for failed SNP jobs"
-          fi
 
           SNP_FLAKY_ARCH=$(echo "$SNP_FLAKY" | jq -r 'group_by(.arch) | map("\(length)x \(.[0].arch)") | join(" ")' 2>/dev/null || echo "")
           echo "snp_flaky_arch_summary=$SNP_FLAKY_ARCH" >> $GITHUB_OUTPUT
-          if [ -z "$SNP_FLAKY_ARCH" ] && [ "$SNP_FLAKY_COUNT" -gt 0 ]; then
-            echo "ℹ️ Note: Architecture data not available for flaky SNP jobs"
-          fi
 
           echo "skip_notification=false" >> $GITHUB_OUTPUT
 
@@ -257,62 +194,33 @@ jobs:
             status_text="Critical"
           fi
 
-          # Get arch breakdowns and 10-day averages from summary with defaults
+          # Get arch breakdowns from summary with defaults
           failed_count=${{ steps.summary.outputs.snp_failed_count }}
           failed_count=${failed_count:-0}
           failing_arch="${{ steps.summary.outputs.snp_arch_summary }}"
-          ten_day_avg_failed=${{ steps.summary.outputs.ten_day_avg_failed }}
-          ten_day_avg_failed=${ten_day_avg_failed:-0}
-          failed_delta=${{ steps.summary.outputs.failed_delta }}
-          failed_delta=${failed_delta:-0}
 
           flaky_count=${{ steps.summary.outputs.snp_flaky_count }}
           flaky_count=${flaky_count:-0}
           flaky_arch="${{ steps.summary.outputs.snp_flaky_arch_summary }}"
-          ten_day_avg_flaky=${{ steps.summary.outputs.ten_day_avg_flaky }}
-          ten_day_avg_flaky=${ten_day_avg_flaky:-0}
-          flaky_delta=${{ steps.summary.outputs.flaky_delta }}
-          flaky_delta=${flaky_delta:-0}
-
-          # Build 10-day average comparison for failed jobs (SNP-specific)
-          # Use awk for floating point comparison
-          failed_cmp_dir=$(echo "$failed_delta" | awk '{if ($1 > 0.5) print "above"; else if ($1 < -0.5) print "below"; else print "at"}')
-          if [ "$failed_cmp_dir" = "above" ]; then
-            avg_cmp="(↑ 10d avg: ${ten_day_avg_failed})"
-          elif [ "$failed_cmp_dir" = "below" ]; then
-            avg_cmp="(↓ 10d avg: ${ten_day_avg_failed})"
-          else
-            avg_cmp="(→ 10d avg: ${ten_day_avg_failed})"
-          fi
-
-          # Build 10-day average comparison for flaky jobs (SNP-specific)
-          flaky_cmp_dir=$(echo "$flaky_delta" | awk '{if ($1 > 0.5) print "above"; else if ($1 < -0.5) print "below"; else print "at"}')
-          if [ "$flaky_cmp_dir" = "above" ]; then
-            flaky_avg_cmp="(↑ 10d avg: ${ten_day_avg_flaky})"
-          elif [ "$flaky_cmp_dir" = "below" ]; then
-            flaky_avg_cmp="(↓ 10d avg: ${ten_day_avg_flaky})"
-          else
-            flaky_avg_cmp="(→ 10d avg: ${ten_day_avg_flaky})"
-          fi
 
           # Build summary lines with arch breakdown
           if [ "$failed_count" -eq 0 ]; then
-            failed_line="🔴 *0 SNP jobs failed* 🎉 ${avg_cmp}"
+            failed_line="🔴 *0 SNP jobs failed* 🎉"
           else
             if [ -n "$failing_arch" ]; then
-              failed_line="🔴 *${failed_count} SNP jobs failed* [${failing_arch}] ${avg_cmp}"
+              failed_line="🔴 *${failed_count} SNP jobs failed* [${failing_arch}]"
             else
-              failed_line="🔴 *${failed_count} SNP jobs failed* ${avg_cmp}"
+              failed_line="🔴 *${failed_count} SNP jobs failed*"
             fi
           fi
 
           if [ "$flaky_count" -eq 0 ]; then
-            flaky_line="⚡ *0 SNP jobs are flaky* ${flaky_avg_cmp}"
+            flaky_line="⚡ *0 SNP jobs are flaky*"
           else
             if [ -n "$flaky_arch" ]; then
-              flaky_line="⚡ *${flaky_count} SNP jobs are flaky* [${flaky_arch}] ${flaky_avg_cmp}"
+              flaky_line="⚡ *${flaky_count} SNP jobs are flaky* [${flaky_arch}]"
             else
-              flaky_line="⚡ *${flaky_count} SNP jobs are flaky* ${flaky_avg_cmp}"
+              flaky_line="⚡ *${flaky_count} SNP jobs are flaky*"
             fi
           fi
 
@@ -326,7 +234,7 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "${status_emoji} AMD SEV-SNP Nightly Summary",
+                  "text": "${status_emoji} AMD SEV-SNP Nightly CI Results",
                   "emoji": true
                 }
               },
