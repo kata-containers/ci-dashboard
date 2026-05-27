@@ -1,5 +1,5 @@
 # Kata Containers CI Dashboard Configuration
-# 
+#
 # This file configures the CI dashboard at:
 # https://kata-containers.github.io/ci-dashboard/
 #
@@ -27,7 +27,7 @@ job_categories:
       - "coco"
       - "cc-se"
       - "cc-vfio-ap"
-  
+
   # NVIDIA GPU tests
   nvidia:
     name: "NVIDIA"
@@ -185,14 +185,14 @@ sections:
     slack:
       workspace: "kata-containers"
       channel: "#kata-ci"
-    
+
     # Jobs to monitor (exact names from GitHub Actions)
     jobs:
       - name: "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64"
         description: "NVIDIA GPU on A100"
         maintainers:
           - "@fidencio"
-      
+
       - name: "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64"
         description: "NVIDIA CC GPU + AMD SNP on H100"
         maintainers:
@@ -207,7 +207,7 @@ sections:
     slack:
       workspace: "kata-containers"
       channel: "#kata-ci"
-    
+
     # Jobs to monitor (exact names from GitHub Actions)
     jobs:
       - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, nydus, guest-pull)"
@@ -215,7 +215,7 @@ sections:
         maintainers:
           - "@stevenhorsman"
           - "@wainersm"
-      
+
       - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (sev-snp, qemu-snp)"
         description: "AMD SEV-SNP with nydus snapshotter"
         maintainers:
@@ -227,50 +227,55 @@ sections:
         maintainers:
           - "@AdithyaKrishnan"
           - "@hgowda-amd"
-      
+
       - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)"
         description: "Intel TDX with nydus snapshotter"
         maintainers:
           - "@mythi"
-      
+
+      - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx-runtime-rs)"
+        description: "Intel TDX with runtime-rs nydus snapshotter"
+        maintainers:
+          - "@mythi"
+
       - name: "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)"
         description: "IBM zVSI with nydus snapshotter"
         maintainers:
           - "@BbolroC"
-      
+
       - name: "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64"
         description: "NVIDIA CC GPU + AMD SNP on H100"
         maintainers:
           - "@fidencio"
-      
+
       - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev, experimental-force-guest-pull)"
         description: "non-TEE with force guest pull"
         maintainers:
           - "@fidencio"
-      
+
       - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)"
         description: "non-TEE with runtime-rs and nydus snapshotter"
         maintainers:
           - "@pmores"
           - "@lifupan"
-      
-      - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter (qemu-coco-dev, erofs, default)"
+
+      - name: "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter (qemu-coco-dev-runtime-rs, erofs, default)"
         description: "non-TEE with erofs snapshotter"
         maintainers:
           - "@stevenhorsman"
           - "@wainersm"
-      
+
       # s390x CC tests (also in IBM section)
       - name: "check-internal-test-result (cc-vfio-ap-e2e-tests)"
         description: "CC VFIO-AP E2E tests (s390x)"
         maintainers:
           - "@BbolroC"
-      
+
       - name: "check-internal-test-result (cc-se-e2e-tests-go)"
         description: "CC Secure Execution E2E tests - Go (s390x)"
         maintainers:
           - "@BbolroC"
-      
+
       - name: "check-internal-test-result (cc-se-e2e-tests-rs)"
         description: "CC Secure Execution E2E tests - Rust (s390x)"
         maintainers:
@@ -352,7 +357,7 @@ sections:
     slack:
       workspace: "kata-containers"
       channel: "#kata-ci"
-    
+
     # Jobs to monitor (exact names from GitHub Actions)
     jobs:
       # From ci-nightly-s390x.yaml workflow
@@ -360,17 +365,17 @@ sections:
         description: "Kata VFIO-AP E2E tests"
         maintainers:
           - "@BbolroC"
-      
+
       - name: "check-internal-test-result (cc-vfio-ap-e2e-tests)"
         description: "CC VFIO-AP E2E tests"
         maintainers:
           - "@BbolroC"
-      
+
       - name: "check-internal-test-result (cc-se-e2e-tests-go)"
         description: "CC Secure Execution E2E tests (Go)"
         maintainers:
           - "@BbolroC"
-      
+
       - name: "check-internal-test-result (cc-se-e2e-tests-rs)"
         description: "CC Secure Execution E2E tests (Rust)"
         maintainers:
