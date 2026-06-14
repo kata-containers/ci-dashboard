@@ -1,15 +1,15 @@
 {
-  "lastRefresh": "2026-06-13T21:17:00.875Z",
+  "lastRefresh": "2026-06-14T02:51:43.055Z",
   "periodDays": 14,
-  "totalFailures": 100,
-  "totalPRs": 9,
-  "confirmedFlakyCount": 20,
+  "totalFailures": 112,
+  "totalPRs": 11,
+  "confirmedFlakyCount": 18,
   "mergedDespiteFailureCount": 2,
   "failedTests": [
     {
       "name": "Pod can be created with templated VM",
       "file": "k8s-vm-templating.bats",
-      "totalFailures": 14,
+      "totalFailures": 12,
       "flakyCount": 0,
       "mergedCount": 0,
       "isConfirmedFlaky": false,
@@ -19,13 +19,6 @@
         "2026-06-11"
       ],
       "affectedJobs": [
-        {
-          "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (devmapper, qemu, kubeadm)",
-          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (devmapper, qemu, kubeadm)",
-          "count": 4,
-          "flakyCount": 0,
-          "mergedCount": 0
-        },
         {
           "name": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
           "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
@@ -60,6 +53,13 @@
           "count": 2,
           "flakyCount": 0,
           "mergedCount": 0
+        },
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (devmapper, qemu, kubeadm)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (devmapper, qemu, kubeadm)",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
         }
       ],
       "recentOccurrences": [
@@ -206,52 +206,33 @@
           "runAttempt": 1,
           "isFlaky": false,
           "prMerged": false
-        },
-        {
-          "date": "2026-06-11",
-          "prNumber": "13196",
-          "prTitle": "runtime: Enable VM Templating Support for CLH",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (devmapper, qemu, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (devmapper, qemu, kubeadm)",
-          "jobId": "80908450334",
-          "runId": "27375535996",
-          "runAttempt": 1,
-          "isFlaky": false,
-          "prMerged": false
-        },
-        {
-          "date": "2026-06-11",
-          "prNumber": "13196",
-          "prTitle": "runtime: Enable VM Templating Support for CLH",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (devmapper, qemu, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (devmapper, qemu, kubeadm)",
-          "jobId": "80908450334",
-          "runId": "27375535996",
-          "runAttempt": 1,
-          "isFlaky": false,
-          "prMerged": false
         }
       ]
     },
     {
-      "name": "Environment variables",
-      "file": "k8s-env.bats",
-      "totalFailures": 10,
-      "flakyCount": 2,
+      "name": "guest unix request is forwarded to host UDS and returns response",
+      "file": "k8s-vsock-uds-forward.bats",
+      "totalFailures": 8,
+      "flakyCount": 0,
       "mergedCount": 0,
-      "isConfirmedFlaky": true,
+      "isConfirmedFlaky": false,
       "mergedDespiteFailure": false,
       "uniquePRs": 1,
       "uniqueDates": [
-        "2026-06-13",
-        "2026-06-12",
-        "2026-06-11"
+        "2026-06-12"
       ],
       "affectedJobs": [
         {
-          "name": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "count": 8,
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
+        },
+        {
+          "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
+          "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
+          "count": 2,
           "flakyCount": 0,
           "mergedCount": 0
         },
@@ -259,129 +240,253 @@
           "name": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
           "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
           "count": 2,
-          "flakyCount": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
+        },
+        {
+          "name": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "displayName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "count": 2,
+          "flakyCount": 0,
           "mergedCount": 0
         }
       ],
       "recentOccurrences": [
         {
-          "date": "2026-06-13",
-          "prNumber": "13164",
-          "prTitle": "tests: use limits for Kata workload resources",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobId": "81171046366",
-          "runId": "27452100664",
-          "runAttempt": 2,
-          "isFlaky": false,
-          "prMerged": false
-        },
-        {
-          "date": "2026-06-13",
-          "prNumber": "13164",
-          "prTitle": "tests: use limits for Kata workload resources",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobId": "81171046366",
-          "runId": "27452100664",
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "jobId": "81131370151",
+          "runId": "27440200489",
           "runAttempt": 2,
           "isFlaky": false,
           "prMerged": false
         },
         {
           "date": "2026-06-12",
-          "prNumber": "13164",
-          "prTitle": "tests: use limits for Kata workload resources",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobId": "81137049876",
-          "runId": "27447032850",
-          "runAttempt": 1,
-          "isFlaky": false,
-          "prMerged": false
-        },
-        {
-          "date": "2026-06-12",
-          "prNumber": "13164",
-          "prTitle": "tests: use limits for Kata workload resources",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobId": "81137049876",
-          "runId": "27447032850",
-          "runAttempt": 1,
-          "isFlaky": false,
-          "prMerged": false
-        },
-        {
-          "date": "2026-06-12",
-          "prNumber": "13164",
-          "prTitle": "tests: use limits for Kata workload resources",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobId": "81098841418",
-          "runId": "27435652253",
-          "runAttempt": 1,
-          "isFlaky": false,
-          "prMerged": false
-        },
-        {
-          "date": "2026-06-12",
-          "prNumber": "13164",
-          "prTitle": "tests: use limits for Kata workload resources",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobId": "81098841418",
-          "runId": "27435652253",
-          "runAttempt": 1,
-          "isFlaky": false,
-          "prMerged": false
-        },
-        {
-          "date": "2026-06-11",
-          "prNumber": "13164",
-          "prTitle": "tests: use limits for Kata workload resources",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobId": "80922285197",
-          "runId": "27375417569",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "jobId": "81131370151",
+          "runId": "27440200489",
           "runAttempt": 2,
           "isFlaky": false,
           "prMerged": false
         },
         {
-          "date": "2026-06-11",
-          "prNumber": "13164",
-          "prTitle": "tests: use limits for Kata workload resources",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-          "jobId": "80922285197",
-          "runId": "27375417569",
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
+          "jobId": "81131372855",
+          "runId": "27440200489",
           "runAttempt": 2,
           "isFlaky": false,
           "prMerged": false
         },
         {
-          "date": "2026-06-11",
-          "prNumber": "13164",
-          "prTitle": "tests: use limits for Kata workload resources",
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
+          "jobId": "81131372855",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
           "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
           "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
-          "jobId": "80922287571",
-          "runId": "27375417569",
+          "jobId": "81132927765",
+          "runId": "27440200489",
           "runAttempt": 2,
-          "isFlaky": true,
+          "isFlaky": false,
           "prMerged": false
         },
         {
-          "date": "2026-06-11",
-          "prNumber": "13164",
-          "prTitle": "tests: use limits for Kata workload resources",
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
           "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
           "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
-          "jobId": "80922287571",
-          "runId": "27375417569",
+          "jobId": "81132927765",
+          "runId": "27440200489",
           "runAttempt": 2,
-          "isFlaky": true,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobId": "81132927857",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobId": "81132927857",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        }
+      ]
+    },
+    {
+      "name": "vsock UDS forward pod shuts down cleanly after guest relay is ready",
+      "file": "k8s-vsock-uds-forward.bats",
+      "totalFailures": 8,
+      "flakyCount": 0,
+      "mergedCount": 0,
+      "isConfirmedFlaky": false,
+      "mergedDespiteFailure": false,
+      "uniquePRs": 1,
+      "uniqueDates": [
+        "2026-06-12"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
+        },
+        {
+          "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
+          "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
+        },
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
+        },
+        {
+          "name": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "displayName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "jobId": "81131370151",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "jobId": "81131370151",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
+          "jobId": "81131372855",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
+          "jobId": "81131372855",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
+          "jobId": "81132927765",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu-runtime-rs, kubeadm)",
+          "jobId": "81132927765",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobId": "81132927857",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobId": "81132927857",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
           "prMerged": false
         }
       ]
@@ -389,7 +494,7 @@
     {
       "name": "setup_file failed",
       "file": "k8s-nvidia-nim.bats",
-      "totalFailures": 10,
+      "totalFailures": 8,
       "flakyCount": 2,
       "mergedCount": 0,
       "isConfirmedFlaky": true,
@@ -427,13 +532,6 @@
           "count": 2,
           "flakyCount": 0,
           "mergedCount": 0
-        },
-        {
-          "name": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, latest)",
-          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, latest)",
-          "count": 2,
-          "flakyCount": 0,
-          "mergedCount": 0
         }
       ],
       "recentOccurrences": [
@@ -528,30 +626,6 @@
           "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (clh, latest)",
           "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (clh, latest)",
           "jobId": "80904673793",
-          "runId": "27375535996",
-          "runAttempt": 1,
-          "isFlaky": false,
-          "prMerged": false
-        },
-        {
-          "date": "2026-06-11",
-          "prNumber": "13196",
-          "prTitle": "runtime: Enable VM Templating Support for CLH",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, latest)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, latest)",
-          "jobId": "80904674066",
-          "runId": "27375535996",
-          "runAttempt": 1,
-          "isFlaky": false,
-          "prMerged": false
-        },
-        {
-          "date": "2026-06-11",
-          "prNumber": "13196",
-          "prTitle": "runtime: Enable VM Templating Support for CLH",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, latest)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, latest)",
-          "jobId": "80904674066",
           "runId": "27375535996",
           "runAttempt": 1,
           "isFlaky": false,
@@ -701,6 +775,103 @@
       ]
     },
     {
+      "name": "Environment variables",
+      "file": "k8s-env.bats",
+      "totalFailures": 6,
+      "flakyCount": 0,
+      "mergedCount": 0,
+      "isConfirmedFlaky": false,
+      "mergedDespiteFailure": false,
+      "uniquePRs": 1,
+      "uniqueDates": [
+        "2026-06-13",
+        "2026-06-12"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "count": 6,
+          "flakyCount": 0,
+          "mergedCount": 0
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-06-13",
+          "prNumber": "13164",
+          "prTitle": "tests: use limits for Kata workload resources",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "jobId": "81171046366",
+          "runId": "27452100664",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-13",
+          "prNumber": "13164",
+          "prTitle": "tests: use limits for Kata workload resources",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "jobId": "81171046366",
+          "runId": "27452100664",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13164",
+          "prTitle": "tests: use limits for Kata workload resources",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "jobId": "81137049876",
+          "runId": "27447032850",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13164",
+          "prTitle": "tests: use limits for Kata workload resources",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "jobId": "81137049876",
+          "runId": "27447032850",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13164",
+          "prTitle": "tests: use limits for Kata workload resources",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "jobId": "81098841418",
+          "runId": "27435652253",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13164",
+          "prTitle": "tests: use limits for Kata workload resources",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
+          "jobId": "81098841418",
+          "runId": "27435652253",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        }
+      ]
+    },
+    {
       "name": "Pod quota",
       "file": "k8s-pod-quota.bats",
       "totalFailures": 4,
@@ -775,6 +946,85 @@
           "jobId": "80922803975",
           "runId": "27375949533",
           "runAttempt": 2,
+          "isFlaky": true,
+          "prMerged": false
+        }
+      ]
+    },
+    {
+      "name": "Pod that performs ip6tables setup",
+      "file": "k8s-ip6tables.bats",
+      "totalFailures": 4,
+      "flakyCount": 2,
+      "mergedCount": 0,
+      "isConfirmedFlaky": true,
+      "mergedDespiteFailure": false,
+      "uniquePRs": 2,
+      "uniqueDates": [
+        "2026-06-12"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, oci-distribution)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, oci-distribution)",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
+        },
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "count": 2,
+          "flakyCount": 2,
+          "mergedCount": 0
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-06-12",
+          "prNumber": "13223",
+          "prTitle": "tests: add runtime config drop-in helpers",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, oci-distribution)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, oci-distribution)",
+          "jobId": "81240745845",
+          "runId": "27444924761",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13223",
+          "prTitle": "tests: add runtime config drop-in helpers",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, oci-distribution)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, oci-distribution)",
+          "jobId": "81240745845",
+          "runId": "27444924761",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "11485",
+          "prTitle": "",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "jobId": "80986017743",
+          "runId": "27401692683",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "11485",
+          "prTitle": "",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+          "jobId": "80986017743",
+          "runId": "27401692683",
+          "runAttempt": 1,
           "isFlaky": true,
           "prMerged": false
         }
@@ -1413,6 +1663,74 @@
       ]
     },
     {
+      "name": "Get CDH resource",
+      "file": "k8s-confidential-attestation.bats",
+      "totalFailures": 3,
+      "flakyCount": 2,
+      "mergedCount": 0,
+      "isConfirmedFlaky": true,
+      "mergedDespiteFailure": false,
+      "uniquePRs": 2,
+      "uniqueDates": [
+        "2026-06-12",
+        "2026-06-11"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "count": 2,
+          "flakyCount": 2,
+          "mergedCount": 0
+        },
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-runtime-rs-tests-on-amd64",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-runtime-rs-tests-on-amd64",
+          "count": 1,
+          "flakyCount": 0,
+          "mergedCount": 0
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-runtime-rs-tests-on-amd64",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-runtime-rs-tests-on-amd64",
+          "jobId": "81131372764",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-11",
+          "prNumber": "13196",
+          "prTitle": "runtime: Enable VM Templating Support for CLH",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "jobId": "80904673268",
+          "runId": "27375535996",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-11",
+          "prNumber": "13196",
+          "prTitle": "runtime: Enable VM Templating Support for CLH",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
+          "jobId": "80904673268",
+          "runId": "27375535996",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": false
+        }
+      ]
+    },
+    {
       "name": "Empty dir volumes",
       "file": "k8s-empty-dirs.bats",
       "totalFailures": 2,
@@ -1605,6 +1923,54 @@
       ]
     },
     {
+      "name": "Run a cron job to completion",
+      "file": "k8s-cron-job.bats",
+      "totalFailures": 2,
+      "flakyCount": 0,
+      "mergedCount": 0,
+      "isConfirmedFlaky": false,
+      "mergedDespiteFailure": false,
+      "uniquePRs": 1,
+      "uniqueDates": [
+        "2026-06-12"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure-runtime-rs, small)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure-runtime-rs, small)",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure-runtime-rs, small)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure-runtime-rs, small)",
+          "jobId": "81131372968",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure-runtime-rs, small)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure-runtime-rs, small)",
+          "jobId": "81131372968",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
+          "prMerged": false
+        }
+      ]
+    },
+    {
       "name": "Test cannot launch pod with measured boot enabled and incorrect hash",
       "file": "k8s-measured-rootfs.bats",
       "totalFailures": 2,
@@ -1697,102 +2063,6 @@
           "runAttempt": 1,
           "isFlaky": false,
           "prMerged": true
-        }
-      ]
-    },
-    {
-      "name": "Pod that performs ip6tables setup",
-      "file": "k8s-ip6tables.bats",
-      "totalFailures": 2,
-      "flakyCount": 2,
-      "mergedCount": 0,
-      "isConfirmedFlaky": true,
-      "mergedDespiteFailure": false,
-      "uniquePRs": 1,
-      "uniqueDates": [
-        "2026-06-12"
-      ],
-      "affectedJobs": [
-        {
-          "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
-          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
-          "count": 2,
-          "flakyCount": 2,
-          "mergedCount": 0
-        }
-      ],
-      "recentOccurrences": [
-        {
-          "date": "2026-06-12",
-          "prNumber": "11485",
-          "prTitle": "",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
-          "jobId": "80986017743",
-          "runId": "27401692683",
-          "runAttempt": 1,
-          "isFlaky": true,
-          "prMerged": false
-        },
-        {
-          "date": "2026-06-12",
-          "prNumber": "11485",
-          "prTitle": "",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
-          "jobId": "80986017743",
-          "runId": "27401692683",
-          "runAttempt": 1,
-          "isFlaky": true,
-          "prMerged": false
-        }
-      ]
-    },
-    {
-      "name": "Get CDH resource",
-      "file": "k8s-confidential-attestation.bats",
-      "totalFailures": 2,
-      "flakyCount": 2,
-      "mergedCount": 0,
-      "isConfirmedFlaky": true,
-      "mergedDespiteFailure": false,
-      "uniquePRs": 1,
-      "uniqueDates": [
-        "2026-06-11"
-      ],
-      "affectedJobs": [
-        {
-          "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
-          "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
-          "count": 2,
-          "flakyCount": 2,
-          "mergedCount": 0
-        }
-      ],
-      "recentOccurrences": [
-        {
-          "date": "2026-06-11",
-          "prNumber": "13196",
-          "prTitle": "runtime: Enable VM Templating Support for CLH",
-          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
-          "jobId": "80904673268",
-          "runId": "27375535996",
-          "runAttempt": 1,
-          "isFlaky": true,
-          "prMerged": false
-        },
-        {
-          "date": "2026-06-11",
-          "prNumber": "13196",
-          "prTitle": "runtime: Enable VM Templating Support for CLH",
-          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx)",
-          "jobId": "80904673268",
-          "runId": "27375535996",
-          "runAttempt": 1,
-          "isFlaky": true,
-          "prMerged": false
         }
       ]
     },
@@ -1893,70 +2163,54 @@
       ]
     },
     {
-      "name": "Test OOM events for pods",
-      "file": "k8s-oom.bats",
-      "totalFailures": 2,
-      "flakyCount": 2,
+      "name": "Cannot get CDH resource when deny-all policy is set",
+      "file": "k8s-confidential-attestation.bats",
+      "totalFailures": 1,
+      "flakyCount": 0,
       "mergedCount": 0,
-      "isConfirmedFlaky": true,
+      "isConfirmedFlaky": false,
       "mergedDespiteFailure": false,
       "uniquePRs": 1,
       "uniqueDates": [
-        "2026-06-11"
+        "2026-06-12"
       ],
       "affectedJobs": [
         {
-          "name": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (clh-runtime-rs, minimum)",
-          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (clh-runtime-rs, minimum)",
-          "count": 2,
-          "flakyCount": 2,
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-runtime-rs-tests-on-amd64",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-runtime-rs-tests-on-amd64",
+          "count": 1,
+          "flakyCount": 0,
           "mergedCount": 0
         }
       ],
       "recentOccurrences": [
         {
-          "date": "2026-06-11",
-          "prNumber": "13196",
-          "prTitle": "runtime: Enable VM Templating Support for CLH",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (clh-runtime-rs, minimum)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (clh-runtime-rs, minimum)",
-          "jobId": "80904673848",
-          "runId": "27375535996",
-          "runAttempt": 1,
-          "isFlaky": true,
-          "prMerged": false
-        },
-        {
-          "date": "2026-06-11",
-          "prNumber": "13196",
-          "prTitle": "runtime: Enable VM Templating Support for CLH",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (clh-runtime-rs, minimum)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (clh-runtime-rs, minimum)",
-          "jobId": "80904673848",
-          "runId": "27375535996",
-          "runAttempt": 1,
-          "isFlaky": true,
+          "date": "2026-06-12",
+          "prNumber": "13162",
+          "prTitle": "Expose unix sockets to guest workloads (as vsock)",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-runtime-rs-tests-on-amd64",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-runtime-rs-tests-on-amd64",
+          "jobId": "81131372764",
+          "runId": "27440200489",
+          "runAttempt": 2,
+          "isFlaky": false,
           "prMerged": false
         }
       ]
     }
   ],
   "summary": {
-    "totalFailedTests": 24,
-    "confirmedFlaky": 20,
+    "totalFailedTests": 27,
+    "confirmedFlaky": 18,
     "mergedDespiteFailure": 2,
     "mostAffectedJob": {
       "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
       "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
-      "count": 16,
+      "count": 20,
       "flakyCount": 16,
       "mergedCount": 0
     },
     "trend": [
-      {
-        "date": "2026-05-31",
-        "failures": 0
-      },
       {
         "date": "2026-06-01",
         "failures": 0
@@ -1999,22 +2253,26 @@
       },
       {
         "date": "2026-06-11",
-        "failures": 44
+        "failures": 34
       },
       {
         "date": "2026-06-12",
-        "failures": 50
+        "failures": 72
       },
       {
         "date": "2026-06-13",
         "failures": 6
+      },
+      {
+        "date": "2026-06-14",
+        "failures": 0
       }
     ],
     "jobBreakdown": [
       {
         "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
         "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee (qemu-coco-dev-runtime-rs, nydus, guest-pull)",
-        "count": 16,
+        "count": 20,
         "flakyCount": 16,
         "mergedCount": 0
       },
@@ -2028,15 +2286,8 @@
       {
         "name": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
         "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu, kubeadm)",
-        "count": 10,
+        "count": 8,
         "flakyCount": 2,
-        "mergedCount": 0
-      },
-      {
-        "name": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, latest)",
-        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, latest)",
-        "count": 6,
-        "flakyCount": 0,
         "mergedCount": 0
       },
       {
@@ -2061,6 +2312,13 @@
         "mergedCount": 0
       },
       {
+        "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev, kubeadm)",
+        "count": 6,
+        "flakyCount": 2,
+        "mergedCount": 0
+      },
+      {
         "name": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (clh-runtime-rs, latest)",
         "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (clh-runtime-rs, latest)",
         "count": 6,
@@ -2068,17 +2326,17 @@
         "mergedCount": 0
       },
       {
-        "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (devmapper, qemu, kubeadm)",
-        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (devmapper, qemu, kubeadm)",
-        "count": 4,
-        "flakyCount": 0,
-        "mergedCount": 0
-      },
-      {
         "name": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
         "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-arm64 / run-k8s-tests-on-arm64 (qemu, kubeadm)",
         "count": 4,
         "flakyCount": 2,
+        "mergedCount": 0
+      },
+      {
+        "name": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, latest)",
+        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, latest)",
+        "count": 4,
+        "flakyCount": 0,
         "mergedCount": 0
       }
     ]
