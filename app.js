@@ -958,11 +958,13 @@ function toggleGroup(groupId) {
   if (state.activeProject === 'coco') {
     if (state.activeCocoTab === 'coco-charts') {
       renderCocoSections();
+    } else if (state.activeCocoTab === 'coco-trustee') {
+      renderTrusteeSections();
     } else if (state.activeCocoTab === 'coco-caa') {
       renderCAASections();
     }
   } else {
-  renderSections();
+    renderSections();
   }
   
   // Scroll to the clicked group after re-render
@@ -1056,7 +1058,7 @@ function updateJobCount() {
 }
 
 function showWeatherModal(sectionId, testId) {
-  // Look in regular sections, allJobsSection, cocoChartsSection, and cocoCAASection
+  // Look in regular sections, allJobsSection, cocoChartsSection, cocoCAASection, and cocoTrusteeSection
   let section = state.data.sections.find(s => s.id === sectionId);
   if (!section && sectionId === 'all-jobs' && state.data.allJobsSection) {
     section = state.data.allJobsSection;
@@ -1066,6 +1068,9 @@ function showWeatherModal(sectionId, testId) {
   }
   if (!section && sectionId === 'coco-caa' && state.data.cocoCAASection) {
     section = state.data.cocoCAASection;
+  }
+  if (!section && sectionId === 'coco-trustee' && state.data.cocoTrusteeSection) {
+    section = state.data.cocoTrusteeSection;
   }
   const test = section?.tests.find(t => t.id === testId);
   
@@ -2287,6 +2292,8 @@ function setTrusteeFilter(filter) {
   document.querySelectorAll('.filter-btn.trustee-filter').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.filter === filter);
   });
+  // Ensure the outer section is expanded so filtered groups are visible
+  state.expandedSections.add('coco-trustee');
   renderTrusteeSections();
   updateTrusteeJobCount();
 }
