@@ -2053,6 +2053,10 @@ function init() {
   document.getElementById('current-date').textContent = formatDate();
   const cocoDateEl = document.getElementById('coco-current-date');
   if (cocoDateEl) cocoDateEl.textContent = formatDate();
+  const trusteeDateEl = document.getElementById('trustee-current-date');
+  if (trusteeDateEl) trusteeDateEl.textContent = formatDate();
+  const caeDateEl = document.getElementById('caa-current-date');
+  if (caeDateEl) caeDateEl.textContent = formatDate();
   
   // Load data
   loadData();
