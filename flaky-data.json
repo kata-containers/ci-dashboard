@@ -1,7 +1,7 @@
 {
-  "lastRefresh": "2026-09-01T19:09:17.155Z",
+  "lastRefresh": "2026-09-01T22:21:26.134Z",
   "periodDays": 14,
-  "totalFailures": 82,
+  "totalFailures": 84,
   "totalPRs": 9,
   "confirmedFlakyCount": 5,
   "mergedDespiteFailureCount": 26,
@@ -1387,6 +1387,102 @@
       ]
     },
     {
+      "name": "Privileged pod runs and is able to execute privileged operations",
+      "file": "k8s-privileged.bats",
+      "totalFailures": 2,
+      "flakyCount": 0,
+      "mergedCount": 0,
+      "isConfirmedFlaky": false,
+      "mergedDespiteFailure": false,
+      "uniquePRs": 1,
+      "uniqueDates": [
+        "2026-09-01"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, openvmm-azure-runtime-rs, small)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, openvmm-azure-runtime-rs, small)",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-09-01",
+          "prNumber": "13756",
+          "prTitle": "agent: keep EROFS backing mounts outside container bundles",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, openvmm-azure-runtime-rs, small)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, openvmm-azure-runtime-rs, small)",
+          "jobId": "99996771795",
+          "runId": "33546415787",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-09-01",
+          "prNumber": "13756",
+          "prTitle": "agent: keep EROFS backing mounts outside container bundles",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, openvmm-azure-runtime-rs, small)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, openvmm-azure-runtime-rs, small)",
+          "jobId": "99996771795",
+          "runId": "33546415787",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        }
+      ]
+    },
+    {
+      "name": "ConfigMap for a pod",
+      "file": "k8s-configmap.bats",
+      "totalFailures": 2,
+      "flakyCount": 0,
+      "mergedCount": 0,
+      "isConfirmedFlaky": false,
+      "mergedDespiteFailure": false,
+      "uniquePRs": 1,
+      "uniqueDates": [
+        "2026-09-01"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter-memory-dmverity",
+          "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter-memory-dmverity",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-09-01",
+          "prNumber": "13756",
+          "prTitle": "agent: keep EROFS backing mounts outside container bundles",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter-memory-dmverity",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter-memory-dmverity",
+          "jobId": "99996772147",
+          "runId": "33546415787",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-09-01",
+          "prNumber": "13756",
+          "prTitle": "agent: keep EROFS backing mounts outside container bundles",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter-memory-dmverity",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter-memory-dmverity",
+          "jobId": "99996772147",
+          "runId": "33546415787",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        }
+      ]
+    },
+    {
       "name": "runtime, virtiofsd and VMM share the pod sandbox cgroup",
       "file": "k8s-sandbox-cgroup-placement.bats",
       "totalFailures": 2,
@@ -1579,54 +1675,6 @@
       ]
     },
     {
-      "name": "Test we cannot pull a large image that pull time exceeds createcontainer timeout inside the guest",
-      "file": "k8s-guest-pull-image.bats",
-      "totalFailures": 2,
-      "flakyCount": 0,
-      "mergedCount": 0,
-      "isConfirmedFlaky": false,
-      "mergedDespiteFailure": false,
-      "uniquePRs": 1,
-      "uniqueDates": [
-        "2026-08-27"
-      ],
-      "affectedJobs": [
-        {
-          "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
-          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
-          "count": 2,
-          "flakyCount": 0,
-          "mergedCount": 0
-        }
-      ],
-      "recentOccurrences": [
-        {
-          "date": "2026-08-27",
-          "prNumber": "13677",
-          "prTitle": "agent: synchronize initrd clocks with KVM PTP",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
-          "jobId": "98567704789",
-          "runId": "33081458239",
-          "runAttempt": 1,
-          "isFlaky": false,
-          "prMerged": false
-        },
-        {
-          "date": "2026-08-27",
-          "prNumber": "13677",
-          "prTitle": "agent: synchronize initrd clocks with KVM PTP",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
-          "jobId": "98567704789",
-          "runId": "33081458239",
-          "runAttempt": 1,
-          "isFlaky": false,
-          "prMerged": false
-        }
-      ]
-    },
-    {
       "name": "Successful sc deployment with auto-generated policy and container image volumes",
       "file": "k8s-policy-deployment-sc.bats",
       "totalFailures": 1,
@@ -1664,7 +1712,7 @@
     }
   ],
   "summary": {
-    "totalFailedTests": 27,
+    "totalFailedTests": 28,
     "confirmedFlaky": 5,
     "mergedDespiteFailure": 26,
     "mostAffectedJob": {
@@ -1709,7 +1757,7 @@
       },
       {
         "date": "2026-08-27",
-        "failures": 56
+        "failures": 54
       },
       {
         "date": "2026-08-28",
@@ -1729,7 +1777,7 @@
       },
       {
         "date": "2026-09-01",
-        "failures": 0
+        "failures": 4
       }
     ],
     "jobBreakdown": [
@@ -1769,6 +1817,13 @@
         "mergedCount": 4
       },
       {
+        "name": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, openvmm-azure-runtime-rs, small)",
+        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, openvmm-azure-runtime-rs, small)",
+        "count": 4,
+        "flakyCount": 2,
+        "mergedCount": 2
+      },
+      {
         "name": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu-runtime-rs, kubeadm)",
         "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-ppc64le / run-k8s-tests (qemu-runtime-rs, kubeadm)",
         "count": 3,
@@ -1783,11 +1838,11 @@
         "mergedCount": 2
       },
       {
-        "name": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, openvmm-azure-runtime-rs, small)",
-        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, openvmm-azure-runtime-rs, small)",
+        "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter-memory-dmverity",
+        "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-coco-nontee-with-erofs-snapshotter-memory-dmverity",
         "count": 2,
-        "flakyCount": 2,
-        "mergedCount": 2
+        "flakyCount": 0,
+        "mergedCount": 0
       },
       {
         "name": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
@@ -1795,13 +1850,6 @@
         "count": 2,
         "flakyCount": 2,
         "mergedCount": 2
-      },
-      {
-        "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
-        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
-        "count": 2,
-        "flakyCount": 0,
-        "mergedCount": 0
       }
     ]
   }
