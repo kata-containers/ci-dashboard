@@ -36,7 +36,7 @@ declare -A error_messages
 # JOB PATTERN MATRIX
 ###########################################
 # Filter matching (sev-snp, qemu-snp, qemu-snp-runtime-rs, Helm Trustee e2e (SNP))
-job_patterns["snp"]='sev-snp|qemu-snp|(snp)'
+job_patterns["snp"]='sev-snp|qemu-snp|\(snp\)'
 
 
 # JOB ERROR MESSAGE MATRIX
