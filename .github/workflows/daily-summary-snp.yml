@@ -13,289 +13,41 @@ on:
     # Manual trigger for testing
     inputs:
       force:
-        description: 'Force send even if already sent today'
+        description: 'Force send both kata & trustee summaries even if already sent today'
+        type: boolean
+        default: false
+      force_kata:
+        description: 'Force send kata ci summary even if already sent today'
+        type: boolean
+        default: false
+      force_trustee:
+        description: 'Force send trustee ci summary even if already sent today'
         type: boolean
         default: false
 
 jobs:
-  daily-summary-snp:
-    runs-on: ubuntu-latest
+  daily-summary-kata-snp:
+    uses: ./.github/workflows/reusable-daily-summary.yml
+    with:
+      job_label: 'SNP'
+      job_repo: 'kata-containers'
+      test_filter_pattern: 'sev-snp|qemu-snp'
+      test_exclude_pattern: 'experimental'
+      notification_header: 'AMD SEV-SNP Nightly Kata CI Results'
+      force: ${{ github.event.inputs.force == 'true' || github.event.inputs.force_kata == 'true' }}
+    secrets: 
+      slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL_SNP }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    steps:
-      - name: Checkout dashboard repo
-        uses: actions/checkout@v4
-
-      - name: Get today's date
-        id: date
-        run: |
-          TODAY=$(date -u '+%Y-%m-%d')
-          echo "today=$TODAY" >> $GITHUB_OUTPUT
-          echo "Today is: $TODAY"
-
-      - name: Check if already sent today
-        id: check-sent
-        uses: actions/cache@v4
-        with:
-          path: .slack-sent-marker-snp
-          key: slack-snp-summary-${{ steps.date.outputs.today }}
-          lookup-only: true
-
-      - name: Skip if already sent today
-        if: steps.check-sent.outputs.cache-hit == 'true' && github.event.inputs.force != 'true'
-        run: |
-          echo "✅ Already sent SNP notification for ${{ steps.date.outputs.today }}, skipping"
-          echo "Use 'force' option in manual trigger to send anyway"
-
-      - name: Check if nightly ran today
-        id: check-nightly
-        if: steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "Checking if nightly workflow ran today..."
-
-          TODAY="${{ steps.date.outputs.today }}"
-
-          # Check for completed nightly runs that started today
-          NIGHTLY_RUN=$(gh api repos/kata-containers/kata-containers/actions/workflows/ci-nightly.yaml/runs \
-            -q ".workflow_runs[] | select(.created_at | startswith(\"$TODAY\")) | select(.status == \"completed\") | .id" | head -1)
-
-          if [ -z "$NIGHTLY_RUN" ]; then
-            echo "⏳ No completed nightly run found for today ($TODAY)"
-            echo "Will retry at next scheduled time"
-            echo "nightly_ran=false" >> $GITHUB_OUTPUT
-          else
-            echo "✅ Found completed nightly run: $NIGHTLY_RUN"
-            echo "nightly_ran=true" >> $GITHUB_OUTPUT
-            echo "run_id=$NIGHTLY_RUN" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Setup Node.js
-        if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install dependencies
-        if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
-        run: npm install js-yaml
-
-      - name: Generate summary
-        if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
-        id: summary
-        run: |
-          node scripts/generate-summary.js > summary.json
-          cat summary.json
-
-          # Validate summary.json exists and is valid JSON
-          if [ ! -f summary.json ]; then
-            echo "❌ ERROR: summary.json not found"
-            exit 1
-          fi
-
-          if ! jq empty summary.json 2>/dev/null; then
-            echo "❌ ERROR: summary.json is not valid JSON"
-            cat summary.json
-            exit 1
-          fi
-
-          # Filter for SNP jobs only (sev-snp, qemu-snp, qemu-snp-runtime-rs)
-          # Exclude qemu-snp-experimental by filtering it out after initial match
-          echo "Filtering for SNP jobs..."
-          SNP_FAILED=$(jq '[.failing_tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.name | test("experimental"; "i") | not)]' summary.json)
-          SNP_FAILED_COUNT=$(echo "$SNP_FAILED" | jq 'length')
-
-          SNP_FLAKY=$(jq '[.flaky_tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.name | test("experimental"; "i") | not)]' summary.json)
-          SNP_FLAKY_COUNT=$(echo "$SNP_FLAKY" | jq 'length')
-
-          # Calculate SNP-specific stats from all sections
-          SNP_TOTAL=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.name | test("experimental"; "i") | not)] | length' summary.json)
-          SNP_PASSED=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.name | test("experimental"; "i") | not) | select(.status == "passed")] | length' summary.json)
-          SNP_NOT_RUN=$(jq '[.sections[].tests[] | select(.name | test("sev-snp|qemu-snp"; "i")) | select(.name | test("experimental"; "i") | not) | select(.status == "not_run")] | length' summary.json)
-
-          # Validate SNP jobs exist
-          if [ "$SNP_TOTAL" -eq 0 ]; then
-            echo "⚠️ WARNING: No SNP jobs found in summary"
-            echo "This could mean:"
-            echo "  - Job names changed (sev-snp/qemu-snp/qemu-snp-runtime-rs → something else)"
-            echo "  - SNP tests didn't run in this nightly build"
-            echo "  - Filter pattern needs updating"
-            echo "Note: qemu-snp-experimental is intentionally excluded"
-            echo "Skipping notification to avoid sending misleading 0% message"
-
-            # Set outputs to avoid empty values in subsequent steps
-            echo "snp_total=0" >> $GITHUB_OUTPUT
-            echo "snp_passed=0" >> $GITHUB_OUTPUT
-            echo "snp_failed_count=0" >> $GITHUB_OUTPUT
-            echo "snp_not_run=0" >> $GITHUB_OUTPUT
-            echo "snp_flaky_count=0" >> $GITHUB_OUTPUT
-            echo "snp_pass_rate=0" >> $GITHUB_OUTPUT
-            echo "snp_arch_summary=" >> $GITHUB_OUTPUT
-            echo "snp_flaky_arch_summary=" >> $GITHUB_OUTPUT
-            echo "skip_notification=true" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-
-          # Calculate SNP pass rate
-          SNP_PASS_RATE=$(echo "scale=0; ($SNP_PASSED * 100) / $SNP_TOTAL" | bc)
-
-          echo "snp_total=$SNP_TOTAL" >> $GITHUB_OUTPUT
-          echo "snp_passed=$SNP_PASSED" >> $GITHUB_OUTPUT
-          echo "snp_failed_count=$SNP_FAILED_COUNT" >> $GITHUB_OUTPUT
-          echo "snp_not_run=$SNP_NOT_RUN" >> $GITHUB_OUTPUT
-          echo "snp_flaky_count=$SNP_FLAKY_COUNT" >> $GITHUB_OUTPUT
-          echo "snp_pass_rate=$SNP_PASS_RATE" >> $GITHUB_OUTPUT
-
-          # Get architecture breakdown for SNP jobs if available
-          SNP_ARCH=$(echo "$SNP_FAILED" | jq -r 'group_by(.arch) | map("\(length)x \(.[0].arch)") | join(" ")' 2>/dev/null || echo "")
-          echo "snp_arch_summary=$SNP_ARCH" >> $GITHUB_OUTPUT
-
-          SNP_FLAKY_ARCH=$(echo "$SNP_FLAKY" | jq -r 'group_by(.arch) | map("\(length)x \(.[0].arch)") | join(" ")' 2>/dev/null || echo "")
-          echo "snp_flaky_arch_summary=$SNP_FLAKY_ARCH" >> $GITHUB_OUTPUT
-
-          echo "skip_notification=false" >> $GITHUB_OUTPUT
-
-          echo "=== SNP Summary ==="
-          echo "Total SNP jobs: $SNP_TOTAL"
-          echo "Passed: $SNP_PASSED"
-          echo "Failed: $SNP_FAILED_COUNT"
-          echo "Not run: $SNP_NOT_RUN"
-          echo "Flaky: $SNP_FLAKY_COUNT"
-          echo "Pass rate: $SNP_PASS_RATE%"
-
-      - name: Send Slack notification
-        if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true' && steps.summary.outputs.skip_notification != 'true'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_SNP }}
-        run: |
-          # Skip if no webhook configured
-          if [ -z "$SLACK_WEBHOOK_URL" ]; then
-            echo "No SLACK_WEBHOOK_URL_SNP secret configured, skipping notification"
-            exit 0
-          fi
-
-          # Get outputs with defaults to avoid unary operator errors
-          pass_rate=${{ steps.summary.outputs.snp_pass_rate }}
-          pass_rate=${pass_rate:-0}
-          if [ "$pass_rate" -ge 95 ]; then
-            status_emoji="☀️"
-            status_text="Excellent"
-          elif [ "$pass_rate" -ge 85 ]; then
-            status_emoji="🌤️"
-            status_text="Good"
-          elif [ "$pass_rate" -ge 70 ]; then
-            status_emoji="⛅"
-            status_text="Fair"
-          elif [ "$pass_rate" -ge 50 ]; then
-            status_emoji="🌧️"
-            status_text="Needs Attention"
-          else
-            status_emoji="⛈️"
-            status_text="Critical"
-          fi
-
-          # Get arch breakdowns from summary with defaults
-          failed_count=${{ steps.summary.outputs.snp_failed_count }}
-          failed_count=${failed_count:-0}
-          failing_arch="${{ steps.summary.outputs.snp_arch_summary }}"
-
-          flaky_count=${{ steps.summary.outputs.snp_flaky_count }}
-          flaky_count=${flaky_count:-0}
-          flaky_arch="${{ steps.summary.outputs.snp_flaky_arch_summary }}"
-
-          # Build summary lines with arch breakdown
-          if [ "$failed_count" -eq 0 ]; then
-            failed_line="🔴 *0 SNP jobs failed* 🎉"
-          else
-            if [ -n "$failing_arch" ]; then
-              failed_line="🔴 *${failed_count} SNP jobs failed* [${failing_arch}]"
-            else
-              failed_line="🔴 *${failed_count} SNP jobs failed*"
-            fi
-          fi
-
-          if [ "$flaky_count" -eq 0 ]; then
-            flaky_line="⚡ *0 SNP jobs are flaky*"
-          else
-            if [ -n "$flaky_arch" ]; then
-              flaky_line="⚡ *${flaky_count} SNP jobs are flaky* [${flaky_arch}]"
-            else
-              flaky_line="⚡ *${flaky_count} SNP jobs are flaky*"
-            fi
-          fi
-
-          # Send to Slack webhook
-          curl -X POST "$SLACK_WEBHOOK_URL" \
-            -H "Content-Type: application/json" \
-            -d @- <<EOF
-          {
-            "blocks": [
-              {
-                "type": "header",
-                "text": {
-                  "type": "plain_text",
-                  "text": "${status_emoji} AMD SEV-SNP Nightly CI Results",
-                  "emoji": true
-                }
-              },
-              {
-                "type": "context",
-                "elements": [
-                  {
-                    "type": "mrkdwn",
-                    "text": "$(date -u '+%A, %B %d, %Y')"
-                  }
-                ]
-              },
-              {
-                "type": "divider"
-              },
-              {
-                "type": "section",
-                "fields": [
-                  {
-                    "type": "mrkdwn",
-                    "text": "*Pass Rate*\n${status_emoji} ${pass_rate}%"
-                  },
-                  {
-                    "type": "mrkdwn",
-                    "text": "*Status*\n${status_text}"
-                  },
-                  {
-                    "type": "mrkdwn",
-                    "text": "*SNP Jobs*\n${{ steps.summary.outputs.snp_total }} total"
-                  },
-                  {
-                    "type": "mrkdwn",
-                    "text": "*Results*\n🟢 ${{ steps.summary.outputs.snp_passed }} | 🔴 ${{ steps.summary.outputs.snp_failed_count }} | 🟡 ${{ steps.summary.outputs.snp_not_run }}"
-                  }
-                ]
-              },
-              {
-                "type": "divider"
-              },
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "${failed_line}\n${flaky_line}\n\n📊 <https://kata-containers.github.io/ci-dashboard/|View details on CI Dashboard>"
-                }
-              }
-            ]
-          }
-          EOF
-
-          echo "✅ Slack notification sent!"
-
-      - name: Create sent marker
-        if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
-        run: |
-          echo "Sent SNP notification for ${{ steps.date.outputs.today }} at $(date -u)" > .slack-sent-marker-snp
-
-      - name: Save sent marker to cache
-        if: (steps.check-sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'true') && steps.check-nightly.outputs.nightly_ran == 'true'
-        continue-on-error: true  # Cache may already exist from concurrent run
-        uses: actions/cache/save@v4
-        with:
-          path: .slack-sent-marker-snp
-          key: slack-snp-summary-${{ steps.date.outputs.today }}
+  daily-summary-trustee-snp:
+    uses: ./.github/workflows/reusable-daily-summary.yml
+    with:
+      job_label: 'SNP'
+      job_repo: 'trustee'
+      test_filter_pattern: '\(SNP\)'
+      test_exclude_pattern: 'experimental'
+      notification_header: 'AMD SEV-SNP Nightly Trustee CI Results'
+      force: ${{ github.event.inputs.force == 'true' || github.event.inputs.force_trustee == 'true' }}
+    secrets: 
+      slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL_SNP }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
