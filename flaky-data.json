@@ -1,10 +1,10 @@
 {
-  "lastRefresh": "2026-09-19T15:10:48.832Z",
+  "lastRefresh": "2026-09-19T18:27:58.664Z",
   "periodDays": 14,
   "totalFailures": 843,
-  "totalPRs": 9,
-  "confirmedFlakyCount": 16,
-  "mergedDespiteFailureCount": 15,
+  "totalPRs": 10,
+  "confirmedFlakyCount": 15,
+  "mergedDespiteFailureCount": 14,
   "failedTests": [
     {
       "name": "Support seccomp runtime/default profile",
@@ -13518,6 +13518,54 @@
       ]
     },
     {
+      "name": "setup_file failed",
+      "file": "k8s-nvidia-vllm.bats",
+      "totalFailures": 2,
+      "flakyCount": 0,
+      "mergedCount": 0,
+      "isConfirmedFlaky": false,
+      "mergedDespiteFailure": false,
+      "uniquePRs": 1,
+      "uniqueDates": [
+        "2026-09-19"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-09-19",
+          "prNumber": "13878",
+          "prTitle": "kata-deploy: honor imagePullSecrets on the kubectl-image hook Jobs",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
+          "jobId": "105932388479",
+          "runId": "35455785293",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-09-19",
+          "prNumber": "13878",
+          "prTitle": "kata-deploy: honor imagePullSecrets on the kubectl-image hook Jobs",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
+          "jobId": "105932388479",
+          "runId": "35455785293",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        }
+      ]
+    },
+    {
       "name": "NUMA: explicit numa_mapping in TOML pins the sandbox to the chosen host node",
       "file": "k8s-nvidia-numa.bats",
       "totalFailures": 2,
@@ -13660,60 +13708,12 @@
           "prMerged": false
         }
       ]
-    },
-    {
-      "name": "setup_file failed",
-      "file": "k8s-nvidia-vllm.bats",
-      "totalFailures": 2,
-      "flakyCount": 2,
-      "mergedCount": 2,
-      "isConfirmedFlaky": true,
-      "mergedDespiteFailure": true,
-      "uniquePRs": 1,
-      "uniqueDates": [
-        "2026-09-17"
-      ],
-      "affectedJobs": [
-        {
-          "name": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
-          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
-          "count": 2,
-          "flakyCount": 2,
-          "mergedCount": 2
-        }
-      ],
-      "recentOccurrences": [
-        {
-          "date": "2026-09-17",
-          "prNumber": "13755",
-          "prTitle": "runtime(-rs): resolve symlinked mount paths",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
-          "jobId": "105415385322",
-          "runId": "35282440674",
-          "runAttempt": 1,
-          "isFlaky": true,
-          "prMerged": true
-        },
-        {
-          "date": "2026-09-17",
-          "prNumber": "13755",
-          "prTitle": "runtime(-rs): resolve symlinked mount paths",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
-          "jobId": "105415385322",
-          "runId": "35282440674",
-          "runAttempt": 1,
-          "isFlaky": true,
-          "prMerged": true
-        }
-      ]
     }
   ],
   "summary": {
     "totalFailedTests": 92,
-    "confirmedFlaky": 16,
-    "mergedDespiteFailure": 15,
+    "confirmedFlaky": 15,
+    "mergedDespiteFailure": 14,
     "mostAffectedJob": {
       "name": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (sev-snp, qemu-snp)",
       "displayName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (sev-snp, qemu-snp)",
@@ -13768,7 +13768,7 @@
       },
       {
         "date": "2026-09-17",
-        "failures": 33
+        "failures": 31
       },
       {
         "date": "2026-09-18",
@@ -13776,7 +13776,7 @@
       },
       {
         "date": "2026-09-19",
-        "failures": 63
+        "failures": 65
       }
     ],
     "jobBreakdown": [
