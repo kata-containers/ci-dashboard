@@ -1,0 +1,344 @@
+name: Reusable Daily CI Summary
+
+on:
+  workflow_call:
+    inputs:
+      test_filter_pattern:
+        description: 'Regex pattern to match job names (e.g., "sev-snp|qemu-snp")'
+        required: true
+        type: string
+      test_exclude_pattern:
+        description: 'Regex pattern to exclude job names (e.g., "experimental"). Leave empty to skip exclusion.'
+        required: false
+        type: string
+        default: ''
+      notification_header:
+        description: 'Header text for the Slack notification (e.g., "AMD SEV-SNP Nightly CI Results")'
+        required: true
+        type: string
+      job_label:
+        description: 'Short label used in message body (e.g., "SNP")'
+        required: true
+        type: string
+      job_repo:
+        description: 'Repository name for the job (e.g., "kata-containers", or "trustee")'
+        required: true
+        type: string
+      nightly_workflow_api_path:
+        description: 'GitHub API path for the nightly workflow runs (e.g., "repos/kata-containers/kata-containers/actions/workflows/ci-nightly.yaml/runs", or "repos/confidential-containers/trustee/actions/workflows/test-e2e-helm-nightly.yml/runs")'
+        required: true
+        type: string
+      force:
+        description: 'Force send even if already sent today'
+        required: false
+        type: boolean
+        default: false
+    secrets:
+      slack_webhook_url:
+        description: 'Slack webhook URL for this notification'
+        required: true
+      gh_token:
+        description: 'The Github token used to access the job repo'
+        required: true
+
+env:
+  CACHE_KEY_SUFFIX: ${{ inputs.job_repo }}-${{ inputs.job_label }}
+
+jobs:
+  daily-summary:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get today's date
+        id: date
+        run: |
+          TODAY=$(date -u '+%Y-%m-%d')
+          echo "today=$TODAY" >> $GITHUB_OUTPUT
+          echo "Today is: $TODAY"
+
+      - name: Check if already sent today
+        id: check-sent
+        uses: actions/cache@v4
+        with:
+          path: .slack-sent-marker-${{ env.CACHE_KEY_SUFFIX }}
+          key: slack-${{ env.CACHE_KEY_SUFFIX }}-summary-${{ steps.date.outputs.today }}
+          lookup-only: true
+
+      - name: Skip if already sent today
+        if: steps.check-sent.outputs.cache-hit == 'true' && !inputs.force
+        run: |
+          echo "✅ Already sent ${{ inputs.job_label }} notification for ${{ steps.date.outputs.today }}, skipping"
+          echo "Use 'force' option in manual trigger to send anyway"
+
+      - name: Install Shell Script Dependencies
+        run: |
+          expected=(gh bc)
+          missing=()
+          for util in "${expected[@]}"; do
+            if [[ ! $(which $util) ]]; then
+              missing+=($util)
+            fi
+          done
+          if [[ ${#missing[@]} -ne 0 ]]; then
+            sudo apt update
+            sudo apt install -y "${missing[@]}"
+          fi
+      - name: Check if nightly ran today
+        id: check-nightly
+        if: steps.check-sent.outputs.cache-hit != 'true' || inputs.force
+        env:
+          GH_TOKEN: ${{ secrets.gh_token }}
+        run: |
+          echo "Checking if nightly workflow ran today..."
+
+          TODAY="${{ steps.date.outputs.today }}"
+
+          # Check for completed nightly runs that started today
+          NIGHTLY_RUN=$(gh api "${{ inputs.nightly_workflow_api_path }}" \
+            -q ".workflow_runs[] | select(.created_at | startswith(\"$TODAY\")) | select(.status == \"completed\") | .id" | head -1)
+
+          if [ -z "$NIGHTLY_RUN" ]; then
+            echo "⏳ No completed nightly run found for today ($TODAY)"
+            echo "Will retry at next scheduled time"
+            echo "nightly_ran=false" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Found completed nightly run: $NIGHTLY_RUN"
+            echo "nightly_ran=true" >> $GITHUB_OUTPUT
+            echo "run_id=$NIGHTLY_RUN" >> $GITHUB_OUTPUT
+          fi
+      - name: Checkout dashboard repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        if: (steps.check-sent.outputs.cache-hit != 'true' || inputs.force) && steps.check-nightly.outputs.nightly_ran == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Node dependencies
+        if: (steps.check-sent.outputs.cache-hit != 'true' || inputs.force) && steps.check-nightly.outputs.nightly_ran == 'true'
+        run: npm install js-yaml
+
+      - name: Generate summary
+        if: (steps.check-sent.outputs.cache-hit != 'true' || inputs.force) && steps.check-nightly.outputs.nightly_ran == 'true'
+        id: summary
+        env:
+          TEST_FILTER_PATTERN: ${{ inputs.test_filter_pattern }}
+          TEST_EXCLUDE_PATTERN: ${{ inputs.test_exclude_pattern }}
+          JOB_LABEL: ${{ inputs.job_label }}
+          SUMMARY_MODE: ${{ inputs.job_repo }}
+        run: |
+          node scripts/generate-summary.js > summary.json
+          cat summary.json
+
+          # Validate summary.json exists and is valid JSON
+          if [ ! -f summary.json ]; then
+            echo "❌ ERROR: summary.json not found"
+            exit 1
+          fi
+
+          if ! jq empty summary.json 2>/dev/null; then
+            echo "❌ ERROR: summary.json is not valid JSON"
+            cat summary.json
+            exit 1
+          fi
+
+          # Filter for matching jobs
+          echo "Filtering for $JOB_LABEL jobs (include: $TEST_FILTER_PATTERN, exclude: $TEST_EXCLUDE_PATTERN)..."
+          FILTERED_FAILED=$(jq --arg filter "$TEST_FILTER_PATTERN" --arg exclude "$TEST_EXCLUDE_PATTERN" '[.failing_tests[] | select(.name | test($filter; "i")) | select($exclude == "" or (.name | test($exclude; "i") | not))]' summary.json)
+          FILTERED_FAILED_COUNT=$(echo "$FILTERED_FAILED" | jq 'length')
+
+          FILTERED_FLAKY=$(jq --arg filter "$TEST_FILTER_PATTERN" --arg exclude "$TEST_EXCLUDE_PATTERN" '[.flaky_tests[] | select(.name | test($filter; "i")) | select($exclude == "" or (.name | test($exclude; "i") | not))]' summary.json)
+          FILTERED_FLAKY_COUNT=$(echo "$FILTERED_FLAKY" | jq 'length')
+
+          # Calculate filtered stats from all sections
+          FILTERED_TOTAL=$(jq --arg filter "$TEST_FILTER_PATTERN" --arg exclude "$TEST_EXCLUDE_PATTERN" '[.sections[].tests[] | select(.name | test($filter; "i")) | select($exclude == "" or (.name | test($exclude; "i") | not))] | length' summary.json)
+          FILTERED_PASSED=$(jq --arg filter "$TEST_FILTER_PATTERN" --arg exclude "$TEST_EXCLUDE_PATTERN" '[.sections[].tests[] | select(.name | test($filter; "i")) | select($exclude == "" or (.name | test($exclude; "i") | not)) | select(.status == "passed")] | length' summary.json)
+          FILTERED_NOT_RUN=$(jq --arg filter "$TEST_FILTER_PATTERN" --arg exclude "$TEST_EXCLUDE_PATTERN" '[.sections[].tests[] | select(.name | test($filter; "i")) | select($exclude == "" or (.name | test($exclude; "i") | not)) | select(.status == "not_run")] | length' summary.json)
+
+          # Validate matching jobs exist
+          if [ "$FILTERED_TOTAL" -eq 0 ]; then
+            echo "⚠️ WARNING: No $JOB_LABEL jobs found in summary"
+            echo "This could mean:"
+            echo "  - Job names changed"
+            echo "  - $JOB_LABEL tests didn't run in this nightly build"
+            echo "  - Filter pattern needs updating (include: $TEST_FILTER_PATTERN, exclude: $TEST_EXCLUDE_PATTERN)"
+            echo "Skipping notification to avoid sending misleading 0% message"
+
+            echo "filtered_total=0" >> $GITHUB_OUTPUT
+            echo "filtered_passed=0" >> $GITHUB_OUTPUT
+            echo "filtered_failed_count=0" >> $GITHUB_OUTPUT
+            echo "filtered_not_run=0" >> $GITHUB_OUTPUT
+            echo "filtered_flaky_count=0" >> $GITHUB_OUTPUT
+            echo "filtered_pass_rate=0" >> $GITHUB_OUTPUT
+            echo "filtered_arch_summary=" >> $GITHUB_OUTPUT
+            echo "filtered_flaky_arch_summary=" >> $GITHUB_OUTPUT
+            echo "skip_notification=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Calculate pass rate
+          FILTERED_PASS_RATE=$(echo "scale=0; ($FILTERED_PASSED * 100) / $FILTERED_TOTAL" | bc)
+
+          echo "filtered_total=$FILTERED_TOTAL" >> $GITHUB_OUTPUT
+          echo "filtered_passed=$FILTERED_PASSED" >> $GITHUB_OUTPUT
+          echo "filtered_failed_count=$FILTERED_FAILED_COUNT" >> $GITHUB_OUTPUT
+          echo "filtered_not_run=$FILTERED_NOT_RUN" >> $GITHUB_OUTPUT
+          echo "filtered_flaky_count=$FILTERED_FLAKY_COUNT" >> $GITHUB_OUTPUT
+          echo "filtered_pass_rate=$FILTERED_PASS_RATE" >> $GITHUB_OUTPUT
+
+          # Get architecture breakdown
+          FILTERED_ARCH=$(echo "$FILTERED_FAILED" | jq -r 'group_by(.arch) | map("\(length)x \(.[0].arch)") | join(" ")' 2>/dev/null || echo "")
+          echo "filtered_arch_summary=$FILTERED_ARCH" >> $GITHUB_OUTPUT
+
+          FILTERED_FLAKY_ARCH=$(echo "$FILTERED_FLAKY" | jq -r 'group_by(.arch) | map("\(length)x \(.[0].arch)") | join(" ")' 2>/dev/null || echo "")
+          echo "filtered_flaky_arch_summary=$FILTERED_FLAKY_ARCH" >> $GITHUB_OUTPUT
+
+          echo "skip_notification=false" >> $GITHUB_OUTPUT
+
+          echo "=== $JOB_LABEL Summary ==="
+          echo "Total $JOB_LABEL jobs: $FILTERED_TOTAL"
+          echo "Passed: $FILTERED_PASSED"
+          echo "Failed: $FILTERED_FAILED_COUNT"
+          echo "Not run: $FILTERED_NOT_RUN"
+          echo "Flaky: $FILTERED_FLAKY_COUNT"
+          echo "Pass rate: $FILTERED_PASS_RATE%"
+
+      - name: Send Slack notification
+        if: (steps.check-sent.outputs.cache-hit != 'true' || inputs.force) && steps.check-nightly.outputs.nightly_ran == 'true' && steps.summary.outputs.skip_notification != 'true'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.slack_webhook_url }}
+          JOB_LABEL: ${{ inputs.job_label }}
+          NOTIFICATION_HEADER: ${{ inputs.notification_header }}
+        run: |
+          # Skip if no webhook configured
+          if [ -z "$SLACK_WEBHOOK_URL" ]; then
+            echo "No slack_webhook_url secret configured, skipping notification"
+            exit 0
+          fi
+
+          # Get outputs with defaults to avoid unary operator errors
+          pass_rate=${{ steps.summary.outputs.filtered_pass_rate }}
+          pass_rate=${pass_rate:-0}
+          if [ "$pass_rate" -ge 95 ]; then
+            status_emoji="☀️"
+            status_text="Excellent"
+          elif [ "$pass_rate" -ge 85 ]; then
+            status_emoji="🌤️"
+            status_text="Good"
+          elif [ "$pass_rate" -ge 70 ]; then
+            status_emoji="⛅"
+            status_text="Fair"
+          elif [ "$pass_rate" -ge 50 ]; then
+            status_emoji="🌧️"
+            status_text="Needs Attention"
+          else
+            status_emoji="⛈️"
+            status_text="Critical"
+          fi
+
+          # Get arch breakdowns from summary with defaults
+          failed_count=${{ steps.summary.outputs.filtered_failed_count }}
+          failed_count=${failed_count:-0}
+          failing_arch="${{ steps.summary.outputs.filtered_arch_summary }}"
+
+          flaky_count=${{ steps.summary.outputs.filtered_flaky_count }}
+          flaky_count=${flaky_count:-0}
+          flaky_arch="${{ steps.summary.outputs.filtered_flaky_arch_summary }}"
+
+          # Build summary lines with arch breakdown
+          if [ "$failed_count" -eq 0 ]; then
+            failed_line="🔴 *0 ${JOB_LABEL} jobs failed* 🎉"
+          else
+            if [ -n "$failing_arch" ]; then
+              failed_line="🔴 *${failed_count} ${JOB_LABEL} jobs failed* [${failing_arch}]"
+            else
+              failed_line="🔴 *${failed_count} ${JOB_LABEL} jobs failed*"
+            fi
+          fi
+
+          if [ "$flaky_count" -eq 0 ]; then
+            flaky_line="⚡ *0 ${JOB_LABEL} jobs are flaky*"
+          else
+            if [ -n "$flaky_arch" ]; then
+              flaky_line="⚡ *${flaky_count} ${JOB_LABEL} jobs are flaky* [${flaky_arch}]"
+            else
+              flaky_line="⚡ *${flaky_count} ${JOB_LABEL} jobs are flaky*"
+            fi
+          fi
+
+          # Send to Slack webhook
+          curl -X POST "$SLACK_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d @- <<EOF
+          {
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "${status_emoji} ${NOTIFICATION_HEADER}",
+                  "emoji": true
+                }
+              },
+              {
+                "type": "context",
+                "elements": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "$(date -u '+%A, %B %d, %Y')"
+                  }
+                ]
+              },
+              {
+                "type": "divider"
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Pass Rate*\n${status_emoji} ${pass_rate}%"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Status*\n${status_text}"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*${JOB_LABEL} Jobs*\n${{ steps.summary.outputs.filtered_total }} total"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Results*\n🟢 ${{ steps.summary.outputs.filtered_passed }} | 🔴 ${{ steps.summary.outputs.filtered_failed_count }} | 🟡 ${{ steps.summary.outputs.filtered_not_run }}"
+                  }
+                ]
+              },
+              {
+                "type": "divider"
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "${failed_line}\n${flaky_line}\n\n📊 <https://kata-containers.github.io/ci-dashboard/|View details on CI Dashboard>"
+                }
+              }
+            ]
+          }
+          EOF
+
+          echo "✅ Slack notification sent!"
+
+      - name: Create sent marker
+        if: (steps.check-sent.outputs.cache-hit != 'true' || inputs.force) && steps.check-nightly.outputs.nightly_ran == 'true'
+        run: |
+          echo "Sent ${{ inputs.job_label }} notification for ${{ steps.date.outputs.today }} at $(date -u)" > .slack-sent-marker-${{ env.CACHE_KEY_SUFFIX }}
+
+      - name: Save sent marker to cache
+        if: (steps.check-sent.outputs.cache-hit != 'true' || inputs.force) && steps.check-nightly.outputs.nightly_ran == 'true'
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: .slack-sent-marker-${{ env.CACHE_KEY_SUFFIX }}
+          key: slack-${{ env.CACHE_KEY_SUFFIX }}-summary-${{ steps.date.outputs.today }}
