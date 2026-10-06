@@ -9,6 +9,12 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
 
+const mode = process.argv[2];
+if (!mode || !['kata', 'trustee'].includes(mode)) {
+  console.error('Usage: generate-summary.js <kata|trustee>');
+  process.exit(1);
+}
+
 // Load data
 const data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
 
@@ -42,9 +48,9 @@ function resolveMaintainersToSlack(handles) {
   return mentions.join(' ');
 }
 
-// Use allJobsSection for the nightly "All Jobs" view
-// This matches what the dashboard shows
-const allJobsSection = data.allJobsSection || { tests: [] };
+const allJobsSection = mode === 'trustee'
+  ? (data.cocoTrusteeSection || { tests: [] })
+  : (data.allJobsSection || { tests: [] });
 const allTests = allJobsSection.tests || [];
 const totalTests = allTests.length;
 const failedCount = allTests.filter(t => t.status === 'failed').length;
