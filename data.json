@@ -1,5 +1,5 @@
 {
-  "lastRefresh": "2026-10-15T03:05:36.108Z",
+  "lastRefresh": "2026-10-15T10:56:26.377Z",
   "sections": [
     {
       "id": "nvidia-gpu",
@@ -11,13 +11,13 @@
           "name": "NVIDIA GPU on A100",
           "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64",
           "fullName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64",
-          "status": "not_run",
+          "status": "failed",
           "categories": [
             "nvidia"
           ],
           "isRequired": false,
-          "duration": "N/A",
-          "lastFailure": "10/8/2026",
+          "duration": "50m 9s",
+          "lastFailure": "8h ago",
           "lastSuccess": "Yesterday",
           "weatherHistory": [
             {
@@ -103,21 +103,223 @@
             },
             {
               "date": "2026-10-15T00:00:00.000Z",
-              "status": "none",
+              "status": "failed",
               "runId": "38659437601",
               "jobId": "116180523227",
-              "duration": "N/A",
-              "failureStep": null,
-              "failureDetails": null
+              "duration": "50m 9s",
+              "failureStep": "k8s-nvidia-numa.bats, k8s-nvidia-cuda.bats, k8s-nvidia-dcgm.bats, k8s-nvidia-vllm.bats, k8s-nvidia-nim.bats",
+              "failureDetails": {
+                "failures": [
+                  {
+                    "number": 3,
+                    "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                    "comment": "",
+                    "file": "k8s-nvidia-numa.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "CUDA Vector Addition Test",
+                    "comment": "",
+                    "file": "k8s-nvidia-cuda.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "CUDA Vector Addition Test",
+                    "comment": "",
+                    "file": "k8s-nvidia-cuda.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "setup_file failed",
+                    "comment": "",
+                    "file": "k8s-nvidia-dcgm.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "setup_file failed",
+                    "comment": "",
+                    "file": "k8s-nvidia-vllm.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "setup_file failed",
+                    "comment": "",
+                    "file": "k8s-nvidia-nim.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "CUDA Vector Addition Test",
+                    "comment": "",
+                    "file": "##[group]k8s-nvidia-cuda.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "setup_file failed",
+                    "comment": "",
+                    "file": "##[group]k8s-nvidia-dcgm.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "setup_file failed",
+                    "comment": "",
+                    "file": "##[group]k8s-nvidia-vllm.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "setup_file failed",
+                    "comment": "",
+                    "file": "##[group]k8s-nvidia-nim.bats"
+                  },
+                  {
+                    "number": 3,
+                    "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                    "comment": "",
+                    "file": "##[group]k8s-nvidia-numa.bats"
+                  }
+                ],
+                "stats": {
+                  "total": 32,
+                  "passed": 21,
+                  "failed": 11,
+                  "skipped": 0
+                },
+                "batsFiles": [
+                  "k8s-nvidia-numa.bats",
+                  "k8s-nvidia-cuda.bats",
+                  "k8s-nvidia-dcgm.bats",
+                  "k8s-nvidia-vllm.bats",
+                  "k8s-nvidia-nim.bats"
+                ]
+              }
             }
           ],
-          "failureCount": 0,
-          "failedTestsInWeather": [],
+          "failureCount": 1,
+          "failedTestsInWeather": [
+            {
+              "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-nvidia-numa.bats"
+              ]
+            },
+            {
+              "name": "CUDA Vector Addition Test",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-nvidia-cuda.bats"
+              ]
+            },
+            {
+              "name": "setup_file failed",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-nvidia-dcgm.bats"
+              ]
+            }
+          ],
           "retried": 0,
           "setupRetry": false,
           "runId": "38659437601",
           "jobId": "116180523227",
-          "error": null,
+          "error": {
+            "step": "k8s-nvidia-numa.bats, k8s-nvidia-cuda.bats, k8s-nvidia-dcgm.bats, k8s-nvidia-vllm.bats, k8s-nvidia-nim.bats, ##[group]k8s-nvidia-cuda.bats, ##[group]k8s-nvidia-dcgm.bats, ##[group]k8s-nvidia-vllm.bats, ##[group]k8s-nvidia-nim.bats, ##[group]k8s-nvidia-numa.bats",
+            "batsFiles": [
+              "k8s-nvidia-numa.bats",
+              "k8s-nvidia-cuda.bats",
+              "k8s-nvidia-dcgm.bats",
+              "k8s-nvidia-vllm.bats",
+              "k8s-nvidia-nim.bats",
+              "##[group]k8s-nvidia-cuda.bats",
+              "##[group]k8s-nvidia-dcgm.bats",
+              "##[group]k8s-nvidia-vllm.bats",
+              "##[group]k8s-nvidia-nim.bats",
+              "##[group]k8s-nvidia-numa.bats"
+            ],
+            "testResults": {
+              "total": 32,
+              "passed": 21,
+              "failed": 11,
+              "skipped": 0
+            },
+            "failures": [
+              {
+                "number": 3,
+                "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                "comment": "",
+                "file": "k8s-nvidia-numa.bats"
+              },
+              {
+                "number": 1,
+                "name": "CUDA Vector Addition Test",
+                "comment": "",
+                "file": "k8s-nvidia-cuda.bats"
+              },
+              {
+                "number": 1,
+                "name": "CUDA Vector Addition Test",
+                "comment": "",
+                "file": "k8s-nvidia-cuda.bats"
+              },
+              {
+                "number": 1,
+                "name": "setup_file failed",
+                "comment": "",
+                "file": "k8s-nvidia-dcgm.bats"
+              },
+              {
+                "number": 1,
+                "name": "setup_file failed",
+                "comment": "",
+                "file": "k8s-nvidia-vllm.bats"
+              },
+              {
+                "number": 1,
+                "name": "setup_file failed",
+                "comment": "",
+                "file": "k8s-nvidia-nim.bats"
+              },
+              {
+                "number": 1,
+                "name": "CUDA Vector Addition Test",
+                "comment": "",
+                "file": "##[group]k8s-nvidia-cuda.bats"
+              },
+              {
+                "number": 1,
+                "name": "setup_file failed",
+                "comment": "",
+                "file": "##[group]k8s-nvidia-dcgm.bats"
+              },
+              {
+                "number": 1,
+                "name": "setup_file failed",
+                "comment": "",
+                "file": "##[group]k8s-nvidia-vllm.bats"
+              },
+              {
+                "number": 1,
+                "name": "setup_file failed",
+                "comment": "",
+                "file": "##[group]k8s-nvidia-nim.bats"
+              },
+              {
+                "number": 3,
+                "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                "comment": "",
+                "file": "##[group]k8s-nvidia-numa.bats"
+              }
+            ],
+            "output": "not ok 3 - NUMA: GPU passthrough with VFIO has correct NUMA placement\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - setup_file failed\nnot ok 1 - setup_file failed\nnot ok 1 - setup_file failed\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - setup_file failed\nnot ok 1 - setup_file failed\nnot ok 1 - setup_file failed\nnot ok 3 - NUMA: GPU passthrough with VFIO has correct NUMA placement"
+          },
           "maintainers": [
             "@fidencio"
           ]
@@ -127,14 +329,14 @@
           "name": "NVIDIA CC GPU + AMD SNP on H100",
           "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
           "fullName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
-          "status": "not_run",
+          "status": "failed",
           "categories": [
             "tee",
             "nvidia"
           ],
           "isRequired": false,
-          "duration": "N/A",
-          "lastFailure": "Never",
+          "duration": "64m 51s",
+          "lastFailure": "6h ago",
           "lastSuccess": "Yesterday",
           "weatherHistory": [
             {
@@ -220,21 +422,332 @@
             },
             {
               "date": "2026-10-15T00:00:00.000Z",
-              "status": "none",
-              "runId": null,
-              "jobId": null,
-              "duration": null,
-              "failureStep": null,
-              "failureDetails": null
+              "status": "failed",
+              "runId": "38659437601",
+              "jobId": "116180523311",
+              "duration": "64m 51s",
+              "failureStep": "k8s-confidential-attestation.bats, k8s-nvidia-numa.bats, k8s-nvidia-cuda.bats, k8s-nvidia-dcgm.bats",
+              "failureDetails": {
+                "failures": [
+                  {
+                    "number": 1,
+                    "name": "Get CDH resource",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 2,
+                    "name": "Cannot get CDH resource when deny-all policy is set",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 4,
+                    "name": "Can get CDH resource when affirming policy is set with reference values",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "Cannot get CDH resource when deny-all policy is set",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "Can get CDH resource when affirming policy is set with reference values",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 3,
+                    "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                    "comment": "",
+                    "file": "k8s-nvidia-numa.bats"
+                  },
+                  {
+                    "number": 4,
+                    "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+                    "comment": "",
+                    "file": "k8s-nvidia-numa.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "CUDA Vector Addition Test",
+                    "comment": "",
+                    "file": "k8s-nvidia-cuda.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "CUDA Vector Addition Test",
+                    "comment": "",
+                    "file": "k8s-nvidia-cuda.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "setup_file failed",
+                    "comment": "",
+                    "file": "k8s-nvidia-dcgm.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "CUDA Vector Addition Test",
+                    "comment": "",
+                    "file": "##[group]k8s-nvidia-cuda.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "setup_file failed",
+                    "comment": "",
+                    "file": "##[group]k8s-nvidia-dcgm.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "Get CDH resource",
+                    "comment": "",
+                    "file": "##[group]k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 2,
+                    "name": "Cannot get CDH resource when deny-all policy is set",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 4,
+                    "name": "Can get CDH resource when affirming policy is set with reference values",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 3,
+                    "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                    "comment": "",
+                    "file": "##[group]k8s-nvidia-numa.bats"
+                  },
+                  {
+                    "number": 4,
+                    "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+                    "comment": "",
+                    "file": "k8s-nvidia-numa.bats"
+                  }
+                ],
+                "stats": {
+                  "total": 28,
+                  "passed": 11,
+                  "failed": 17,
+                  "skipped": 0
+                },
+                "batsFiles": [
+                  "k8s-confidential-attestation.bats",
+                  "k8s-nvidia-numa.bats",
+                  "k8s-nvidia-cuda.bats",
+                  "k8s-nvidia-dcgm.bats"
+                ]
+              }
             }
           ],
-          "failureCount": 0,
-          "failedTestsInWeather": [],
+          "failureCount": 1,
+          "failedTestsInWeather": [
+            {
+              "name": "Get CDH resource",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-confidential-attestation.bats"
+              ]
+            },
+            {
+              "name": "Cannot get CDH resource when deny-all policy is set",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-confidential-attestation.bats"
+              ]
+            },
+            {
+              "name": "Can get CDH resource when affirming policy is set with reference values",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-confidential-attestation.bats"
+              ]
+            },
+            {
+              "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-nvidia-numa.bats"
+              ]
+            },
+            {
+              "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-nvidia-numa.bats"
+              ]
+            },
+            {
+              "name": "CUDA Vector Addition Test",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-nvidia-cuda.bats"
+              ]
+            },
+            {
+              "name": "setup_file failed",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-nvidia-dcgm.bats"
+              ]
+            }
+          ],
           "retried": 0,
           "setupRetry": false,
           "runId": "38659437601",
           "jobId": "116180523311",
-          "error": null,
+          "error": {
+            "step": "k8s-confidential-attestation.bats, k8s-nvidia-numa.bats, k8s-nvidia-cuda.bats, k8s-nvidia-dcgm.bats, ##[group]k8s-nvidia-cuda.bats, ##[group]k8s-nvidia-dcgm.bats, ##[group]k8s-confidential-attestation.bats, ##[group]k8s-nvidia-numa.bats",
+            "batsFiles": [
+              "k8s-confidential-attestation.bats",
+              "k8s-nvidia-numa.bats",
+              "k8s-nvidia-cuda.bats",
+              "k8s-nvidia-dcgm.bats",
+              "##[group]k8s-nvidia-cuda.bats",
+              "##[group]k8s-nvidia-dcgm.bats",
+              "##[group]k8s-confidential-attestation.bats",
+              "##[group]k8s-nvidia-numa.bats"
+            ],
+            "testResults": {
+              "total": 28,
+              "passed": 11,
+              "failed": 17,
+              "skipped": 0
+            },
+            "failures": [
+              {
+                "number": 1,
+                "name": "Get CDH resource",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 2,
+                "name": "Cannot get CDH resource when deny-all policy is set",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 4,
+                "name": "Can get CDH resource when affirming policy is set with reference values",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 1,
+                "name": "Cannot get CDH resource when deny-all policy is set",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 1,
+                "name": "Can get CDH resource when affirming policy is set with reference values",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 3,
+                "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                "comment": "",
+                "file": "k8s-nvidia-numa.bats"
+              },
+              {
+                "number": 4,
+                "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+                "comment": "",
+                "file": "k8s-nvidia-numa.bats"
+              },
+              {
+                "number": 1,
+                "name": "CUDA Vector Addition Test",
+                "comment": "",
+                "file": "k8s-nvidia-cuda.bats"
+              },
+              {
+                "number": 1,
+                "name": "CUDA Vector Addition Test",
+                "comment": "",
+                "file": "k8s-nvidia-cuda.bats"
+              },
+              {
+                "number": 1,
+                "name": "setup_file failed",
+                "comment": "",
+                "file": "k8s-nvidia-dcgm.bats"
+              },
+              {
+                "number": 1,
+                "name": "CUDA Vector Addition Test",
+                "comment": "",
+                "file": "##[group]k8s-nvidia-cuda.bats"
+              },
+              {
+                "number": 1,
+                "name": "setup_file failed",
+                "comment": "",
+                "file": "##[group]k8s-nvidia-dcgm.bats"
+              },
+              {
+                "number": 1,
+                "name": "Get CDH resource",
+                "comment": "",
+                "file": "##[group]k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 2,
+                "name": "Cannot get CDH resource when deny-all policy is set",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 4,
+                "name": "Can get CDH resource when affirming policy is set with reference values",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 3,
+                "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                "comment": "",
+                "file": "##[group]k8s-nvidia-numa.bats"
+              },
+              {
+                "number": 4,
+                "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+                "comment": "",
+                "file": "k8s-nvidia-numa.bats"
+              }
+            ],
+            "output": "not ok 1 - Get CDH resource\nnot ok 2 - Cannot get CDH resource when deny-all policy is set\nnot ok 4 - Can get CDH resource when affirming policy is set with reference values\nnot ok 1 - Cannot get CDH resource when deny-all policy is set\nnot ok 1 - Can get CDH resource when affirming policy is set with reference values\nnot ok 3 - NUMA: GPU passthrough with VFIO has correct NUMA placement\nnot ok 4 - NUMA: small GPU workload right-sizes to the GPU's host NUMA node\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - setup_file failed\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - setup_file failed\nnot ok 1 - Get CDH resource\nnot ok 2 - Cannot get CDH resource when deny-all policy is set\nnot ok 4 - Can get CDH resource when affirming policy is set with reference values\nnot ok 3 - NUMA: GPU passthrough with VFIO has correct NUMA placement\nnot ok 4 - NUMA: small GPU workload right-sizes to the GPU's host NUMA node"
+          },
           "maintainers": [
             "@fidencio"
           ]
@@ -259,7 +772,7 @@
           "isRequired": true,
           "duration": "53m 32s",
           "lastFailure": "Never",
-          "lastSuccess": "2h ago",
+          "lastSuccess": "10h ago",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -377,7 +890,7 @@
           "isRequired": true,
           "duration": "69m 9s",
           "lastFailure": "Yesterday",
-          "lastSuccess": "2h ago",
+          "lastSuccess": "10h ago",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -495,7 +1008,7 @@
           "isRequired": true,
           "duration": "58m 16s",
           "lastFailure": "Yesterday",
-          "lastSuccess": "2h ago",
+          "lastSuccess": "10h ago",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -745,7 +1258,7 @@
           ],
           "isRequired": false,
           "duration": "93m 29s",
-          "lastFailure": "2h ago",
+          "lastFailure": "10h ago",
           "lastSuccess": "Yesterday",
           "weatherHistory": [
             {
@@ -988,14 +1501,14 @@
           "name": "Intel TDX with runtime-rs nydus snapshotter",
           "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx-runtime-rs)",
           "fullName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx-runtime-rs)",
-          "status": "not_run",
+          "status": "passed",
           "categories": [
             "tee"
           ],
           "isRequired": false,
-          "duration": "N/A",
+          "duration": "94m 20s",
           "lastFailure": "4 days ago",
-          "lastSuccess": "Yesterday",
+          "lastSuccess": "8h ago",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -1104,10 +1617,10 @@
             },
             {
               "date": "2026-10-15T00:00:00.000Z",
-              "status": "none",
+              "status": "passed",
               "runId": "38659437601",
               "jobId": "116180523530",
-              "duration": "N/A",
+              "duration": "94m 20s",
               "failureStep": null,
               "failureDetails": null
             }
@@ -1147,7 +1660,7 @@
           "isRequired": false,
           "duration": "41m 6s",
           "lastFailure": "Never",
-          "lastSuccess": "2h ago",
+          "lastSuccess": "10h ago",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -1256,14 +1769,14 @@
           "name": "NVIDIA CC GPU + AMD SNP on H100",
           "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
           "fullName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
-          "status": "not_run",
+          "status": "failed",
           "categories": [
             "tee",
             "nvidia"
           ],
           "isRequired": false,
-          "duration": "N/A",
-          "lastFailure": "Never",
+          "duration": "64m 51s",
+          "lastFailure": "6h ago",
           "lastSuccess": "Yesterday",
           "weatherHistory": [
             {
@@ -1349,21 +1862,332 @@
             },
             {
               "date": "2026-10-15T00:00:00.000Z",
-              "status": "none",
-              "runId": null,
-              "jobId": null,
-              "duration": null,
-              "failureStep": null,
-              "failureDetails": null
+              "status": "failed",
+              "runId": "38659437601",
+              "jobId": "116180523311",
+              "duration": "64m 51s",
+              "failureStep": "k8s-confidential-attestation.bats, k8s-nvidia-numa.bats, k8s-nvidia-cuda.bats, k8s-nvidia-dcgm.bats",
+              "failureDetails": {
+                "failures": [
+                  {
+                    "number": 1,
+                    "name": "Get CDH resource",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 2,
+                    "name": "Cannot get CDH resource when deny-all policy is set",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 4,
+                    "name": "Can get CDH resource when affirming policy is set with reference values",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "Cannot get CDH resource when deny-all policy is set",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "Can get CDH resource when affirming policy is set with reference values",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 3,
+                    "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                    "comment": "",
+                    "file": "k8s-nvidia-numa.bats"
+                  },
+                  {
+                    "number": 4,
+                    "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+                    "comment": "",
+                    "file": "k8s-nvidia-numa.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "CUDA Vector Addition Test",
+                    "comment": "",
+                    "file": "k8s-nvidia-cuda.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "CUDA Vector Addition Test",
+                    "comment": "",
+                    "file": "k8s-nvidia-cuda.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "setup_file failed",
+                    "comment": "",
+                    "file": "k8s-nvidia-dcgm.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "CUDA Vector Addition Test",
+                    "comment": "",
+                    "file": "##[group]k8s-nvidia-cuda.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "setup_file failed",
+                    "comment": "",
+                    "file": "##[group]k8s-nvidia-dcgm.bats"
+                  },
+                  {
+                    "number": 1,
+                    "name": "Get CDH resource",
+                    "comment": "",
+                    "file": "##[group]k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 2,
+                    "name": "Cannot get CDH resource when deny-all policy is set",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 4,
+                    "name": "Can get CDH resource when affirming policy is set with reference values",
+                    "comment": "",
+                    "file": "k8s-confidential-attestation.bats"
+                  },
+                  {
+                    "number": 3,
+                    "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                    "comment": "",
+                    "file": "##[group]k8s-nvidia-numa.bats"
+                  },
+                  {
+                    "number": 4,
+                    "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+                    "comment": "",
+                    "file": "k8s-nvidia-numa.bats"
+                  }
+                ],
+                "stats": {
+                  "total": 28,
+                  "passed": 11,
+                  "failed": 17,
+                  "skipped": 0
+                },
+                "batsFiles": [
+                  "k8s-confidential-attestation.bats",
+                  "k8s-nvidia-numa.bats",
+                  "k8s-nvidia-cuda.bats",
+                  "k8s-nvidia-dcgm.bats"
+                ]
+              }
             }
           ],
-          "failureCount": 0,
-          "failedTestsInWeather": [],
+          "failureCount": 1,
+          "failedTestsInWeather": [
+            {
+              "name": "Get CDH resource",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-confidential-attestation.bats"
+              ]
+            },
+            {
+              "name": "Cannot get CDH resource when deny-all policy is set",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-confidential-attestation.bats"
+              ]
+            },
+            {
+              "name": "Can get CDH resource when affirming policy is set with reference values",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-confidential-attestation.bats"
+              ]
+            },
+            {
+              "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-nvidia-numa.bats"
+              ]
+            },
+            {
+              "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-nvidia-numa.bats"
+              ]
+            },
+            {
+              "name": "CUDA Vector Addition Test",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-nvidia-cuda.bats"
+              ]
+            },
+            {
+              "name": "setup_file failed",
+              "count": 1,
+              "dates": [
+                "2026-10-15"
+              ],
+              "files": [
+                "k8s-nvidia-dcgm.bats"
+              ]
+            }
+          ],
           "retried": 0,
           "setupRetry": false,
           "runId": "38659437601",
           "jobId": "116180523311",
-          "error": null,
+          "error": {
+            "step": "k8s-confidential-attestation.bats, k8s-nvidia-numa.bats, k8s-nvidia-cuda.bats, k8s-nvidia-dcgm.bats, ##[group]k8s-nvidia-cuda.bats, ##[group]k8s-nvidia-dcgm.bats, ##[group]k8s-confidential-attestation.bats, ##[group]k8s-nvidia-numa.bats",
+            "batsFiles": [
+              "k8s-confidential-attestation.bats",
+              "k8s-nvidia-numa.bats",
+              "k8s-nvidia-cuda.bats",
+              "k8s-nvidia-dcgm.bats",
+              "##[group]k8s-nvidia-cuda.bats",
+              "##[group]k8s-nvidia-dcgm.bats",
+              "##[group]k8s-confidential-attestation.bats",
+              "##[group]k8s-nvidia-numa.bats"
+            ],
+            "testResults": {
+              "total": 28,
+              "passed": 11,
+              "failed": 17,
+              "skipped": 0
+            },
+            "failures": [
+              {
+                "number": 1,
+                "name": "Get CDH resource",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 2,
+                "name": "Cannot get CDH resource when deny-all policy is set",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 4,
+                "name": "Can get CDH resource when affirming policy is set with reference values",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 1,
+                "name": "Cannot get CDH resource when deny-all policy is set",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 1,
+                "name": "Can get CDH resource when affirming policy is set with reference values",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 3,
+                "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                "comment": "",
+                "file": "k8s-nvidia-numa.bats"
+              },
+              {
+                "number": 4,
+                "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+                "comment": "",
+                "file": "k8s-nvidia-numa.bats"
+              },
+              {
+                "number": 1,
+                "name": "CUDA Vector Addition Test",
+                "comment": "",
+                "file": "k8s-nvidia-cuda.bats"
+              },
+              {
+                "number": 1,
+                "name": "CUDA Vector Addition Test",
+                "comment": "",
+                "file": "k8s-nvidia-cuda.bats"
+              },
+              {
+                "number": 1,
+                "name": "setup_file failed",
+                "comment": "",
+                "file": "k8s-nvidia-dcgm.bats"
+              },
+              {
+                "number": 1,
+                "name": "CUDA Vector Addition Test",
+                "comment": "",
+                "file": "##[group]k8s-nvidia-cuda.bats"
+              },
+              {
+                "number": 1,
+                "name": "setup_file failed",
+                "comment": "",
+                "file": "##[group]k8s-nvidia-dcgm.bats"
+              },
+              {
+                "number": 1,
+                "name": "Get CDH resource",
+                "comment": "",
+                "file": "##[group]k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 2,
+                "name": "Cannot get CDH resource when deny-all policy is set",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 4,
+                "name": "Can get CDH resource when affirming policy is set with reference values",
+                "comment": "",
+                "file": "k8s-confidential-attestation.bats"
+              },
+              {
+                "number": 3,
+                "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                "comment": "",
+                "file": "##[group]k8s-nvidia-numa.bats"
+              },
+              {
+                "number": 4,
+                "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+                "comment": "",
+                "file": "k8s-nvidia-numa.bats"
+              }
+            ],
+            "output": "not ok 1 - Get CDH resource\nnot ok 2 - Cannot get CDH resource when deny-all policy is set\nnot ok 4 - Can get CDH resource when affirming policy is set with reference values\nnot ok 1 - Cannot get CDH resource when deny-all policy is set\nnot ok 1 - Can get CDH resource when affirming policy is set with reference values\nnot ok 3 - NUMA: GPU passthrough with VFIO has correct NUMA placement\nnot ok 4 - NUMA: small GPU workload right-sizes to the GPU's host NUMA node\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - setup_file failed\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - setup_file failed\nnot ok 1 - Get CDH resource\nnot ok 2 - Cannot get CDH resource when deny-all policy is set\nnot ok 4 - Can get CDH resource when affirming policy is set with reference values\nnot ok 3 - NUMA: GPU passthrough with VFIO has correct NUMA placement\nnot ok 4 - NUMA: small GPU workload right-sizes to the GPU's host NUMA node"
+          },
           "maintainers": [
             "@fidencio"
           ]
@@ -1380,7 +2204,7 @@
           "isRequired": false,
           "duration": "50m 7s",
           "lastFailure": "Never",
-          "lastSuccess": "2h ago",
+          "lastSuccess": "10h ago",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -1497,7 +2321,7 @@
           "isRequired": true,
           "duration": "53m 4s",
           "lastFailure": "Never",
-          "lastSuccess": "2h ago",
+          "lastSuccess": "10h ago",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -1613,9 +2437,9 @@
             "ibm"
           ],
           "isRequired": false,
-          "duration": "0m 7s",
-          "lastFailure": "Yesterday",
-          "lastSuccess": "22h ago",
+          "duration": "0m 9s",
+          "lastFailure": "2 days ago",
+          "lastSuccess": "5h ago",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -1700,10 +2524,10 @@
             },
             {
               "date": "2026-10-15T00:00:00.000Z",
-              "status": "none",
-              "runId": null,
-              "jobId": null,
-              "duration": null,
+              "status": "passed",
+              "runId": "38684483788",
+              "jobId": "116256107048",
+              "duration": "0m 9s",
               "failureStep": null,
               "failureDetails": null
             }
@@ -1712,8 +2536,8 @@
           "failedTestsInWeather": [],
           "retried": 0,
           "setupRetry": false,
-          "runId": "38514330460",
-          "jobId": "115689615914",
+          "runId": "38684483788",
+          "jobId": "116256107048",
           "error": null,
           "maintainers": [
             "@BbolroC"
@@ -1730,9 +2554,9 @@
             "ibm"
           ],
           "isRequired": false,
-          "duration": "0m 13s",
-          "lastFailure": "Yesterday",
-          "lastSuccess": "22h ago",
+          "duration": "0m 10s",
+          "lastFailure": "2 days ago",
+          "lastSuccess": "5h ago",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -1817,10 +2641,10 @@
             },
             {
               "date": "2026-10-15T00:00:00.000Z",
-              "status": "none",
-              "runId": null,
-              "jobId": null,
-              "duration": null,
+              "status": "passed",
+              "runId": "38684483788",
+              "jobId": "116256106977",
+              "duration": "0m 10s",
               "failureStep": null,
               "failureDetails": null
             }
@@ -1829,8 +2653,8 @@
           "failedTestsInWeather": [],
           "retried": 0,
           "setupRetry": false,
-          "runId": "38514330460",
-          "jobId": "115689616636",
+          "runId": "38684483788",
+          "jobId": "116256106977",
           "error": null,
           "maintainers": [
             "@BbolroC"
@@ -1841,15 +2665,15 @@
           "name": "CC Secure Execution E2E tests - Rust (s390x)",
           "jobName": "check-internal-test-result (cc-se-e2e-tests-rs)",
           "fullName": "check-internal-test-result (cc-se-e2e-tests-rs)",
-          "status": "passed",
+          "status": "failed",
           "categories": [
             "tee",
             "ibm"
           ],
           "isRequired": false,
-          "duration": "0m 13s",
-          "lastFailure": "Yesterday",
-          "lastSuccess": "22h ago",
+          "duration": "0m 15s",
+          "lastFailure": "5h ago",
+          "lastSuccess": "Yesterday",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -1934,21 +2758,24 @@
             },
             {
               "date": "2026-10-15T00:00:00.000Z",
-              "status": "none",
-              "runId": null,
-              "jobId": null,
-              "duration": null,
-              "failureStep": null,
+              "status": "failed",
+              "runId": "38684483788",
+              "jobId": "116256106634",
+              "duration": "0m 15s",
+              "failureStep": "Fetch a test result for {{ matrix.test_title }}",
               "failureDetails": null
             }
           ],
-          "failureCount": 0,
+          "failureCount": 1,
           "failedTestsInWeather": [],
           "retried": 0,
           "setupRetry": false,
-          "runId": "38514330460",
-          "jobId": "115689616086",
-          "error": null,
+          "runId": "38684483788",
+          "jobId": "116256106634",
+          "error": {
+            "step": "Fetch a test result for {{ matrix.test_title }}",
+            "output": "View full log on GitHub for details"
+          },
           "maintainers": [
             "@BbolroC"
           ]
@@ -3390,8 +4217,8 @@
           ],
           "isRequired": false,
           "duration": "0m 7s",
-          "lastFailure": "2 days ago",
-          "lastSuccess": "22h ago",
+          "lastFailure": "3 days ago",
+          "lastSuccess": "5h ago",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -3476,10 +4303,10 @@
             },
             {
               "date": "2026-10-15T00:00:00.000Z",
-              "status": "none",
-              "runId": null,
-              "jobId": null,
-              "duration": null,
+              "status": "passed",
+              "runId": "38684483788",
+              "jobId": "116256106836",
+              "duration": "0m 7s",
               "failureStep": null,
               "failureDetails": null
             }
@@ -3488,8 +4315,8 @@
           "failedTestsInWeather": [],
           "retried": 0,
           "setupRetry": false,
-          "runId": "38514330460",
-          "jobId": "115689615931",
+          "runId": "38684483788",
+          "jobId": "116256106836",
           "error": null,
           "maintainers": [
             "@BbolroC"
@@ -3506,9 +4333,9 @@
             "ibm"
           ],
           "isRequired": false,
-          "duration": "0m 7s",
-          "lastFailure": "Yesterday",
-          "lastSuccess": "22h ago",
+          "duration": "0m 9s",
+          "lastFailure": "2 days ago",
+          "lastSuccess": "5h ago",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -3593,10 +4420,10 @@
             },
             {
               "date": "2026-10-15T00:00:00.000Z",
-              "status": "none",
-              "runId": null,
-              "jobId": null,
-              "duration": null,
+              "status": "passed",
+              "runId": "38684483788",
+              "jobId": "116256107048",
+              "duration": "0m 9s",
               "failureStep": null,
               "failureDetails": null
             }
@@ -3605,8 +4432,8 @@
           "failedTestsInWeather": [],
           "retried": 0,
           "setupRetry": false,
-          "runId": "38514330460",
-          "jobId": "115689615914",
+          "runId": "38684483788",
+          "jobId": "116256107048",
           "error": null,
           "maintainers": [
             "@BbolroC"
@@ -3623,9 +4450,9 @@
             "ibm"
           ],
           "isRequired": false,
-          "duration": "0m 13s",
-          "lastFailure": "Yesterday",
-          "lastSuccess": "22h ago",
+          "duration": "0m 10s",
+          "lastFailure": "2 days ago",
+          "lastSuccess": "5h ago",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -3710,10 +4537,10 @@
             },
             {
               "date": "2026-10-15T00:00:00.000Z",
-              "status": "none",
-              "runId": null,
-              "jobId": null,
-              "duration": null,
+              "status": "passed",
+              "runId": "38684483788",
+              "jobId": "116256106977",
+              "duration": "0m 10s",
               "failureStep": null,
               "failureDetails": null
             }
@@ -3722,8 +4549,8 @@
           "failedTestsInWeather": [],
           "retried": 0,
           "setupRetry": false,
-          "runId": "38514330460",
-          "jobId": "115689616636",
+          "runId": "38684483788",
+          "jobId": "116256106977",
           "error": null,
           "maintainers": [
             "@BbolroC"
@@ -3734,15 +4561,15 @@
           "name": "CC Secure Execution E2E tests (Rust)",
           "jobName": "check-internal-test-result (cc-se-e2e-tests-rs)",
           "fullName": "check-internal-test-result (cc-se-e2e-tests-rs)",
-          "status": "passed",
+          "status": "failed",
           "categories": [
             "tee",
             "ibm"
           ],
           "isRequired": false,
-          "duration": "0m 13s",
-          "lastFailure": "Yesterday",
-          "lastSuccess": "22h ago",
+          "duration": "0m 15s",
+          "lastFailure": "5h ago",
+          "lastSuccess": "Yesterday",
           "weatherHistory": [
             {
               "date": "2026-10-06T00:00:00.000Z",
@@ -3827,21 +4654,24 @@
             },
             {
               "date": "2026-10-15T00:00:00.000Z",
-              "status": "none",
-              "runId": null,
-              "jobId": null,
-              "duration": null,
-              "failureStep": null,
+              "status": "failed",
+              "runId": "38684483788",
+              "jobId": "116256106634",
+              "duration": "0m 15s",
+              "failureStep": "Fetch a test result for {{ matrix.test_title }}",
               "failureDetails": null
             }
           ],
-          "failureCount": 0,
+          "failureCount": 1,
           "failedTestsInWeather": [],
           "retried": 0,
           "setupRetry": false,
-          "runId": "38514330460",
-          "jobId": "115689616086",
-          "error": null,
+          "runId": "38684483788",
+          "jobId": "116256106634",
+          "error": {
+            "step": "Fetch a test result for {{ matrix.test_title }}",
+            "output": "View full log on GitHub for details"
+          },
           "maintainers": [
             "@BbolroC"
           ]
@@ -3865,9 +4695,9 @@
           "ibm"
         ],
         "isRequired": false,
-        "duration": "0m 13s",
-        "lastFailure": "Yesterday",
-        "lastSuccess": "22h ago",
+        "duration": "0m 10s",
+        "lastFailure": "2 days ago",
+        "lastSuccess": "5h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -3952,10 +4782,10 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38684483788",
+            "jobId": "116256106977",
+            "duration": "0m 10s",
             "failureStep": null,
             "failureDetails": null
           }
@@ -3964,8 +4794,8 @@
         "failedTestsInWeather": [],
         "retried": 0,
         "setupRetry": false,
-        "runId": "38514330460",
-        "jobId": "115689616636",
+        "runId": "38684483788",
+        "jobId": "116256106977",
         "error": null,
         "maintainers": [
           "@BbolroC"
@@ -3976,15 +4806,15 @@
         "name": "check-internal-test-result (cc-se-e2e-tests-rs)",
         "jobName": "check-internal-test-result (cc-se-e2e-tests-rs)",
         "fullName": "check-internal-test-result (cc-se-e2e-tests-rs)",
-        "status": "passed",
+        "status": "failed",
         "categories": [
           "tee",
           "ibm"
         ],
         "isRequired": false,
-        "duration": "0m 13s",
-        "lastFailure": "Yesterday",
-        "lastSuccess": "22h ago",
+        "duration": "0m 15s",
+        "lastFailure": "5h ago",
+        "lastSuccess": "Yesterday",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -4069,21 +4899,24 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
-            "failureStep": null,
+            "status": "failed",
+            "runId": "38684483788",
+            "jobId": "116256106634",
+            "duration": "0m 15s",
+            "failureStep": "Fetch a test result for {{ matrix.test_title }}",
             "failureDetails": null
           }
         ],
-        "failureCount": 0,
+        "failureCount": 1,
         "failedTestsInWeather": [],
         "retried": 0,
         "setupRetry": false,
-        "runId": "38514330460",
-        "jobId": "115689616086",
-        "error": null,
+        "runId": "38684483788",
+        "jobId": "116256106634",
+        "error": {
+          "step": "Fetch a test result for {{ matrix.test_title }}",
+          "output": "View full log on GitHub for details"
+        },
         "maintainers": [
           "@BbolroC"
         ]
@@ -4099,9 +4932,9 @@
           "ibm"
         ],
         "isRequired": false,
-        "duration": "0m 7s",
-        "lastFailure": "Yesterday",
-        "lastSuccess": "22h ago",
+        "duration": "0m 9s",
+        "lastFailure": "2 days ago",
+        "lastSuccess": "5h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -4186,10 +5019,10 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38684483788",
+            "jobId": "116256107048",
+            "duration": "0m 9s",
             "failureStep": null,
             "failureDetails": null
           }
@@ -4198,8 +5031,8 @@
         "failedTestsInWeather": [],
         "retried": 0,
         "setupRetry": false,
-        "runId": "38514330460",
-        "jobId": "115689615914",
+        "runId": "38684483788",
+        "jobId": "116256107048",
         "error": null,
         "maintainers": [
           "@BbolroC"
@@ -4216,8 +5049,8 @@
         ],
         "isRequired": false,
         "duration": "0m 7s",
-        "lastFailure": "2 days ago",
-        "lastSuccess": "22h ago",
+        "lastFailure": "3 days ago",
+        "lastSuccess": "5h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -4302,10 +5135,10 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38684483788",
+            "jobId": "116256106836",
+            "duration": "0m 7s",
             "failureStep": null,
             "failureDetails": null
           }
@@ -4314,8 +5147,8 @@
         "failedTestsInWeather": [],
         "retried": 0,
         "setupRetry": false,
-        "runId": "38514330460",
-        "jobId": "115689615931",
+        "runId": "38684483788",
+        "jobId": "116256106836",
         "error": null,
         "maintainers": [
           "@BbolroC"
@@ -4331,7 +5164,7 @@
         "isRequired": false,
         "duration": "0m 42s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -4442,7 +5275,7 @@
         "isRequired": false,
         "duration": "0m 47s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -4553,7 +5386,7 @@
         "isRequired": false,
         "duration": "0m 49s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -4664,7 +5497,7 @@
         "isRequired": false,
         "duration": "0m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -4777,7 +5610,7 @@
         "isRequired": false,
         "duration": "1m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -4888,7 +5721,7 @@
         "isRequired": false,
         "duration": "1m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -4999,7 +5832,7 @@
         "isRequired": false,
         "duration": "0m 44s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -5110,7 +5943,7 @@
         "isRequired": false,
         "duration": "0m 54s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -5221,7 +6054,7 @@
         "isRequired": false,
         "duration": "0m 44s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -5334,7 +6167,7 @@
         "isRequired": false,
         "duration": "0m 59s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -5445,7 +6278,7 @@
         "isRequired": false,
         "duration": "0m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -5556,7 +6389,7 @@
         "isRequired": false,
         "duration": "0m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -5667,7 +6500,7 @@
         "isRequired": false,
         "duration": "1m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -5780,7 +6613,7 @@
         "isRequired": false,
         "duration": "0m 54s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -5893,7 +6726,7 @@
         "isRequired": false,
         "duration": "0m 57s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -6004,7 +6837,7 @@
         "isRequired": false,
         "duration": "0m 55s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -6115,7 +6948,7 @@
         "isRequired": false,
         "duration": "0m 44s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -6226,7 +7059,7 @@
         "isRequired": false,
         "duration": "0m 56s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -6339,7 +7172,7 @@
         "isRequired": false,
         "duration": "0m 46s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -6452,7 +7285,7 @@
         "isRequired": false,
         "duration": "1m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -6563,7 +7396,7 @@
         "isRequired": false,
         "duration": "0m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -6674,7 +7507,7 @@
         "isRequired": false,
         "duration": "1m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -6787,7 +7620,7 @@
         "isRequired": false,
         "duration": "1m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -6898,7 +7731,7 @@
         "isRequired": false,
         "duration": "1m 15s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -7009,7 +7842,7 @@
         "isRequired": false,
         "duration": "1m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -7120,7 +7953,7 @@
         "isRequired": false,
         "duration": "1m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -7233,7 +8066,7 @@
         "isRequired": false,
         "duration": "1m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -7346,7 +8179,7 @@
         "isRequired": false,
         "duration": "1m 42s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -7459,7 +8292,7 @@
         "isRequired": false,
         "duration": "1m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -7572,7 +8405,7 @@
         "isRequired": false,
         "duration": "1m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -7683,7 +8516,7 @@
         "isRequired": false,
         "duration": "0m 59s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -7794,7 +8627,7 @@
         "isRequired": false,
         "duration": "1m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -7905,7 +8738,7 @@
         "isRequired": false,
         "duration": "1m 24s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -8016,7 +8849,7 @@
         "isRequired": false,
         "duration": "1m 10s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -8127,7 +8960,7 @@
         "isRequired": false,
         "duration": "4m 10s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -8240,7 +9073,7 @@
         "isRequired": false,
         "duration": "0m 17s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -8351,7 +9184,7 @@
         "isRequired": false,
         "duration": "0m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -8462,7 +9295,7 @@
         "isRequired": false,
         "duration": "1m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -8573,7 +9406,7 @@
         "isRequired": false,
         "duration": "1m 14s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -8684,7 +9517,7 @@
         "isRequired": false,
         "duration": "0m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -8795,7 +9628,7 @@
         "isRequired": false,
         "duration": "0m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -8906,7 +9739,7 @@
         "isRequired": false,
         "duration": "3m 8s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -9017,7 +9850,7 @@
         "isRequired": false,
         "duration": "0m 25s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -9128,7 +9961,7 @@
         "isRequired": false,
         "duration": "0m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -9241,7 +10074,7 @@
         "isRequired": false,
         "duration": "0m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -9354,7 +10187,7 @@
         "isRequired": false,
         "duration": "0m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -9465,7 +10298,7 @@
         "isRequired": false,
         "duration": "0m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -9576,7 +10409,7 @@
         "isRequired": false,
         "duration": "0m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -9687,7 +10520,7 @@
         "isRequired": false,
         "duration": "0m 45s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -9798,7 +10631,7 @@
         "isRequired": false,
         "duration": "0m 43s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -9909,7 +10742,7 @@
         "isRequired": false,
         "duration": "0m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -10022,7 +10855,7 @@
         "isRequired": false,
         "duration": "0m 45s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -10133,7 +10966,7 @@
         "isRequired": false,
         "duration": "0m 41s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -10244,7 +11077,7 @@
         "isRequired": false,
         "duration": "0m 46s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -10355,7 +11188,7 @@
         "isRequired": false,
         "duration": "0m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -10466,7 +11299,7 @@
         "isRequired": false,
         "duration": "0m 42s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -10579,7 +11412,7 @@
         "isRequired": false,
         "duration": "0m 47s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -10690,7 +11523,7 @@
         "isRequired": false,
         "duration": "0m 55s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -10803,7 +11636,7 @@
         "isRequired": true,
         "duration": "1m 1s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -10914,7 +11747,7 @@
         "isRequired": false,
         "duration": "0m 55s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -11025,7 +11858,7 @@
         "isRequired": false,
         "duration": "0m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -11136,7 +11969,7 @@
         "isRequired": false,
         "duration": "0m 56s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -11247,7 +12080,7 @@
         "isRequired": false,
         "duration": "0m 51s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -11358,7 +12191,7 @@
         "isRequired": false,
         "duration": "0m 45s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -11469,7 +12302,7 @@
         "isRequired": false,
         "duration": "0m 55s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -11582,7 +12415,7 @@
         "isRequired": false,
         "duration": "0m 45s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -11693,7 +12526,7 @@
         "isRequired": false,
         "duration": "0m 49s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -11804,7 +12637,7 @@
         "isRequired": false,
         "duration": "0m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -11917,7 +12750,7 @@
         "isRequired": false,
         "duration": "0m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -12030,7 +12863,7 @@
         "isRequired": false,
         "duration": "0m 51s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -12143,7 +12976,7 @@
         "isRequired": false,
         "duration": "0m 55s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -12254,7 +13087,7 @@
         "isRequired": false,
         "duration": "0m 46s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -12365,7 +13198,7 @@
         "isRequired": false,
         "duration": "1m 12s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -12476,7 +13309,7 @@
         "isRequired": false,
         "duration": "1m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -12587,7 +13420,7 @@
         "isRequired": false,
         "duration": "4m 32s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -12700,7 +13533,7 @@
         "isRequired": false,
         "duration": "0m 18s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -12811,7 +13644,7 @@
         "isRequired": false,
         "duration": "0m 44s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -12922,7 +13755,7 @@
         "isRequired": false,
         "duration": "0m 42s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -13033,7 +13866,7 @@
         "isRequired": false,
         "duration": "1m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -13144,7 +13977,7 @@
         "isRequired": false,
         "duration": "0m 11s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -13255,7 +14088,7 @@
         "isRequired": false,
         "duration": "0m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -13368,7 +14201,7 @@
         "isRequired": false,
         "duration": "0m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -13481,7 +14314,7 @@
         "isRequired": false,
         "duration": "0m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -13592,7 +14425,7 @@
         "isRequired": false,
         "duration": "0m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -13703,7 +14536,7 @@
         "isRequired": false,
         "duration": "0m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -13814,7 +14647,7 @@
         "isRequired": false,
         "duration": "2m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -13925,7 +14758,7 @@
         "isRequired": false,
         "duration": "2m 14s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -14036,7 +14869,7 @@
         "isRequired": false,
         "duration": "3m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -14147,7 +14980,7 @@
         "isRequired": false,
         "duration": "1m 37s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -14258,7 +15091,7 @@
         "isRequired": false,
         "duration": "2m 32s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -14369,7 +15202,7 @@
         "isRequired": false,
         "duration": "2m 21s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -14480,7 +15313,7 @@
         "isRequired": false,
         "duration": "1m 37s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -14591,7 +15424,7 @@
         "isRequired": false,
         "duration": "9m 52s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -14704,7 +15537,7 @@
         "isRequired": false,
         "duration": "0m 20s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -14815,7 +15648,7 @@
         "isRequired": false,
         "duration": "1m 13s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -14926,7 +15759,7 @@
         "isRequired": false,
         "duration": "0m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -15039,7 +15872,7 @@
         "isRequired": false,
         "duration": "1m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -15153,7 +15986,7 @@
         "isRequired": false,
         "duration": "1m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -15266,7 +16099,7 @@
         "isRequired": false,
         "duration": "1m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -15379,7 +16212,7 @@
         "isRequired": false,
         "duration": "1m 9s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -15492,7 +16325,7 @@
         "isRequired": false,
         "duration": "0m 59s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -15605,7 +16438,7 @@
         "isRequired": false,
         "duration": "1m 12s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -15718,7 +16551,7 @@
         "isRequired": false,
         "duration": "0m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -15831,7 +16664,7 @@
         "isRequired": false,
         "duration": "1m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -15944,7 +16777,7 @@
         "isRequired": false,
         "duration": "1m 41s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -16058,7 +16891,7 @@
         "isRequired": false,
         "duration": "2m 9s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -16171,7 +17004,7 @@
         "isRequired": false,
         "duration": "1m 55s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -16284,7 +17117,7 @@
         "isRequired": false,
         "duration": "1m 38s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -16397,7 +17230,7 @@
         "isRequired": false,
         "duration": "1m 32s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -16510,7 +17343,7 @@
         "isRequired": false,
         "duration": "1m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -16623,7 +17456,7 @@
         "isRequired": false,
         "duration": "1m 23s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -16736,7 +17569,7 @@
         "isRequired": false,
         "duration": "8m 30s",
         "lastFailure": "10/8/2026",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -16850,7 +17683,7 @@
         "isRequired": false,
         "duration": "0m 23s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -16963,7 +17796,7 @@
         "isRequired": false,
         "duration": "1m 13s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -17076,7 +17909,7 @@
         "isRequired": false,
         "duration": "0m 2s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -17190,7 +18023,7 @@
         "isRequired": false,
         "duration": "0m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -17303,7 +18136,7 @@
         "isRequired": false,
         "duration": "0m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -17414,7 +18247,7 @@
         "isRequired": false,
         "duration": "4m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -17525,7 +18358,7 @@
         "isRequired": false,
         "duration": "1m 30s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -17747,7 +18580,7 @@
         "isRequired": false,
         "duration": "1m 1s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -17973,7 +18806,7 @@
         "isRequired": false,
         "duration": "1m 38s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -18084,7 +18917,7 @@
         "isRequired": false,
         "duration": "2m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -18195,7 +19028,7 @@
         "isRequired": false,
         "duration": "0m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -18417,7 +19250,7 @@
         "isRequired": false,
         "duration": "0m 39s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -18643,7 +19476,7 @@
         "isRequired": false,
         "duration": "1m 9s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -18754,7 +19587,7 @@
         "isRequired": false,
         "duration": "6m 32s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -18865,7 +19698,7 @@
         "isRequired": false,
         "duration": "4m 21s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -18976,7 +19809,7 @@
         "isRequired": false,
         "duration": "4m 33s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -19089,7 +19922,7 @@
         "isRequired": true,
         "duration": "3m 11s",
         "lastFailure": "10/8/2026",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -19202,7 +20035,7 @@
         "isRequired": true,
         "duration": "7m 42s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -19315,7 +20148,7 @@
         "isRequired": true,
         "duration": "8m 19s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -19428,7 +20261,7 @@
         "isRequired": true,
         "duration": "4m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -19541,7 +20374,7 @@
         "isRequired": true,
         "duration": "8m 33s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -19654,7 +20487,7 @@
         "isRequired": true,
         "duration": "3m 39s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -19767,7 +20600,7 @@
         "isRequired": true,
         "duration": "8m 9s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -19880,7 +20713,7 @@
         "isRequired": true,
         "duration": "8m 29s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -19993,7 +20826,7 @@
         "isRequired": true,
         "duration": "4m 14s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -20106,7 +20939,7 @@
         "isRequired": true,
         "duration": "8m 37s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -20217,7 +21050,7 @@
         "isRequired": false,
         "duration": "0m 54s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -20330,7 +21163,7 @@
         "isRequired": false,
         "duration": "0m 55s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -20443,7 +21276,7 @@
         "isRequired": false,
         "duration": "0m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -20556,7 +21389,7 @@
         "isRequired": false,
         "duration": "1m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -20669,7 +21502,7 @@
         "isRequired": false,
         "duration": "0m 46s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -20780,7 +21613,7 @@
         "isRequired": false,
         "duration": "1m 1s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -20893,7 +21726,7 @@
         "isRequired": true,
         "duration": "0m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -21004,7 +21837,7 @@
         "isRequired": false,
         "duration": "1m 14s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -21117,7 +21950,7 @@
         "isRequired": true,
         "duration": "1m 22s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -21230,7 +22063,7 @@
         "isRequired": true,
         "duration": "2m 13s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -21343,7 +22176,7 @@
         "isRequired": true,
         "duration": "1m 30s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -21456,7 +22289,7 @@
         "isRequired": false,
         "duration": "1m 24s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -21569,7 +22402,7 @@
         "isRequired": false,
         "duration": "2m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -21682,7 +22515,7 @@
         "isRequired": true,
         "duration": "1m 34s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -21795,7 +22628,7 @@
         "isRequired": true,
         "duration": "1m 9s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -21906,7 +22739,7 @@
         "isRequired": false,
         "duration": "0m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -22019,7 +22852,7 @@
         "isRequired": true,
         "duration": "0m 47s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -22132,7 +22965,7 @@
         "isRequired": true,
         "duration": "1m 12s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -22243,7 +23076,7 @@
         "isRequired": false,
         "duration": "0m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -22356,7 +23189,7 @@
         "isRequired": true,
         "duration": "0m 59s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -22467,7 +23300,7 @@
         "isRequired": false,
         "duration": "1m 27s",
         "lastFailure": "10/7/2026",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -22580,7 +23413,7 @@
         "isRequired": true,
         "duration": "0m 47s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -22693,7 +23526,7 @@
         "isRequired": true,
         "duration": "1m 20s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -22804,7 +23637,7 @@
         "isRequired": false,
         "duration": "2m 29s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -23143,7 +23976,7 @@
         "isRequired": false,
         "duration": "4m 12s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -23256,7 +24089,7 @@
         "isRequired": false,
         "duration": "3m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -23369,7 +24202,7 @@
         "isRequired": false,
         "duration": "1m 24s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -23482,7 +24315,7 @@
         "isRequired": false,
         "duration": "0m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -23595,7 +24428,7 @@
         "isRequired": true,
         "duration": "5m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -23708,7 +24541,7 @@
         "isRequired": true,
         "duration": "3m 27s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -23821,7 +24654,7 @@
         "isRequired": true,
         "duration": "4m 25s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -23934,7 +24767,7 @@
         "isRequired": true,
         "duration": "5m 9s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -24047,7 +24880,7 @@
         "isRequired": true,
         "duration": "5m 16s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -24160,7 +24993,7 @@
         "isRequired": true,
         "duration": "4m 12s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -24273,7 +25106,7 @@
         "isRequired": true,
         "duration": "4m 21s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -24386,7 +25219,7 @@
         "isRequired": true,
         "duration": "4m 32s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -24499,7 +25332,7 @@
         "isRequired": true,
         "duration": "5m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -24612,7 +25445,7 @@
         "isRequired": true,
         "duration": "4m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -24834,7 +25667,7 @@
         "isRequired": false,
         "duration": "7m 51s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -24945,7 +25778,7 @@
         "isRequired": false,
         "duration": "8m 12s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -25172,7 +26005,7 @@
         "isRequired": true,
         "duration": "3m 17s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -25285,7 +26118,7 @@
         "isRequired": false,
         "duration": "2m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -25396,7 +26229,7 @@
         "isRequired": false,
         "duration": "21m 20s",
         "lastFailure": "5 days ago",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -25507,7 +26340,7 @@
         "isRequired": false,
         "duration": "16m 29s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -25620,7 +26453,7 @@
         "isRequired": true,
         "duration": "18m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -25733,7 +26566,7 @@
         "isRequired": true,
         "duration": "49m 43s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -25846,7 +26679,7 @@
         "isRequired": true,
         "duration": "44m 23s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -25959,7 +26792,7 @@
         "isRequired": true,
         "duration": "16m 12s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -26072,7 +26905,7 @@
         "isRequired": true,
         "duration": "30m 37s",
         "lastFailure": "2 days ago",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -26185,7 +27018,7 @@
         "isRequired": true,
         "duration": "19m 28s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -26298,7 +27131,7 @@
         "isRequired": true,
         "duration": "44m 54s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -26411,7 +27244,7 @@
         "isRequired": true,
         "duration": "15m 57s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -26522,7 +27355,7 @@
         "isRequired": false,
         "duration": "17m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -26635,7 +27468,7 @@
         "isRequired": true,
         "duration": "20m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -26748,7 +27581,7 @@
         "isRequired": true,
         "duration": "19m 31s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -26859,7 +27692,7 @@
         "isRequired": false,
         "duration": "5m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -26972,7 +27805,7 @@
         "isRequired": true,
         "duration": "16m 30s",
         "lastFailure": "2 days ago",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -27085,7 +27918,7 @@
         "isRequired": true,
         "duration": "20m 25s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -27198,7 +28031,7 @@
         "isRequired": true,
         "duration": "17m 31s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -27311,7 +28144,7 @@
         "isRequired": true,
         "duration": "23m 23s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -27422,7 +28255,7 @@
         "isRequired": false,
         "duration": "20m 51s",
         "lastFailure": "Yesterday",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -27535,7 +28368,7 @@
         "isRequired": true,
         "duration": "20m 46s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -27648,7 +28481,7 @@
         "isRequired": false,
         "duration": "25m 44s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -27761,7 +28594,7 @@
         "isRequired": false,
         "duration": "21m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -27874,7 +28707,7 @@
         "isRequired": true,
         "duration": "18m 46s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -27987,7 +28820,7 @@
         "isRequired": true,
         "duration": "20m 8s",
         "lastFailure": "5 days ago",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -28100,7 +28933,7 @@
         "isRequired": false,
         "duration": "23m 58s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -28213,7 +29046,7 @@
         "isRequired": false,
         "duration": "21m 30s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -28319,13 +29152,13 @@
         "name": "run-nvidia-gpu-runtime-rs-tests-on-amd64",
         "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-runtime-rs-tests-on-amd64",
         "fullName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-runtime-rs-tests-on-amd64",
-        "status": "running",
+        "status": "failed",
         "categories": [
           "nvidia"
         ],
         "isRequired": false,
-        "duration": "N/A",
-        "lastFailure": "6 days ago",
+        "duration": "37m 24s",
+        "lastFailure": "7h ago",
         "lastSuccess": "Yesterday",
         "weatherHistory": [
           {
@@ -28411,20 +29244,22 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
+            "status": "failed",
             "retried": false,
             "runId": "38659437601",
             "jobId": "116180523172",
-            "duration": "N/A",
-            "failureStep": null
+            "duration": "37m 24s",
+            "failureStep": "Run tests qemu-nvidia-gpu-runtime-rs"
           }
         ],
-        "failureCount": 2,
+        "failureCount": 3,
         "retried": false,
         "retriedAndPassed": false,
         "runId": "38659437601",
         "jobId": "116180523172",
-        "error": null,
+        "error": {
+          "step": "Run tests qemu-nvidia-gpu-runtime-rs"
+        },
         "maintainers": []
       },
       {
@@ -28432,14 +29267,14 @@
         "name": "run-nvidia-gpu-snp-runtime-rs-tests-on-amd64",
         "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-runtime-rs-tests-on-amd64",
         "fullName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-runtime-rs-tests-on-amd64",
-        "status": "running",
+        "status": "failed",
         "categories": [
           "tee",
           "nvidia"
         ],
         "isRequired": false,
-        "duration": "N/A",
-        "lastFailure": "10/8/2026",
+        "duration": "52m 18s",
+        "lastFailure": "5h ago",
         "lastSuccess": "Yesterday",
         "weatherHistory": [
           {
@@ -28525,20 +29360,22 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
+            "status": "failed",
             "retried": false,
             "runId": "38659437601",
             "jobId": "116180523367",
-            "duration": "N/A",
-            "failureStep": null
+            "duration": "52m 18s",
+            "failureStep": "Run tests qemu-nvidia-gpu-snp-runtime-rs"
           }
         ],
-        "failureCount": 1,
+        "failureCount": 2,
         "retried": false,
         "retriedAndPassed": false,
         "runId": "38659437601",
         "jobId": "116180523367",
-        "error": null,
+        "error": {
+          "step": "Run tests qemu-nvidia-gpu-snp-runtime-rs"
+        },
         "maintainers": []
       },
       {
@@ -28546,14 +29383,14 @@
         "name": "run-nvidia-gpu-snp-tests-on-amd64",
         "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
         "fullName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-snp-tests-on-amd64",
-        "status": "not_run",
+        "status": "failed",
         "categories": [
           "tee",
           "nvidia"
         ],
         "isRequired": false,
-        "duration": "N/A",
-        "lastFailure": "Never",
+        "duration": "64m 51s",
+        "lastFailure": "6h ago",
         "lastSuccess": "Yesterday",
         "weatherHistory": [
           {
@@ -28639,21 +29476,332 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
-            "failureStep": null,
-            "failureDetails": null
+            "status": "failed",
+            "runId": "38659437601",
+            "jobId": "116180523311",
+            "duration": "64m 51s",
+            "failureStep": "k8s-confidential-attestation.bats, k8s-nvidia-numa.bats, k8s-nvidia-cuda.bats, k8s-nvidia-dcgm.bats",
+            "failureDetails": {
+              "failures": [
+                {
+                  "number": 1,
+                  "name": "Get CDH resource",
+                  "comment": "",
+                  "file": "k8s-confidential-attestation.bats"
+                },
+                {
+                  "number": 2,
+                  "name": "Cannot get CDH resource when deny-all policy is set",
+                  "comment": "",
+                  "file": "k8s-confidential-attestation.bats"
+                },
+                {
+                  "number": 4,
+                  "name": "Can get CDH resource when affirming policy is set with reference values",
+                  "comment": "",
+                  "file": "k8s-confidential-attestation.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "Cannot get CDH resource when deny-all policy is set",
+                  "comment": "",
+                  "file": "k8s-confidential-attestation.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "Can get CDH resource when affirming policy is set with reference values",
+                  "comment": "",
+                  "file": "k8s-confidential-attestation.bats"
+                },
+                {
+                  "number": 3,
+                  "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                  "comment": "",
+                  "file": "k8s-nvidia-numa.bats"
+                },
+                {
+                  "number": 4,
+                  "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+                  "comment": "",
+                  "file": "k8s-nvidia-numa.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "CUDA Vector Addition Test",
+                  "comment": "",
+                  "file": "k8s-nvidia-cuda.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "CUDA Vector Addition Test",
+                  "comment": "",
+                  "file": "k8s-nvidia-cuda.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "setup_file failed",
+                  "comment": "",
+                  "file": "k8s-nvidia-dcgm.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "CUDA Vector Addition Test",
+                  "comment": "",
+                  "file": "##[group]k8s-nvidia-cuda.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "setup_file failed",
+                  "comment": "",
+                  "file": "##[group]k8s-nvidia-dcgm.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "Get CDH resource",
+                  "comment": "",
+                  "file": "##[group]k8s-confidential-attestation.bats"
+                },
+                {
+                  "number": 2,
+                  "name": "Cannot get CDH resource when deny-all policy is set",
+                  "comment": "",
+                  "file": "k8s-confidential-attestation.bats"
+                },
+                {
+                  "number": 4,
+                  "name": "Can get CDH resource when affirming policy is set with reference values",
+                  "comment": "",
+                  "file": "k8s-confidential-attestation.bats"
+                },
+                {
+                  "number": 3,
+                  "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                  "comment": "",
+                  "file": "##[group]k8s-nvidia-numa.bats"
+                },
+                {
+                  "number": 4,
+                  "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+                  "comment": "",
+                  "file": "k8s-nvidia-numa.bats"
+                }
+              ],
+              "stats": {
+                "total": 28,
+                "passed": 11,
+                "failed": 17,
+                "skipped": 0
+              },
+              "batsFiles": [
+                "k8s-confidential-attestation.bats",
+                "k8s-nvidia-numa.bats",
+                "k8s-nvidia-cuda.bats",
+                "k8s-nvidia-dcgm.bats"
+              ]
+            }
           }
         ],
-        "failureCount": 0,
-        "failedTestsInWeather": [],
+        "failureCount": 1,
+        "failedTestsInWeather": [
+          {
+            "name": "Get CDH resource",
+            "count": 1,
+            "dates": [
+              "2026-10-15"
+            ],
+            "files": [
+              "k8s-confidential-attestation.bats"
+            ]
+          },
+          {
+            "name": "Cannot get CDH resource when deny-all policy is set",
+            "count": 1,
+            "dates": [
+              "2026-10-15"
+            ],
+            "files": [
+              "k8s-confidential-attestation.bats"
+            ]
+          },
+          {
+            "name": "Can get CDH resource when affirming policy is set with reference values",
+            "count": 1,
+            "dates": [
+              "2026-10-15"
+            ],
+            "files": [
+              "k8s-confidential-attestation.bats"
+            ]
+          },
+          {
+            "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+            "count": 1,
+            "dates": [
+              "2026-10-15"
+            ],
+            "files": [
+              "k8s-nvidia-numa.bats"
+            ]
+          },
+          {
+            "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+            "count": 1,
+            "dates": [
+              "2026-10-15"
+            ],
+            "files": [
+              "k8s-nvidia-numa.bats"
+            ]
+          },
+          {
+            "name": "CUDA Vector Addition Test",
+            "count": 1,
+            "dates": [
+              "2026-10-15"
+            ],
+            "files": [
+              "k8s-nvidia-cuda.bats"
+            ]
+          },
+          {
+            "name": "setup_file failed",
+            "count": 1,
+            "dates": [
+              "2026-10-15"
+            ],
+            "files": [
+              "k8s-nvidia-dcgm.bats"
+            ]
+          }
+        ],
         "retried": 0,
         "setupRetry": false,
         "runId": "38659437601",
         "jobId": "116180523311",
-        "error": null,
+        "error": {
+          "step": "k8s-confidential-attestation.bats, k8s-nvidia-numa.bats, k8s-nvidia-cuda.bats, k8s-nvidia-dcgm.bats, ##[group]k8s-nvidia-cuda.bats, ##[group]k8s-nvidia-dcgm.bats, ##[group]k8s-confidential-attestation.bats, ##[group]k8s-nvidia-numa.bats",
+          "batsFiles": [
+            "k8s-confidential-attestation.bats",
+            "k8s-nvidia-numa.bats",
+            "k8s-nvidia-cuda.bats",
+            "k8s-nvidia-dcgm.bats",
+            "##[group]k8s-nvidia-cuda.bats",
+            "##[group]k8s-nvidia-dcgm.bats",
+            "##[group]k8s-confidential-attestation.bats",
+            "##[group]k8s-nvidia-numa.bats"
+          ],
+          "testResults": {
+            "total": 28,
+            "passed": 11,
+            "failed": 17,
+            "skipped": 0
+          },
+          "failures": [
+            {
+              "number": 1,
+              "name": "Get CDH resource",
+              "comment": "",
+              "file": "k8s-confidential-attestation.bats"
+            },
+            {
+              "number": 2,
+              "name": "Cannot get CDH resource when deny-all policy is set",
+              "comment": "",
+              "file": "k8s-confidential-attestation.bats"
+            },
+            {
+              "number": 4,
+              "name": "Can get CDH resource when affirming policy is set with reference values",
+              "comment": "",
+              "file": "k8s-confidential-attestation.bats"
+            },
+            {
+              "number": 1,
+              "name": "Cannot get CDH resource when deny-all policy is set",
+              "comment": "",
+              "file": "k8s-confidential-attestation.bats"
+            },
+            {
+              "number": 1,
+              "name": "Can get CDH resource when affirming policy is set with reference values",
+              "comment": "",
+              "file": "k8s-confidential-attestation.bats"
+            },
+            {
+              "number": 3,
+              "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+              "comment": "",
+              "file": "k8s-nvidia-numa.bats"
+            },
+            {
+              "number": 4,
+              "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+              "comment": "",
+              "file": "k8s-nvidia-numa.bats"
+            },
+            {
+              "number": 1,
+              "name": "CUDA Vector Addition Test",
+              "comment": "",
+              "file": "k8s-nvidia-cuda.bats"
+            },
+            {
+              "number": 1,
+              "name": "CUDA Vector Addition Test",
+              "comment": "",
+              "file": "k8s-nvidia-cuda.bats"
+            },
+            {
+              "number": 1,
+              "name": "setup_file failed",
+              "comment": "",
+              "file": "k8s-nvidia-dcgm.bats"
+            },
+            {
+              "number": 1,
+              "name": "CUDA Vector Addition Test",
+              "comment": "",
+              "file": "##[group]k8s-nvidia-cuda.bats"
+            },
+            {
+              "number": 1,
+              "name": "setup_file failed",
+              "comment": "",
+              "file": "##[group]k8s-nvidia-dcgm.bats"
+            },
+            {
+              "number": 1,
+              "name": "Get CDH resource",
+              "comment": "",
+              "file": "##[group]k8s-confidential-attestation.bats"
+            },
+            {
+              "number": 2,
+              "name": "Cannot get CDH resource when deny-all policy is set",
+              "comment": "",
+              "file": "k8s-confidential-attestation.bats"
+            },
+            {
+              "number": 4,
+              "name": "Can get CDH resource when affirming policy is set with reference values",
+              "comment": "",
+              "file": "k8s-confidential-attestation.bats"
+            },
+            {
+              "number": 3,
+              "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+              "comment": "",
+              "file": "##[group]k8s-nvidia-numa.bats"
+            },
+            {
+              "number": 4,
+              "name": "NUMA: small GPU workload right-sizes to the GPU's host NUMA node",
+              "comment": "",
+              "file": "k8s-nvidia-numa.bats"
+            }
+          ],
+          "output": "not ok 1 - Get CDH resource\nnot ok 2 - Cannot get CDH resource when deny-all policy is set\nnot ok 4 - Can get CDH resource when affirming policy is set with reference values\nnot ok 1 - Cannot get CDH resource when deny-all policy is set\nnot ok 1 - Can get CDH resource when affirming policy is set with reference values\nnot ok 3 - NUMA: GPU passthrough with VFIO has correct NUMA placement\nnot ok 4 - NUMA: small GPU workload right-sizes to the GPU's host NUMA node\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - setup_file failed\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - setup_file failed\nnot ok 1 - Get CDH resource\nnot ok 2 - Cannot get CDH resource when deny-all policy is set\nnot ok 4 - Can get CDH resource when affirming policy is set with reference values\nnot ok 3 - NUMA: GPU passthrough with VFIO has correct NUMA placement\nnot ok 4 - NUMA: small GPU workload right-sizes to the GPU's host NUMA node"
+        },
         "maintainers": [
           "@fidencio"
         ]
@@ -28663,13 +29811,13 @@
         "name": "run-nvidia-gpu-tests-on-amd64",
         "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64",
         "fullName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64",
-        "status": "not_run",
+        "status": "failed",
         "categories": [
           "nvidia"
         ],
         "isRequired": false,
-        "duration": "N/A",
-        "lastFailure": "10/8/2026",
+        "duration": "50m 9s",
+        "lastFailure": "8h ago",
         "lastSuccess": "Yesterday",
         "weatherHistory": [
           {
@@ -28755,21 +29903,223 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
+            "status": "failed",
             "runId": "38659437601",
             "jobId": "116180523227",
-            "duration": "N/A",
-            "failureStep": null,
-            "failureDetails": null
+            "duration": "50m 9s",
+            "failureStep": "k8s-nvidia-numa.bats, k8s-nvidia-cuda.bats, k8s-nvidia-dcgm.bats, k8s-nvidia-vllm.bats, k8s-nvidia-nim.bats",
+            "failureDetails": {
+              "failures": [
+                {
+                  "number": 3,
+                  "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                  "comment": "",
+                  "file": "k8s-nvidia-numa.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "CUDA Vector Addition Test",
+                  "comment": "",
+                  "file": "k8s-nvidia-cuda.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "CUDA Vector Addition Test",
+                  "comment": "",
+                  "file": "k8s-nvidia-cuda.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "setup_file failed",
+                  "comment": "",
+                  "file": "k8s-nvidia-dcgm.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "setup_file failed",
+                  "comment": "",
+                  "file": "k8s-nvidia-vllm.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "setup_file failed",
+                  "comment": "",
+                  "file": "k8s-nvidia-nim.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "CUDA Vector Addition Test",
+                  "comment": "",
+                  "file": "##[group]k8s-nvidia-cuda.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "setup_file failed",
+                  "comment": "",
+                  "file": "##[group]k8s-nvidia-dcgm.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "setup_file failed",
+                  "comment": "",
+                  "file": "##[group]k8s-nvidia-vllm.bats"
+                },
+                {
+                  "number": 1,
+                  "name": "setup_file failed",
+                  "comment": "",
+                  "file": "##[group]k8s-nvidia-nim.bats"
+                },
+                {
+                  "number": 3,
+                  "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+                  "comment": "",
+                  "file": "##[group]k8s-nvidia-numa.bats"
+                }
+              ],
+              "stats": {
+                "total": 32,
+                "passed": 21,
+                "failed": 11,
+                "skipped": 0
+              },
+              "batsFiles": [
+                "k8s-nvidia-numa.bats",
+                "k8s-nvidia-cuda.bats",
+                "k8s-nvidia-dcgm.bats",
+                "k8s-nvidia-vllm.bats",
+                "k8s-nvidia-nim.bats"
+              ]
+            }
           }
         ],
-        "failureCount": 0,
-        "failedTestsInWeather": [],
+        "failureCount": 1,
+        "failedTestsInWeather": [
+          {
+            "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+            "count": 1,
+            "dates": [
+              "2026-10-15"
+            ],
+            "files": [
+              "k8s-nvidia-numa.bats"
+            ]
+          },
+          {
+            "name": "CUDA Vector Addition Test",
+            "count": 1,
+            "dates": [
+              "2026-10-15"
+            ],
+            "files": [
+              "k8s-nvidia-cuda.bats"
+            ]
+          },
+          {
+            "name": "setup_file failed",
+            "count": 1,
+            "dates": [
+              "2026-10-15"
+            ],
+            "files": [
+              "k8s-nvidia-dcgm.bats"
+            ]
+          }
+        ],
         "retried": 0,
         "setupRetry": false,
         "runId": "38659437601",
         "jobId": "116180523227",
-        "error": null,
+        "error": {
+          "step": "k8s-nvidia-numa.bats, k8s-nvidia-cuda.bats, k8s-nvidia-dcgm.bats, k8s-nvidia-vllm.bats, k8s-nvidia-nim.bats, ##[group]k8s-nvidia-cuda.bats, ##[group]k8s-nvidia-dcgm.bats, ##[group]k8s-nvidia-vllm.bats, ##[group]k8s-nvidia-nim.bats, ##[group]k8s-nvidia-numa.bats",
+          "batsFiles": [
+            "k8s-nvidia-numa.bats",
+            "k8s-nvidia-cuda.bats",
+            "k8s-nvidia-dcgm.bats",
+            "k8s-nvidia-vllm.bats",
+            "k8s-nvidia-nim.bats",
+            "##[group]k8s-nvidia-cuda.bats",
+            "##[group]k8s-nvidia-dcgm.bats",
+            "##[group]k8s-nvidia-vllm.bats",
+            "##[group]k8s-nvidia-nim.bats",
+            "##[group]k8s-nvidia-numa.bats"
+          ],
+          "testResults": {
+            "total": 32,
+            "passed": 21,
+            "failed": 11,
+            "skipped": 0
+          },
+          "failures": [
+            {
+              "number": 3,
+              "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+              "comment": "",
+              "file": "k8s-nvidia-numa.bats"
+            },
+            {
+              "number": 1,
+              "name": "CUDA Vector Addition Test",
+              "comment": "",
+              "file": "k8s-nvidia-cuda.bats"
+            },
+            {
+              "number": 1,
+              "name": "CUDA Vector Addition Test",
+              "comment": "",
+              "file": "k8s-nvidia-cuda.bats"
+            },
+            {
+              "number": 1,
+              "name": "setup_file failed",
+              "comment": "",
+              "file": "k8s-nvidia-dcgm.bats"
+            },
+            {
+              "number": 1,
+              "name": "setup_file failed",
+              "comment": "",
+              "file": "k8s-nvidia-vllm.bats"
+            },
+            {
+              "number": 1,
+              "name": "setup_file failed",
+              "comment": "",
+              "file": "k8s-nvidia-nim.bats"
+            },
+            {
+              "number": 1,
+              "name": "CUDA Vector Addition Test",
+              "comment": "",
+              "file": "##[group]k8s-nvidia-cuda.bats"
+            },
+            {
+              "number": 1,
+              "name": "setup_file failed",
+              "comment": "",
+              "file": "##[group]k8s-nvidia-dcgm.bats"
+            },
+            {
+              "number": 1,
+              "name": "setup_file failed",
+              "comment": "",
+              "file": "##[group]k8s-nvidia-vllm.bats"
+            },
+            {
+              "number": 1,
+              "name": "setup_file failed",
+              "comment": "",
+              "file": "##[group]k8s-nvidia-nim.bats"
+            },
+            {
+              "number": 3,
+              "name": "NUMA: GPU passthrough with VFIO has correct NUMA placement",
+              "comment": "",
+              "file": "##[group]k8s-nvidia-numa.bats"
+            }
+          ],
+          "output": "not ok 3 - NUMA: GPU passthrough with VFIO has correct NUMA placement\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - setup_file failed\nnot ok 1 - setup_file failed\nnot ok 1 - setup_file failed\nnot ok 1 - CUDA Vector Addition Test\nnot ok 1 - setup_file failed\nnot ok 1 - setup_file failed\nnot ok 1 - setup_file failed\nnot ok 3 - NUMA: GPU passthrough with VFIO has correct NUMA placement"
+        },
         "maintainers": [
           "@fidencio"
         ]
@@ -28786,7 +30136,7 @@
         "isRequired": false,
         "duration": "6m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -29008,7 +30358,7 @@
         "isRequired": false,
         "duration": "18m 57s",
         "lastFailure": "6 days ago",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -29119,7 +30469,7 @@
         "isRequired": false,
         "duration": "18m 6s",
         "lastFailure": "6 days ago",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -29347,7 +30697,7 @@
         "isRequired": false,
         "duration": "21m 23s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -29461,7 +30811,7 @@
         "isRequired": false,
         "duration": "41m 6s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -29579,7 +30929,7 @@
         "isRequired": true,
         "duration": "41m 56s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -29694,7 +31044,7 @@
         "isRequired": true,
         "duration": "18m 48s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "9h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -29807,7 +31157,7 @@
         "isRequired": false,
         "duration": "50m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -29924,7 +31274,7 @@
         "isRequired": true,
         "duration": "53m 32s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -30042,7 +31392,7 @@
         "isRequired": true,
         "duration": "53m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -30159,7 +31509,7 @@
         "isRequired": false,
         "duration": "25m 5s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -30272,7 +31622,7 @@
         "isRequired": false,
         "duration": "26m 23s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -30385,7 +31735,7 @@
         "isRequired": false,
         "duration": "20m 55s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -30498,7 +31848,7 @@
         "isRequired": false,
         "duration": "27m 37s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -30612,7 +31962,7 @@
         "isRequired": true,
         "duration": "69m 9s",
         "lastFailure": "Yesterday",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -30730,7 +32080,7 @@
         "isRequired": true,
         "duration": "58m 16s",
         "lastFailure": "Yesterday",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -30980,7 +32330,7 @@
         ],
         "isRequired": false,
         "duration": "93m 29s",
-        "lastFailure": "2h ago",
+        "lastFailure": "10h ago",
         "lastSuccess": "Yesterday",
         "weatherHistory": [
           {
@@ -31223,14 +32573,14 @@
         "name": "run-k8s-tests-on-tee (tdx, qemu-tdx-runtime-rs)",
         "jobName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx-runtime-rs)",
         "fullName": "kata-containers-ci-on-push / run-kata-coco-tests / run-k8s-tests-on-tee (tdx, qemu-tdx-runtime-rs)",
-        "status": "not_run",
+        "status": "passed",
         "categories": [
           "tee"
         ],
         "isRequired": false,
-        "duration": "N/A",
+        "duration": "94m 20s",
         "lastFailure": "4 days ago",
-        "lastSuccess": "Yesterday",
+        "lastSuccess": "8h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -31339,10 +32689,10 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
+            "status": "passed",
             "runId": "38659437601",
             "jobId": "116180523530",
-            "duration": "N/A",
+            "duration": "94m 20s",
             "failureStep": null,
             "failureDetails": null
           }
@@ -31381,7 +32731,7 @@
         "isRequired": false,
         "duration": "52m 5s",
         "lastFailure": "10/6/2026",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -31492,7 +32842,7 @@
         "isRequired": false,
         "duration": "7m 32s",
         "lastFailure": "5 days ago",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -31605,7 +32955,7 @@
         "isRequired": false,
         "duration": "16m 44s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -31716,7 +33066,7 @@
         "isRequired": false,
         "duration": "15m 22s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -31827,7 +33177,7 @@
         "isRequired": false,
         "duration": "15m 3s",
         "lastFailure": "4 days ago",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -31938,7 +33288,7 @@
         "isRequired": false,
         "duration": "12m 30s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -32048,7 +33398,7 @@
         "categories": [],
         "isRequired": false,
         "duration": "0m 53s",
-        "lastFailure": "2h ago",
+        "lastFailure": "10h ago",
         "lastSuccess": "Yesterday",
         "weatherHistory": [
           {
@@ -32160,7 +33510,7 @@
         "isRequired": false,
         "duration": "6m 49s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -32271,7 +33621,7 @@
         "isRequired": false,
         "duration": "1m 54s",
         "lastFailure": "Never",
-        "lastSuccess": "2h ago",
+        "lastSuccess": "10h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -32388,9 +33738,9 @@
         "jobName": "Build Docker/Helm e2e materials / Build image coco-as-grpc (linux/amd64)",
         "fullName": "Build Docker/Helm e2e materials / Build image coco-as-grpc (linux/amd64)",
         "status": "passed",
-        "duration": "10m 35s",
+        "duration": "10m 30s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -32466,17 +33816,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116241860317",
+            "duration": "10m 30s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115675780951",
+        "runId": "38679912479",
+        "jobId": "116241860317",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -32487,9 +33837,9 @@
         "jobName": "Build Docker/Helm e2e materials / Build image coco-as-grpc (linux/arm64)",
         "fullName": "Build Docker/Helm e2e materials / Build image coco-as-grpc (linux/arm64)",
         "status": "passed",
-        "duration": "8m 5s",
+        "duration": "7m 34s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -32565,17 +33915,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116241860372",
+            "duration": "7m 34s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115675780999",
+        "runId": "38679912479",
+        "jobId": "116241860372",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -32586,9 +33936,9 @@
         "jobName": "Build Docker/Helm e2e materials / Build image kbs-grpc-as (linux/amd64)",
         "fullName": "Build Docker/Helm e2e materials / Build image kbs-grpc-as (linux/amd64)",
         "status": "passed",
-        "duration": "10m 1s",
+        "duration": "10m 8s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -32664,17 +34014,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116241860258",
+            "duration": "10m 8s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115675781069",
+        "runId": "38679912479",
+        "jobId": "116241860258",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -32685,9 +34035,9 @@
         "jobName": "Build Docker/Helm e2e materials / Build image kbs-grpc-as (linux/arm64)",
         "fullName": "Build Docker/Helm e2e materials / Build image kbs-grpc-as (linux/arm64)",
         "status": "passed",
-        "duration": "8m 2s",
+        "duration": "7m 28s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -32763,17 +34113,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116241860191",
+            "duration": "7m 28s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115675780924",
+        "runId": "38679912479",
+        "jobId": "116241860191",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -32784,9 +34134,9 @@
         "jobName": "Build Docker/Helm e2e materials / Build image rvps (linux/amd64)",
         "fullName": "Build Docker/Helm e2e materials / Build image rvps (linux/amd64)",
         "status": "passed",
-        "duration": "6m 20s",
+        "duration": "5m 13s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -32862,17 +34212,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116241860292",
+            "duration": "5m 13s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115675781030",
+        "runId": "38679912479",
+        "jobId": "116241860292",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -32883,9 +34233,9 @@
         "jobName": "Build Docker/Helm e2e materials / Build image rvps (linux/arm64)",
         "fullName": "Build Docker/Helm e2e materials / Build image rvps (linux/arm64)",
         "status": "passed",
-        "duration": "4m 47s",
+        "duration": "5m 0s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -32961,17 +34311,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116241860368",
+            "duration": "5m 0s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115675780936",
+        "runId": "38679912479",
+        "jobId": "116241860368",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -32982,9 +34332,9 @@
         "jobName": "Build Docker/Helm e2e materials / Build kbs-client default (linux/amd64)",
         "fullName": "Build Docker/Helm e2e materials / Build kbs-client default (linux/amd64)",
         "status": "passed",
-        "duration": "6m 50s",
+        "duration": "6m 15s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -33060,17 +34410,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116241860220",
+            "duration": "6m 15s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115675781087",
+        "runId": "38679912479",
+        "jobId": "116241860220",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -33081,9 +34431,9 @@
         "jobName": "Build Docker/Helm e2e materials / Build kbs-client snp (linux/amd64)",
         "fullName": "Build Docker/Helm e2e materials / Build kbs-client snp (linux/amd64)",
         "status": "passed",
-        "duration": "5m 50s",
+        "duration": "6m 32s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -33159,17 +34509,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116241860268",
+            "duration": "6m 32s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115675781009",
+        "runId": "38679912479",
+        "jobId": "116241860268",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -33180,9 +34530,9 @@
         "jobName": "Build Docker/Helm e2e materials / Build kbs-client tdx (linux/amd64)",
         "fullName": "Build Docker/Helm e2e materials / Build kbs-client tdx (linux/amd64)",
         "status": "passed",
-        "duration": "5m 6s",
+        "duration": "5m 52s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -33258,17 +34608,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116241860374",
+            "duration": "5m 52s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115675781103",
+        "runId": "38679912479",
+        "jobId": "116241860374",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -33279,9 +34629,9 @@
         "jobName": "Build Docker/Helm e2e materials / Package Docker e2e image bundle (linux/amd64)",
         "fullName": "Build Docker/Helm e2e materials / Package Docker e2e image bundle (linux/amd64)",
         "status": "passed",
-        "duration": "0m 37s",
+        "duration": "0m 38s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -33357,17 +34707,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116244789456",
+            "duration": "0m 38s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115678639988",
+        "runId": "38679912479",
+        "jobId": "116244789456",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -33378,9 +34728,9 @@
         "jobName": "Build Docker/Helm e2e materials / Package Docker e2e image bundle (linux/arm64)",
         "fullName": "Build Docker/Helm e2e materials / Package Docker e2e image bundle (linux/arm64)",
         "status": "passed",
-        "duration": "0m 27s",
+        "duration": "0m 42s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -33456,17 +34806,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116244789472",
+            "duration": "0m 42s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115678639943",
+        "runId": "38679912479",
+        "jobId": "116244789472",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -33477,9 +34827,9 @@
         "jobName": "Helm Trustee e2e (IBM SEL) (cc-trustee-helm-e2e-tests)",
         "fullName": "Helm Trustee e2e (IBM SEL) (cc-trustee-helm-e2e-tests)",
         "status": "passed",
-        "duration": "1m 10s",
-        "lastFailure": "22h ago",
-        "lastSuccess": "20h ago",
+        "duration": "0m 30s",
+        "lastFailure": "Yesterday",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -33555,17 +34905,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116241859972",
+            "duration": "0m 30s",
             "failureStep": null
           }
         ],
         "failureCount": 1,
-        "retried": 1,
-        "runId": "38345445768",
-        "jobId": "115720829099",
+        "retried": 0,
+        "runId": "38679912479",
+        "jobId": "116241859972",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -33576,9 +34926,9 @@
         "jobName": "Helm Trustee e2e (SNP) / Helm Trustee e2e (snp)",
         "fullName": "Helm Trustee e2e (SNP) / Helm Trustee e2e (snp)",
         "status": "passed",
-        "duration": "3m 26s",
+        "duration": "3m 15s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -33654,17 +35004,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116244998953",
+            "duration": "3m 15s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115678816178",
+        "runId": "38679912479",
+        "jobId": "116244998953",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -33675,9 +35025,9 @@
         "jobName": "Helm Trustee e2e (TDX) / Helm Trustee e2e (tdx)",
         "fullName": "Helm Trustee e2e (TDX) / Helm Trustee e2e (tdx)",
         "status": "passed",
-        "duration": "4m 12s",
+        "duration": "4m 15s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -33753,17 +35103,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116244998915",
+            "duration": "4m 15s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115678816324",
+        "runId": "38679912479",
+        "jobId": "116244998915",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -33774,9 +35124,9 @@
         "jobName": "Helm Trustee e2e (sample-tee on amd64) / Helm Trustee e2e (sample)",
         "fullName": "Helm Trustee e2e (sample-tee on amd64) / Helm Trustee e2e (sample)",
         "status": "passed",
-        "duration": "3m 12s",
+        "duration": "3m 19s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -33852,17 +35202,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38679912479",
+            "jobId": "116244998942",
+            "duration": "3m 19s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38509907196",
-        "jobId": "115678816219",
+        "runId": "38679912479",
+        "jobId": "116244998942",
         "sourceRepo": "confidential-containers/trustee",
         "maintainers": [],
         "error": null
@@ -33882,9 +35232,9 @@
         "jobName": "e2e / E2E tests on libvirt for the amd64 architecture / Libvirt e2e tests: (ubuntu-24.04, containerd) on mkosi",
         "fullName": "e2e / E2E tests on libvirt for the amd64 architecture / Libvirt e2e tests: (ubuntu-24.04, containerd) on mkosi",
         "status": "passed",
-        "duration": "27m 20s",
+        "duration": "31m 7s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -33960,17 +35310,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116251372549",
+            "duration": "31m 7s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115686086814",
+        "runId": "38681748610",
+        "jobId": "116251372549",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -33981,9 +35331,9 @@
         "jobName": "e2e / E2E tests on libvirt for the s390x architecture / Libvirt e2e tests: (s390x-large, containerd) on mkosi",
         "fullName": "e2e / E2E tests on libvirt for the s390x architecture / Libvirt e2e tests: (s390x-large, containerd) on mkosi",
         "status": "passed",
-        "duration": "28m 46s",
-        "lastFailure": "5 days ago",
-        "lastSuccess": "22h ago",
+        "duration": "29m 18s",
+        "lastFailure": "6 days ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -34059,17 +35409,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116251093367",
+            "duration": "29m 18s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115685302377",
+        "runId": "38681748610",
+        "jobId": "116251093367",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -34080,8 +35430,8 @@
         "jobName": "e2e / alibabacloud (containerd) / Alibaba Cloud e2e tests: (onprem, containerd)",
         "fullName": "e2e / alibabacloud (containerd) / Alibaba Cloud e2e tests: (onprem, containerd)",
         "status": "failed",
-        "duration": "11m 20s",
-        "lastFailure": "22h ago",
+        "duration": "13m 58s",
+        "lastFailure": "6h ago",
         "lastSuccess": "Never",
         "weatherHistory": [
           {
@@ -34158,17 +35508,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
-            "failureStep": null
+            "status": "failed",
+            "runId": "38681748610",
+            "jobId": "116251401115",
+            "duration": "13m 58s",
+            "failureStep": "run tests"
           }
         ],
-        "failureCount": 9,
+        "failureCount": 10,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115686108825",
+        "runId": "38681748610",
+        "jobId": "116251401115",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": {
@@ -34182,9 +35532,9 @@
         "jobName": "e2e / alibabacloud (containerd) / Check Alibaba Cloud credentials",
         "fullName": "e2e / alibabacloud (containerd) / Check Alibaba Cloud credentials",
         "status": "passed",
-        "duration": "0m 3s",
+        "duration": "0m 4s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -34260,17 +35610,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116251372762",
+            "duration": "0m 4s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115686086957",
+        "runId": "38681748610",
+        "jobId": "116251372762",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -34281,9 +35631,9 @@
         "jobName": "e2e / aws (crio) / AWS e2e tests: (onprem, crio)",
         "fullName": "e2e / aws (crio) / AWS e2e tests: (onprem, crio)",
         "status": "passed",
-        "duration": "30m 50s",
+        "duration": "32m 50s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -34359,17 +35709,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116251396592",
+            "duration": "32m 50s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115686113827",
+        "runId": "38681748610",
+        "jobId": "116251396592",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -34382,7 +35732,7 @@
         "status": "passed",
         "duration": "0m 3s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -34458,17 +35808,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116251372759",
+            "duration": "0m 3s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115686087013",
+        "runId": "38681748610",
+        "jobId": "116251372759",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -34479,9 +35829,9 @@
         "jobName": "e2e / azure / Azure e2e tests",
         "fullName": "e2e / azure / Azure e2e tests",
         "status": "passed",
-        "duration": "26m 42s",
-        "lastFailure": "2 days ago",
-        "lastSuccess": "22h ago",
+        "duration": "29m 16s",
+        "lastFailure": "3 days ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -34557,17 +35907,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116251466299",
+            "duration": "29m 16s",
             "failureStep": null
           }
         ],
         "failureCount": 2,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115685610608",
+        "runId": "38681748610",
+        "jobId": "116251466299",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -34578,9 +35928,9 @@
         "jobName": "e2e / byom / BYOM e2e tests",
         "fullName": "e2e / byom / BYOM e2e tests",
         "status": "passed",
-        "duration": "24m 57s",
+        "duration": "20m 49s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -34656,17 +36006,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116249107847",
+            "duration": "20m 49s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115683365064",
+        "runId": "38681748610",
+        "jobId": "116249107847",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -34677,9 +36027,9 @@
         "jobName": "e2e / caa_image_amd64 / build and push (dev, linux/amd64)",
         "fullName": "e2e / caa_image_amd64 / build and push (dev, linux/amd64)",
         "status": "passed",
-        "duration": "4m 12s",
+        "duration": "5m 9s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -34755,17 +36105,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116247632278",
+            "duration": "5m 9s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115681913043",
+        "runId": "38681748610",
+        "jobId": "116247632278",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -34776,9 +36126,9 @@
         "jobName": "e2e / caa_image_amd64 / build and push (release, linux/amd64)",
         "fullName": "e2e / caa_image_amd64 / build and push (release, linux/amd64)",
         "status": "passed",
-        "duration": "4m 12s",
+        "duration": "3m 24s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -34854,17 +36204,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116247632010",
+            "duration": "3m 24s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115681913324",
+        "runId": "38681748610",
+        "jobId": "116247632010",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -34877,7 +36227,7 @@
         "status": "passed",
         "duration": "6m 49s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -34953,17 +36303,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116247632257",
+            "duration": "6m 49s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115681913314",
+        "runId": "38681748610",
+        "jobId": "116247632257",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -34974,9 +36324,9 @@
         "jobName": "e2e / caa_image_s390x / build and push (release, linux/s390x)",
         "fullName": "e2e / caa_image_s390x / build and push (release, linux/s390x)",
         "status": "passed",
-        "duration": "5m 25s",
+        "duration": "6m 12s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -35052,17 +36402,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116247632234",
+            "duration": "6m 12s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115681913362",
+        "runId": "38681748610",
+        "jobId": "116247632234",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -35073,9 +36423,9 @@
         "jobName": "e2e / peerpod_ctrl_image_amd64 / build and push peerpod-ctrl (linux/amd64)",
         "fullName": "e2e / peerpod_ctrl_image_amd64 / build and push peerpod-ctrl (linux/amd64)",
         "status": "passed",
-        "duration": "4m 16s",
+        "duration": "3m 54s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -35151,17 +36501,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116247632287",
+            "duration": "3m 54s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115681913403",
+        "runId": "38681748610",
+        "jobId": "116247632287",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -35172,9 +36522,9 @@
         "jobName": "e2e / peerpod_ctrl_image_s390x / build and push peerpod-ctrl (linux/s390x)",
         "fullName": "e2e / peerpod_ctrl_image_s390x / build and push peerpod-ctrl (linux/s390x)",
         "status": "passed",
-        "duration": "5m 19s",
+        "duration": "5m 53s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -35250,17 +36600,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116247632192",
+            "duration": "5m 53s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115681913282",
+        "runId": "38681748610",
+        "jobId": "116247632192",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -35271,9 +36621,9 @@
         "jobName": "e2e / podvm_mkosi_amd64 / Build mkosi image for amd64",
         "fullName": "e2e / podvm_mkosi_amd64 / Build mkosi image for amd64",
         "status": "passed",
-        "duration": "15m 23s",
+        "duration": "13m 40s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -35349,17 +36699,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116247632553",
+            "duration": "13m 40s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115681913573",
+        "runId": "38681748610",
+        "jobId": "116247632553",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -35370,9 +36720,9 @@
         "jobName": "e2e / podvm_mkosi_azure / Build mkosi image for amd64",
         "fullName": "e2e / podvm_mkosi_azure / Build mkosi image for amd64",
         "status": "passed",
-        "duration": "13m 38s",
+        "duration": "14m 1s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -35448,17 +36798,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116247632208",
+            "duration": "14m 1s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115681913731",
+        "runId": "38681748610",
+        "jobId": "116247632208",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -35469,9 +36819,9 @@
         "jobName": "e2e / podvm_mkosi_s390x / Build mkosi image for s390x",
         "fullName": "e2e / podvm_mkosi_s390x / Build mkosi image for s390x",
         "status": "passed",
-        "duration": "12m 31s",
+        "duration": "12m 38s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -35547,17 +36897,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116247632628",
+            "duration": "12m 38s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115681913659",
+        "runId": "38681748610",
+        "jobId": "116247632628",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -35568,9 +36918,9 @@
         "jobName": "e2e / webhook_image / build and push webhook",
         "fullName": "e2e / webhook_image / build and push webhook",
         "status": "passed",
-        "duration": "5m 20s",
+        "duration": "5m 18s",
         "lastFailure": "Never",
-        "lastSuccess": "22h ago",
+        "lastSuccess": "6h ago",
         "weatherHistory": [
           {
             "date": "2026-10-06T00:00:00.000Z",
@@ -35646,17 +36996,17 @@
           },
           {
             "date": "2026-10-15T00:00:00.000Z",
-            "status": "none",
-            "runId": null,
-            "jobId": null,
-            "duration": null,
+            "status": "passed",
+            "runId": "38681748610",
+            "jobId": "116247632292",
+            "duration": "5m 18s",
             "failureStep": null
           }
         ],
         "failureCount": 0,
         "retried": 0,
-        "runId": "38511853463",
-        "jobId": "115681913316",
+        "runId": "38681748610",
+        "jobId": "116247632292",
         "sourceRepo": "confidential-containers/cloud-api-adaptor",
         "maintainers": [],
         "error": null
@@ -42465,19 +43815,26 @@
     "Get CDH resource": {
       "occurrences": [
         {
+          "date": "2026-10-15T00:00:00.000Z",
+          "jobName": "NVIDIA CC GPU + AMD SNP on H100",
+          "jobId": "116180523311",
+          "runId": "38659437601"
+        },
+        {
           "date": "2026-09-22T00:00:00.000Z",
           "jobName": "NVIDIA CC GPU + AMD SNP on H100",
           "jobId": "106571778714",
           "runId": "35671670927"
         }
       ],
-      "totalCount": 1,
+      "totalCount": 2,
       "affectedJobs": [
         {
           "jobName": "NVIDIA CC GPU + AMD SNP on H100",
-          "count": 1,
-          "latestDate": "2026-09-22T00:00:00.000Z",
+          "count": 2,
+          "latestDate": "2026-10-15T00:00:00.000Z",
           "jobIds": [
+            "116180523311",
             "106571778714"
           ]
         }
@@ -42487,19 +43844,26 @@
     "Cannot get CDH resource when deny-all policy is set": {
       "occurrences": [
         {
+          "date": "2026-10-15T00:00:00.000Z",
+          "jobName": "NVIDIA CC GPU + AMD SNP on H100",
+          "jobId": "116180523311",
+          "runId": "38659437601"
+        },
+        {
           "date": "2026-09-30T00:00:00.000Z",
           "jobName": "NVIDIA CC GPU + AMD SNP on H100",
           "jobId": "109685316697",
           "runId": "36650186552"
         }
       ],
-      "totalCount": 1,
+      "totalCount": 2,
       "affectedJobs": [
         {
           "jobName": "NVIDIA CC GPU + AMD SNP on H100",
-          "count": 1,
-          "latestDate": "2026-09-30T00:00:00.000Z",
+          "count": 2,
+          "latestDate": "2026-10-15T00:00:00.000Z",
           "jobIds": [
+            "116180523311",
             "109685316697"
           ]
         }
@@ -49218,27 +50582,53 @@
     "CUDA Vector Addition Test": {
       "occurrences": [
         {
-          "date": "2026-06-03T00:00:00.000Z",
+          "date": "2026-10-15T00:00:00.000Z",
+          "jobName": "NVIDIA GPU on A100",
+          "jobId": "116180523227",
+          "runId": "38659437601"
+        },
+        {
+          "date": "2026-10-15T00:00:00.000Z",
           "jobName": "NVIDIA CC GPU + AMD SNP on H100",
-          "jobId": "79318132024",
-          "runId": "26856999484"
+          "jobId": "116180523311",
+          "runId": "38659437601"
         }
       ],
-      "totalCount": 1,
+      "totalCount": 2,
       "affectedJobs": [
+        {
+          "jobName": "NVIDIA GPU on A100",
+          "count": 1,
+          "latestDate": "2026-10-15T00:00:00.000Z",
+          "jobIds": [
+            "116180523227"
+          ]
+        },
         {
           "jobName": "NVIDIA CC GPU + AMD SNP on H100",
           "count": 1,
-          "latestDate": "2026-06-03T00:00:00.000Z",
+          "latestDate": "2026-10-15T00:00:00.000Z",
           "jobIds": [
-            "79318132024"
+            "116180523311"
           ]
         }
       ],
-      "uniqueJobsAffected": 1
+      "uniqueJobsAffected": 2
     },
     "setup_file failed": {
       "occurrences": [
+        {
+          "date": "2026-10-15T00:00:00.000Z",
+          "jobName": "NVIDIA GPU on A100",
+          "jobId": "116180523227",
+          "runId": "38659437601"
+        },
+        {
+          "date": "2026-10-15T00:00:00.000Z",
+          "jobName": "NVIDIA CC GPU + AMD SNP on H100",
+          "jobId": "116180523311",
+          "runId": "38659437601"
+        },
         {
           "date": "2026-10-05T00:00:00.000Z",
           "jobName": "NVIDIA GPU on A100",
@@ -49322,21 +50712,16 @@
           "jobName": "NVIDIA CC GPU + AMD SNP on H100",
           "jobId": "106177865250",
           "runId": "35547592149"
-        },
-        {
-          "date": "2026-09-15T00:00:00.000Z",
-          "jobName": "NVIDIA CC GPU + AMD SNP on H100",
-          "jobId": "104213110530",
-          "runId": "34912941988"
         }
       ],
-      "totalCount": 15,
+      "totalCount": 16,
       "affectedJobs": [
         {
           "jobName": "NVIDIA CC GPU + AMD SNP on H100",
           "count": 11,
-          "latestDate": "2026-10-02T00:00:00.000Z",
+          "latestDate": "2026-10-15T00:00:00.000Z",
           "jobIds": [
+            "116180523311",
             "110743482927",
             "110655217064",
             "110163734152",
@@ -49346,15 +50731,15 @@
             "108300405313",
             "107894327913",
             "106571778714",
-            "106177865250",
-            "104213110530"
+            "106177865250"
           ]
         },
         {
           "jobName": "NVIDIA GPU on A100",
-          "count": 4,
-          "latestDate": "2026-10-05T00:00:00.000Z",
+          "count": 5,
+          "latestDate": "2026-10-15T00:00:00.000Z",
           "jobIds": [
+            "116180523227",
             "111575687980",
             "108743686768",
             "107442248804",
@@ -50154,6 +51539,12 @@
     "Can get CDH resource when affirming policy is set with reference values": {
       "occurrences": [
         {
+          "date": "2026-10-15T00:00:00.000Z",
+          "jobName": "NVIDIA CC GPU + AMD SNP on H100",
+          "jobId": "116180523311",
+          "runId": "38659437601"
+        },
+        {
           "date": "2026-10-11T00:00:00.000Z",
           "jobName": "AMD SEV-SNP with runtime-rs and nydus snapshotter",
           "jobId": "114351090805",
@@ -50172,8 +51563,17 @@
           "runId": "36204558932"
         }
       ],
-      "totalCount": 3,
+      "totalCount": 4,
       "affectedJobs": [
+        {
+          "jobName": "NVIDIA CC GPU + AMD SNP on H100",
+          "count": 2,
+          "latestDate": "2026-10-15T00:00:00.000Z",
+          "jobIds": [
+            "116180523311",
+            "108300405313"
+          ]
+        },
         {
           "jobName": "AMD SEV-SNP with runtime-rs and nydus snapshotter",
           "count": 2,
@@ -50181,14 +51581,6 @@
           "jobIds": [
             "114351090805",
             "114086479836"
-          ]
-        },
-        {
-          "jobName": "NVIDIA CC GPU + AMD SNP on H100",
-          "count": 1,
-          "latestDate": "2026-09-26T00:00:00.000Z",
-          "jobIds": [
-            "108300405313"
           ]
         }
       ],
@@ -62423,42 +63815,56 @@
     "NUMA: GPU passthrough with VFIO has correct NUMA placement": {
       "occurrences": [
         {
-          "date": "2026-07-16T00:00:00.000Z",
+          "date": "2026-10-15T00:00:00.000Z",
           "jobName": "NVIDIA GPU on A100",
-          "jobId": "87507146178",
-          "runId": "29461523701"
+          "jobId": "116180523227",
+          "runId": "38659437601"
+        },
+        {
+          "date": "2026-10-15T00:00:00.000Z",
+          "jobName": "NVIDIA CC GPU + AMD SNP on H100",
+          "jobId": "116180523311",
+          "runId": "38659437601"
         }
       ],
-      "totalCount": 1,
+      "totalCount": 2,
       "affectedJobs": [
         {
           "jobName": "NVIDIA GPU on A100",
           "count": 1,
-          "latestDate": "2026-07-16T00:00:00.000Z",
+          "latestDate": "2026-10-15T00:00:00.000Z",
           "jobIds": [
-            "87507146178"
+            "116180523227"
+          ]
+        },
+        {
+          "jobName": "NVIDIA CC GPU + AMD SNP on H100",
+          "count": 1,
+          "latestDate": "2026-10-15T00:00:00.000Z",
+          "jobIds": [
+            "116180523311"
           ]
         }
       ],
-      "uniqueJobsAffected": 1
+      "uniqueJobsAffected": 2
     },
     "NUMA: small GPU workload right-sizes to the GPU's host NUMA node": {
       "occurrences": [
         {
-          "date": "2026-07-16T00:00:00.000Z",
-          "jobName": "NVIDIA GPU on A100",
-          "jobId": "87507146178",
-          "runId": "29461523701"
+          "date": "2026-10-15T00:00:00.000Z",
+          "jobName": "NVIDIA CC GPU + AMD SNP on H100",
+          "jobId": "116180523311",
+          "runId": "38659437601"
         }
       ],
       "totalCount": 1,
       "affectedJobs": [
         {
-          "jobName": "NVIDIA GPU on A100",
+          "jobName": "NVIDIA CC GPU + AMD SNP on H100",
           "count": 1,
-          "latestDate": "2026-07-16T00:00:00.000Z",
+          "latestDate": "2026-10-15T00:00:00.000Z",
           "jobIds": [
-            "87507146178"
+            "116180523311"
           ]
         }
       ],
