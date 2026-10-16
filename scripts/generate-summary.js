@@ -9,6 +9,9 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
 
+// Identify whether to summarize kata-containers tests or trustee tests
+const mode = (process.env.SUMMARY_MODE || 'kata-containers').toLowerCase();
+
 // Load data
 const data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
 
@@ -42,9 +45,9 @@ function resolveMaintainersToSlack(handles) {
   return mentions.join(' ');
 }
 
-// Use allJobsSection for the nightly "All Jobs" view
-// This matches what the dashboard shows
-const allJobsSection = data.allJobsSection || { tests: [] };
+const allJobsSection = mode === 'trustee'
+  ? (data.cocoTrusteeSection || { tests: [] })
+  : (data.allJobsSection || { tests: [] });
 const allTests = allJobsSection.tests || [];
 const totalTests = allTests.length;
 const failedCount = allTests.filter(t => t.status === 'failed').length;
