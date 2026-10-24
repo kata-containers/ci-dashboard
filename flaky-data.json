@@ -1,9 +1,9 @@
 {
-  "lastRefresh": "2026-10-23T22:50:45.892Z",
+  "lastRefresh": "2026-10-24T02:32:42.500Z",
   "periodDays": 14,
-  "totalFailures": 78,
+  "totalFailures": 80,
   "totalPRs": 8,
-  "confirmedFlakyCount": 1,
+  "confirmedFlakyCount": 3,
   "mergedDespiteFailureCount": 2,
   "failedTests": [
     {
@@ -106,6 +106,86 @@
           "runAttempt": 1,
           "isFlaky": false,
           "prMerged": false
+        }
+      ]
+    },
+    {
+      "name": "Check the number vcpus are correctly allocated to the sandbox",
+      "file": "k8s-sandbox-vcpus-allocation.bats",
+      "totalFailures": 4,
+      "flakyCount": 2,
+      "mergedCount": 2,
+      "isConfirmedFlaky": true,
+      "mergedDespiteFailure": true,
+      "uniquePRs": 2,
+      "uniqueDates": [
+        "2026-10-23",
+        "2026-10-22"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "displayName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "count": 2,
+          "flakyCount": 2,
+          "mergedCount": 0
+        },
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 2
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-10-23",
+          "prNumber": "14061",
+          "prTitle": "genpolicy: replace inherited groups on container user overrides",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobId": "120711720195",
+          "runId": "40039706673",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": false
+        },
+        {
+          "date": "2026-10-23",
+          "prNumber": "14061",
+          "prTitle": "genpolicy: replace inherited groups on container user overrides",
+          "jobName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobId": "120711720195",
+          "runId": "40039706673",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": false
+        },
+        {
+          "date": "2026-10-22",
+          "prNumber": "14075",
+          "prTitle": "runtime-rs/dragonball: Preserve device lifecycle state across snapshot restore",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
+          "jobId": "119609447304",
+          "runId": "39711497374",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": true
+        },
+        {
+          "date": "2026-10-22",
+          "prNumber": "14075",
+          "prTitle": "runtime-rs/dragonball: Preserve device lifecycle state across snapshot restore",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
+          "jobId": "119609447304",
+          "runId": "39711497374",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": true
         }
       ]
     },
@@ -1661,60 +1741,12 @@
       ]
     },
     {
-      "name": "Check the number vcpus are correctly allocated to the sandbox",
-      "file": "k8s-sandbox-vcpus-allocation.bats",
-      "totalFailures": 2,
-      "flakyCount": 0,
-      "mergedCount": 2,
-      "isConfirmedFlaky": false,
-      "mergedDespiteFailure": true,
-      "uniquePRs": 1,
-      "uniqueDates": [
-        "2026-10-22"
-      ],
-      "affectedJobs": [
-        {
-          "name": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
-          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
-          "count": 2,
-          "flakyCount": 0,
-          "mergedCount": 2
-        }
-      ],
-      "recentOccurrences": [
-        {
-          "date": "2026-10-22",
-          "prNumber": "14075",
-          "prTitle": "runtime-rs/dragonball: Preserve device lifecycle state across snapshot restore",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
-          "jobId": "119609447304",
-          "runId": "39711497374",
-          "runAttempt": 1,
-          "isFlaky": false,
-          "prMerged": true
-        },
-        {
-          "date": "2026-10-22",
-          "prNumber": "14075",
-          "prTitle": "runtime-rs/dragonball: Preserve device lifecycle state across snapshot restore",
-          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
-          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
-          "jobId": "119609447304",
-          "runId": "39711497374",
-          "runAttempt": 1,
-          "isFlaky": false,
-          "prMerged": true
-        }
-      ]
-    },
-    {
       "name": "ExecProcessRequest tests",
       "file": "k8s-policy-pod.bats",
       "totalFailures": 2,
-      "flakyCount": 0,
+      "flakyCount": 2,
       "mergedCount": 0,
-      "isConfirmedFlaky": false,
+      "isConfirmedFlaky": true,
       "mergedDespiteFailure": false,
       "uniquePRs": 1,
       "uniqueDates": [
@@ -1725,7 +1757,7 @@
           "name": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, containerd)",
           "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, containerd)",
           "count": 2,
-          "flakyCount": 0,
+          "flakyCount": 2,
           "mergedCount": 0
         }
       ],
@@ -1739,7 +1771,7 @@
           "jobId": "119508354584",
           "runId": "39680376019",
           "runAttempt": 1,
-          "isFlaky": false,
+          "isFlaky": true,
           "prMerged": false
         },
         {
@@ -1751,7 +1783,7 @@
           "jobId": "119508354584",
           "runId": "39680376019",
           "runAttempt": 1,
-          "isFlaky": false,
+          "isFlaky": true,
           "prMerged": false
         }
       ]
@@ -1807,7 +1839,7 @@
   ],
   "summary": {
     "totalFailedTests": 35,
-    "confirmedFlaky": 1,
+    "confirmedFlaky": 3,
     "mergedDespiteFailure": 2,
     "mostAffectedJob": {
       "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
@@ -1817,10 +1849,6 @@
       "mergedCount": 0
     },
     "trend": [
-      {
-        "date": "2026-10-10",
-        "failures": 0
-      },
       {
         "date": "2026-10-11",
         "failures": 0
@@ -1871,7 +1899,11 @@
       },
       {
         "date": "2026-10-23",
-        "failures": 21
+        "failures": 23
+      },
+      {
+        "date": "2026-10-24",
+        "failures": 0
       }
     ],
     "jobBreakdown": [
@@ -1890,11 +1922,25 @@
         "mergedCount": 2
       },
       {
+        "name": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+        "displayName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
+        "count": 4,
+        "flakyCount": 2,
+        "mergedCount": 0
+      },
+      {
         "name": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu-runtime-rs)",
         "displayName": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu-runtime-rs)",
         "count": 3,
         "flakyCount": 0,
         "mergedCount": 0
+      },
+      {
+        "name": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
+        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu, latest)",
+        "count": 2,
+        "flakyCount": 0,
+        "mergedCount": 2
       },
       {
         "name": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-cpu-arm64 / run-nvidia-cpu-tests-on-arm64",
@@ -1925,22 +1971,8 @@
         "mergedCount": 0
       },
       {
-        "name": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
-        "displayName": "kata-containers-ci-on-push / run-kata-coco-tests-on-arm64 / run-k8s-tests-coco-arm64-k8s (qemu-coco-dev-runtime-rs, kubeadm)",
-        "count": 2,
-        "flakyCount": 0,
-        "mergedCount": 0
-      },
-      {
         "name": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu-runtime-rs, latest, erofs, memory, dmverity)",
         "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu-nvidia-cpu-runtime-rs, latest, erofs, memory, dmverity)",
-        "count": 2,
-        "flakyCount": 0,
-        "mergedCount": 0
-      },
-      {
-        "name": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64",
-        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64",
         "count": 2,
         "flakyCount": 0,
         "mergedCount": 0
