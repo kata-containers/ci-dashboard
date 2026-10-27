@@ -1,7 +1,7 @@
 {
-  "lastRefresh": "2026-10-26T23:34:08.000Z",
+  "lastRefresh": "2026-10-27T02:56:50.957Z",
   "periodDays": 14,
-  "totalFailures": 159,
+  "totalFailures": 162,
   "totalPRs": 9,
   "confirmedFlakyCount": 1,
   "mergedDespiteFailureCount": 2,
@@ -2431,6 +2431,54 @@
       ]
     },
     {
+      "name": "Test we cannot pull a large image that pull time exceeds createcontainer timeout inside the guest",
+      "file": "k8s-guest-pull-image.bats",
+      "totalFailures": 2,
+      "flakyCount": 0,
+      "mergedCount": 0,
+      "isConfirmedFlaky": false,
+      "mergedDespiteFailure": false,
+      "uniquePRs": 1,
+      "uniqueDates": [
+        "2026-10-26"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
+          "count": 2,
+          "flakyCount": 0,
+          "mergedCount": 0
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-10-26",
+          "prNumber": "14140",
+          "prTitle": "kata-deploy: Allow appending to CRI configuration files",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobId": "121899757931",
+          "runId": "40414865095",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        },
+        {
+          "date": "2026-10-26",
+          "prNumber": "14140",
+          "prTitle": "kata-deploy: Allow appending to CRI configuration files",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
+          "jobId": "121899757931",
+          "runId": "40414865095",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        }
+      ]
+    },
+    {
       "name": "Debug console drops into the devkit shell",
       "file": "k8s-devkit-debug-console.bats",
       "totalFailures": 2,
@@ -3053,24 +3101,56 @@
           "prMerged": false
         }
       ]
+    },
+    {
+      "name": "Copy file in a pod",
+      "file": "k8s-copy-file.bats",
+      "totalFailures": 1,
+      "flakyCount": 0,
+      "mergedCount": 0,
+      "isConfirmedFlaky": false,
+      "mergedDespiteFailure": false,
+      "uniquePRs": 1,
+      "uniqueDates": [
+        "2026-10-26"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu-runtime-rs)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu-runtime-rs)",
+          "count": 1,
+          "flakyCount": 0,
+          "mergedCount": 0
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-10-26",
+          "prNumber": "14140",
+          "prTitle": "kata-deploy: Allow appending to CRI configuration files",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu-runtime-rs)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu-runtime-rs)",
+          "jobId": "121899842375",
+          "runId": "40414865095",
+          "runAttempt": 1,
+          "isFlaky": false,
+          "prMerged": false
+        }
+      ]
     }
   ],
   "summary": {
-    "totalFailedTests": 44,
+    "totalFailedTests": 46,
     "confirmedFlaky": 1,
     "mergedDespiteFailure": 2,
     "mostAffectedJob": {
       "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
       "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
-      "count": 89,
+      "count": 91,
       "flakyCount": 0,
       "mergedCount": 0
     },
     "trend": [
-      {
-        "date": "2026-10-13",
-        "failures": 0
-      },
       {
         "date": "2026-10-14",
         "failures": 0
@@ -3121,14 +3201,18 @@
       },
       {
         "date": "2026-10-26",
-        "failures": 2
+        "failures": 5
+      },
+      {
+        "date": "2026-10-27",
+        "failures": 0
       }
     ],
     "jobBreakdown": [
       {
         "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
         "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
-        "count": 89,
+        "count": 91,
         "flakyCount": 0,
         "mergedCount": 0
       },
@@ -3175,16 +3259,16 @@
         "mergedCount": 0
       },
       {
-        "name": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64",
-        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64",
+        "name": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu-runtime-rs)",
+        "displayName": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu-runtime-rs)",
         "count": 4,
         "flakyCount": 0,
         "mergedCount": 0
       },
       {
-        "name": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu-runtime-rs)",
-        "displayName": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu-runtime-rs)",
-        "count": 3,
+        "name": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64",
+        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-nvidia-gpu / run-nvidia-gpu-tests-on-amd64",
+        "count": 4,
         "flakyCount": 0,
         "mergedCount": 0
       },
