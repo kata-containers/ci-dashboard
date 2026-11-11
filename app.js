@@ -2797,6 +2797,11 @@ function updateTrusteeJobCount() {
 // Cloud API Adaptor (CAA) Functions
 // ============================================
 
+// Running/unknown jobs are shown in the "not run" group so they are never dropped
+function caaStatusGroup(test) {
+  return test.status === 'failed' || test.status === 'passed' ? test.status : 'not_run';
+}
+
 function renderCAASections() {
   const container = document.getElementById('caa-sections-container');
   if (!container) return;
@@ -2821,7 +2826,7 @@ function renderCAASections() {
   
   // Apply status filter
   if (state.caaFilter && state.caaFilter !== 'all') {
-    tests = tests.filter(t => t.status === state.caaFilter);
+    tests = tests.filter(t => caaStatusGroup(t) === state.caaFilter);
   }
   
   // Apply sorting
@@ -2835,7 +2840,7 @@ function renderCAASections() {
   // Group by status (preserving sort order within each group)
   const failed = tests.filter(t => t.status === 'failed');
   const passed = tests.filter(t => t.status === 'passed');
-  const notRun = tests.filter(t => t.status === 'not_run' || t.status === 'none');
+  const notRun = tests.filter(t => caaStatusGroup(t) === 'not_run');
   
   // Calculate weather stats (same as Kata)
   const weatherPercent = tests.length > 0 
@@ -2965,7 +2970,7 @@ function updateCAAStats() {
   const tests = caaSection.tests || [];
   const total = tests.length;
   const failed = tests.filter(t => t.status === 'failed').length;
-  const notRun = tests.filter(t => t.status === 'not_run' || t.status === 'none').length;
+  const notRun = tests.filter(t => caaStatusGroup(t) === 'not_run').length;
   const passed = tests.filter(t => t.status === 'passed').length;
   
   const totalEl = document.getElementById('caa-total-tests');
@@ -3005,7 +3010,7 @@ function updateCAAJobCount() {
   }
   
   if (state.caaFilter && state.caaFilter !== 'all') {
-    tests = tests.filter(t => t.status === state.caaFilter);
+    tests = tests.filter(t => caaStatusGroup(t) === state.caaFilter);
   }
   
   const visibleEl = document.getElementById('caa-visible-jobs');
