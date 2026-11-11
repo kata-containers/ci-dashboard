@@ -1643,7 +1643,8 @@ try {
         const matchingJobs = caaJobs.filter(job => job.name === jobName)
           .sort((a, b) => new Date(b.started_at || b.created_at) - new Date(a.started_at || a.created_at));
         
-        const latestJob = matchingJobs[0];
+        // Prefer the latest completed job so an in-progress run doesn't hide the previous result
+        const latestJob = matchingJobs.find(j => j.status === 'completed') || matchingJobs[0];
         let status = 'not_run';
         
         if (latestJob) {
