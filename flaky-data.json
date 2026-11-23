@@ -1,11 +1,107 @@
 {
-  "lastRefresh": "2026-11-22T21:29:34.206Z",
+  "lastRefresh": "2026-11-23T04:44:44.419Z",
   "periodDays": 14,
-  "totalFailures": 13,
-  "totalPRs": 6,
-  "confirmedFlakyCount": 1,
+  "totalFailures": 17,
+  "totalPRs": 7,
+  "confirmedFlakyCount": 3,
   "mergedDespiteFailureCount": 0,
   "failedTests": [
+    {
+      "name": "Plain ephemeral data storage",
+      "file": "k8s-plain-ephemeral-data-storage.bats",
+      "totalFailures": 2,
+      "flakyCount": 2,
+      "mergedCount": 0,
+      "isConfirmedFlaky": true,
+      "mergedDespiteFailure": false,
+      "uniquePRs": 1,
+      "uniqueDates": [
+        "2026-11-23"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu)",
+          "count": 2,
+          "flakyCount": 2,
+          "mergedCount": 0
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-11-23",
+          "prNumber": "14449",
+          "prTitle": "dragonball: Advertise NIC hotplug to attach TAP after template restore",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu)",
+          "jobId": "137473377304",
+          "runId": "45105294940",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": false
+        },
+        {
+          "date": "2026-11-23",
+          "prNumber": "14449",
+          "prTitle": "dragonball: Advertise NIC hotplug to attach TAP after template restore",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu)",
+          "jobId": "137473377304",
+          "runId": "45105294940",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": false
+        }
+      ]
+    },
+    {
+      "name": "ExecProcessRequest tests",
+      "file": "k8s-policy-pod.bats",
+      "totalFailures": 2,
+      "flakyCount": 2,
+      "mergedCount": 0,
+      "isConfirmedFlaky": true,
+      "mergedDespiteFailure": false,
+      "uniquePRs": 1,
+      "uniqueDates": [
+        "2026-11-23"
+      ],
+      "affectedJobs": [
+        {
+          "name": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, containerd)",
+          "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, containerd)",
+          "count": 2,
+          "flakyCount": 2,
+          "mergedCount": 0
+        }
+      ],
+      "recentOccurrences": [
+        {
+          "date": "2026-11-23",
+          "prNumber": "14449",
+          "prTitle": "dragonball: Advertise NIC hotplug to attach TAP after template restore",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, containerd)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, containerd)",
+          "jobId": "137473378007",
+          "runId": "45105294940",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": false
+        },
+        {
+          "date": "2026-11-23",
+          "prNumber": "14449",
+          "prTitle": "dragonball: Advertise NIC hotplug to attach TAP after template restore",
+          "jobName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, containerd)",
+          "jobDisplayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, containerd)",
+          "jobId": "137473378007",
+          "runId": "45105294940",
+          "runAttempt": 1,
+          "isFlaky": true,
+          "prMerged": false
+        }
+      ]
+    },
     {
       "name": "Running with postStart and preStop handlers",
       "file": "k8s-attach-handlers.bats",
@@ -332,8 +428,8 @@
     }
   ],
   "summary": {
-    "totalFailedTests": 7,
-    "confirmedFlaky": 1,
+    "totalFailedTests": 9,
+    "confirmedFlaky": 3,
     "mergedDespiteFailure": 0,
     "mostAffectedJob": {
       "name": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu-runtime-rs)",
@@ -343,10 +439,6 @@
       "mergedCount": 0
     },
     "trend": [
-      {
-        "date": "2026-11-09",
-        "failures": 0
-      },
       {
         "date": "2026-11-10",
         "failures": 0
@@ -398,6 +490,10 @@
       {
         "date": "2026-11-22",
         "failures": 0
+      },
+      {
+        "date": "2026-11-23",
+        "failures": 4
       }
     ],
     "jobBreakdown": [
@@ -416,6 +512,20 @@
         "mergedCount": 0
       },
       {
+        "name": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu)",
+        "displayName": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu)",
+        "count": 3,
+        "flakyCount": 2,
+        "mergedCount": 0
+      },
+      {
+        "name": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, containerd)",
+        "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-aks / run-k8s-tests (cbl-mariner, clh-azure, small, containerd)",
+        "count": 2,
+        "flakyCount": 2,
+        "mergedCount": 0
+      },
+      {
         "name": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, latest, erofs, disk, unmerged)",
         "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-free-runner / run-k8s-tests (qemu, latest, erofs, disk, unmerged)",
         "count": 2,
@@ -426,13 +536,6 @@
         "name": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
         "displayName": "kata-containers-ci-on-push / run-k8s-tests-on-zvsi / run-k8s-tests (nydus, qemu-coco-dev-runtime-rs, kubeadm)",
         "count": 2,
-        "flakyCount": 0,
-        "mergedCount": 0
-      },
-      {
-        "name": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu)",
-        "displayName": "kata-containers-ci-on-push / run-k8s-tests-crio / run-k8s-tests-crio (qemu)",
-        "count": 1,
         "flakyCount": 0,
         "mergedCount": 0
       }
